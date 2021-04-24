@@ -7,12 +7,19 @@ A single player turn-based empire building game. A player initially chooses one 
 
 ## Contributing Guide Lines
 
-### Commit Naming
+### Github
+#### Commit Naming
 - use the same spacing and capitalizing
 - use this pattern -> Operation: description 
 - Operations -> Update - Fix - Add - Remove - Replace
-- Example -> Update: Readme by adding Commit Naming rules
-- Example -> Fix: bug in class B cause crash when blablabla
+- Example -> ```Update: Readme by adding Commit Naming rules```
+- Example -> ```Fix: bug in class B cause crash when blablabla```
+
+#### Other
+- If there are anything unfinished in a class you started in, you should add a todo comment
+  ```java
+  //TODO: describe here 
+  ```
 
 ## Team members
 - Ahmed Nasser
