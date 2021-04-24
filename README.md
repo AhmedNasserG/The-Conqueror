@@ -17,4 +17,4 @@ A single player turn-based empire building game. A player initially chooses one 
 ## Team members
 - Ahmed Nasser
 - Mohammad Omar
-- Salah Ebaid
+- SalahEl-Din Ebeed
