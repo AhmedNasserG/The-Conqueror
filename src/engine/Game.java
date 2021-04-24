@@ -7,13 +7,13 @@ public class Game {
     private Player player;
     private ArrayList<City> availableCities;
     private ArrayList<Distance> distances;
-    private final int maxTurnCount;
+    private final int maxTurnCount = 30;
     private int currentTurnCount;
 
     //this constructor needs checking
     public Game(String playerName, String playerCity) throws IOException {
-        maxTurnCount = 30;
         currentTurnCount = 1;
+        player = new Player(playerName);
         //how to set the rest of the attributes?
     }
 
