@@ -13,3 +13,8 @@ A single player turn-based empire building game. A player initially chooses one 
 - Operations -> Update - Fix - Add - Remove - Replace
 - Example -> Update: Readme by adding Commit Naming rules
 - Example -> Fix: bug in class B cause crash when blablabla
+
+## Team members
+- Ahmed Nasser
+- Mohammad Omar
+- SalahEl-Din Ebeed
