@@ -47,7 +47,7 @@ public class M1PublicTests {
 	String fcePath = "exceptions.FriendlyCityException";
 	String tnrePath = "exceptions.TargetNotReachedException";
 	String eePath = "exceptions.EmpireException";
-	String bicdePath = "exceptions.BuildingInCooldownException";
+	String bicdePath = "exceptions.BuildingInCoolDownException";
 	String mrePath = "exceptions.MaxRecruitedException";
 	String unitPath = "units.Unit";
 	String armyPath = "units.Army";
