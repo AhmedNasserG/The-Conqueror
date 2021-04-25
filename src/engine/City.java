@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class City{
     private String name;
-    private ArrayList<EconomicBuilding> economicBuildings;
+    private ArrayList<EconomicBuilding> economicalBuildings;
     private ArrayList<MilitaryBuilding> militaryBuildings;
     private Army defendingArmy;
     private int turnsUnderSiege;
@@ -26,8 +26,8 @@ public class City{
         return name;
     }
 
-    public ArrayList<EconomicBuilding> getEconomicBuildings() {
-        return economicBuildings;
+    public ArrayList<EconomicBuilding> getEconomicalBuildings() {
+        return economicalBuildings;
     }
 
     public ArrayList<MilitaryBuilding> getMilitaryBuildings() {
