@@ -13,6 +13,7 @@ public class Army {
 
     public Army(String currentLocation){
         this.currentLocation=currentLocation;
+        this.units = new ArrayList<>();
     }
 
     // Getters
