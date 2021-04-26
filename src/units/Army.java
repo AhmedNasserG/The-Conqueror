@@ -45,7 +45,6 @@ public class Army {
 
     // Setters
 
-
     public void setCurrentStatus(Status currentStatus) {
         this.currentStatus = currentStatus;
     }

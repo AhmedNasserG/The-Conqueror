@@ -1,7 +1,7 @@
 package units;
 
 public abstract class Unit {
-    // Attribiutes
+    // Attributes
    private int level;
    private int maxSoldierCount;
    private int currentSoldierCount;
