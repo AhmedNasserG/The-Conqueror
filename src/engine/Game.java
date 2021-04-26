@@ -21,6 +21,7 @@ public class Game {
 
     public void loadArmy(String cityName,String path) throws IOException {
         //TODO: implement this method
+
     }
 
     private void loadCitiesAndDistances() throws IOException {
@@ -57,5 +58,9 @@ public class Game {
 
     public void setCurrentTurnCount(int currentTurnCount) {
         this.currentTurnCount = currentTurnCount;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 }
