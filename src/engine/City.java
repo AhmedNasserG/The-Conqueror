@@ -17,6 +17,8 @@ public class City{
 
     public City(String name){
         this.name = name;
+        economicalBuildings = new ArrayList<>();
+        militaryBuildings = new ArrayList<>();
         defendingArmy = new Army(name);
         underSiege = false;
     }

@@ -13,6 +13,8 @@ public class Player {
 
     public Player(String name){
         this.name = name;
+        controlledCities = new ArrayList<>();
+        controlledArmies = new ArrayList<>();
     }
 
 
