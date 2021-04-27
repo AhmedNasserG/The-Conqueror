@@ -1,3 +1,7 @@
 *.iml
 .idea
+.metadata
 bin
+.classpath
+.project
+The-Conqueror.iml
