@@ -3,22 +3,26 @@ package units;
 import java.util.ArrayList;
 
 public class Army {
-    // Attribiutes
-    private Status currentStatus = Status.IDLE;
+
+    private Status currentStatus;
     private ArrayList<Unit> units;
-    private int distancetoTarget = -1;
-    private String target="";
+    private int distancetoTarget;
+    private String target;
     private String currentLocation;
-    private final int maxToHold = 10; // Cannot be changed
+    private final int maxToHold; // Cannot be changed
+
 
     public Army(String currentLocation){
-        this.currentLocation=currentLocation;
+        this.currentStatus = Status.IDLE;
         this.units = new ArrayList<>();
+        this.distancetoTarget = -1;
+        this.target = "";
+        this.currentLocation = currentLocation;
+        this.maxToHold = 10;
     }
 
+
     // Getters
-
-
     public Status getCurrentStatus() {
         return currentStatus;
     }
@@ -43,8 +47,8 @@ public class Army {
         return maxToHold;
     }
 
-    // Setters
 
+    // Setters
     public void setCurrentStatus(Status currentStatus) {
         this.currentStatus = currentStatus;
     }

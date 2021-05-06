@@ -12,21 +12,25 @@ import java.util.HashSet;
 public class Game {
     private Player player;
     private ArrayList<City> availableCities;
-    private static ArrayList<Distance> distances;
-    private final int maxTurnCount = 30;
+    private ArrayList<Distance> distances;
+    private final int maxTurnCount;
     private int currentTurnCount;
 
     public Game(String playerName, String playerCity) throws IOException {
-        player = new Player(playerName);
-        availableCities = new ArrayList<>();
-        distances = new ArrayList<>();
-        currentTurnCount = 1;
+        this.player = new Player(playerName);
+        this.availableCities = new ArrayList<>();
+        this.distances = new ArrayList<>();
+        this.maxTurnCount = 30;
+        this.currentTurnCount = 1;
+
         loadCitiesAndDistances();
+
         for (City city : availableCities) {
             if (city.getName().equals(playerCity)) {
                 player.getControlledCities().add(city);
                 city.setDefendingArmy(null);
-            } else {
+            }
+            else {
                 loadArmy(city.getName(), city.getName().toLowerCase() + "_army.csv");
             }
         }
@@ -41,16 +45,19 @@ public class Game {
             }
         }
 
-        ArrayList<Unit> units = new ArrayList<>();
         String currentLine;
         FileReader fileReader = new FileReader(path);
         BufferedReader br = new BufferedReader(fileReader);
+
+        ArrayList<Unit> units = new ArrayList<>();
         while ((currentLine = br.readLine()) != null) {
             String[] line = currentLine.split(",");
             units.add(loadUnit(line[0], line[1]));
         }
-        army.setUnits(units);
 
+        if(army != null) {
+            army.setUnits(units);
+        }
     }
 
     private Unit loadUnit(String type, String level) {
@@ -96,16 +103,21 @@ public class Game {
 
     private void loadCitiesAndDistances() throws IOException {
         HashSet<String> cities = new HashSet<>();
+
         String currentLine;
         FileReader fileReader = new FileReader("distances.csv");
         BufferedReader br = new BufferedReader(fileReader);
+
         while ((currentLine = br.readLine()) != null) {
             String[] line = currentLine.split(",");
+
             Distance distance = new Distance(line[0], line[1], Integer.parseInt(line[2]));
+
             distances.add(distance);
             cities.add(line[0]);
             cities.add(line[1]);
         }
+
         for (String city : cities) {
             availableCities.add(new City(city));
         }

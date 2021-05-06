@@ -7,6 +7,7 @@ import units.Army;
 import java.util.ArrayList;
 
 public class City{
+
     private String name;
     private ArrayList<EconomicBuilding> economicalBuildings;
     private ArrayList<MilitaryBuilding> militaryBuildings;
@@ -17,13 +18,14 @@ public class City{
 
     public City(String name){
         this.name = name;
-        economicalBuildings = new ArrayList<>();
-        militaryBuildings = new ArrayList<>();
-        defendingArmy = new Army(name);
-        underSiege = false;
+        this.economicalBuildings = new ArrayList<>();
+        this.militaryBuildings = new ArrayList<>();
+        this.defendingArmy = new Army(name);
+        this.underSiege = false;
     }
 
 
+    // Getters
     public String getName() {
         return name;
     }
@@ -49,6 +51,7 @@ public class City{
     }
 
 
+    // Setters
     public void setDefendingArmy(Army defendingArmy) {
         this.defendingArmy = defendingArmy;
     }

@@ -11,13 +11,14 @@ public class Player {
     private double treasury;
     private double food;
 
-    public Player(String name){
+    public Player(String name) {
         this.name = name;
-        controlledCities = new ArrayList<>();
-        controlledArmies = new ArrayList<>();
+        this.controlledCities = new ArrayList<>();
+        this.controlledArmies = new ArrayList<>();
     }
 
 
+    // Getters
     public String getName() {
         return name;
     }
@@ -39,6 +40,7 @@ public class Player {
     }
 
 
+    // Setters
     public void setTreasury(double treasury) {
         this.treasury = treasury;
     }
