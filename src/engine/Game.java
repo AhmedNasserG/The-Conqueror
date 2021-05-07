@@ -1,7 +1,6 @@
 package engine;
 
 import units.*;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.io.BufferedReader;
