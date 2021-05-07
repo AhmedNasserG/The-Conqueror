@@ -4,25 +4,21 @@ import java.util.ArrayList;
 
 public class Army {
 
-    private Status currentStatus;
+    private Status currentStatus = Status.IDLE;
     private ArrayList<Unit> units;
-    private int distancetoTarget;
-    private String target;
+    private int distancetoTarget = -1;
+    private String target="";
     private String currentLocation;
-    private final int maxToHold; // Cannot be changed
-
+    private final int maxToHold = 10; // Cannot be changed
 
     public Army(String currentLocation){
-        this.currentStatus = Status.IDLE;
+        this.currentLocation=currentLocation;
         this.units = new ArrayList<>();
-        this.distancetoTarget = -1;
-        this.target = "";
-        this.currentLocation = currentLocation;
-        this.maxToHold = 10;
     }
 
-
     // Getters
+
+
     public Status getCurrentStatus() {
         return currentStatus;
     }
@@ -47,8 +43,8 @@ public class Army {
         return maxToHold;
     }
 
-
     // Setters
+
     public void setCurrentStatus(Status currentStatus) {
         this.currentStatus = currentStatus;
     }
