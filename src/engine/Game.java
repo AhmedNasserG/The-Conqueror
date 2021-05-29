@@ -1,6 +1,7 @@
 package engine;
 
 import units.*;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.io.BufferedReader;
@@ -28,8 +29,7 @@ public class Game {
             if (city.getName().equals(playerCity)) {
                 player.getControlledCities().add(city);
                 city.setDefendingArmy(null);
-            }
-            else {
+            } else {
                 loadArmy(city.getName(), city.getName().toLowerCase() + "_army.csv");
             }
         }
@@ -48,55 +48,29 @@ public class Game {
         FileReader fileReader = new FileReader(path);
         BufferedReader br = new BufferedReader(fileReader);
 
-        ArrayList<Unit> units = new ArrayList<>();
+        ArrayList<Unit> unitsArray = new ArrayList<>();
         while ((currentLine = br.readLine()) != null) {
             String[] line = currentLine.split(",");
-            units.add(loadUnit(line[0], line[1]));
+            loadUnit(unitsArray, line[0], Integer.parseInt(line[1]));
         }
 
-        if(army != null) {
-            army.setUnits(units);
+        if (army != null) {
+            army.setUnits(unitsArray);
         }
     }
 
-    private Unit loadUnit(String type, String level) {
+    private void loadUnit(ArrayList<Unit> unitsArray, String type, int level) {
         switch (type) {
             case "Archer":
-                switch (level) {
-                    case "1":
-                        return new Archer(1, 60, 0.4, 0.5, 0.6);
-
-                    case "2":
-                        return new Archer(2, 60, 0.4, 0.5, 0.6);
-
-                    case "3":
-                        return new Archer(3, 70, 0.5, 0.6, 0.7);
-
-                }
+                unitsArray.add(new Archer(level));
+                break;
             case "Infantry":
-                switch (level) {
-                    case "1":
-                        return new Infantry(1, 50, 0.5, 0.6, 0.7);
-
-                    case "2":
-                        return new Infantry(2, 50, 0.5, 0.6, 0.7);
-
-                    case "3":
-                        return new Infantry(3, 60, 0.6, 0.7, 0.8);
-
-                }
+                unitsArray.add(new Infantry(level));
+                break;
             case "Cavalry":
-                switch (level) {
-                    case "1":
-                        return new Cavalry(1, 40, 0.6, 0.7, 0.75);
-                    case "2":
-                        return new Cavalry(2, 40, 0.6, 0.7, 0.75);
-                    case "3":
-                        return new Cavalry(3, 60, 0.7, 0.8, 0.9);
-
-                }
+                unitsArray.add(new Cavalry(level));
+                break;
         }
-        return null;
     }
 
 
