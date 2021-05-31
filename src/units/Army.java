@@ -19,26 +19,28 @@ public class Army {
     }
 
     public void relocateUnit(Unit unit) throws MaxCapacityException {
+        if (units.size() == maxToHold) {
+            throw new MaxCapacityException();
+        }
         units.add(unit);
-        // TODO 3.1 : Additionally, it should remove the unit from the previous army and add it to the corresponding army.
-
+        unit.getParentArmy().getUnits().remove(unit);
     }
 
-    public void handleAttackedUnit(Unit u){
-        if(u.getCurrentSoldierCount() == 0){
-            units.remove(u);
+    public void handleAttackedUnit(Unit attackedUnit){
+        if(attackedUnit.getCurrentSoldierCount() <= 0){
+            units.remove(attackedUnit);
         }
     }
 
     public double foodNeeded(){
         double foodNeeded = 0.0;
 
-        for(Unit u : units){
-            int currentSoldierCount = u.getCurrentSoldierCount();
+        for(Unit currentUnit : units){
+            int currentSoldierCount = currentUnit.getCurrentSoldierCount();
             switch (currentStatus) {
-                case IDLE -> foodNeeded += u.getIdleUpkeep() * currentSoldierCount;
-                case MARCHING -> foodNeeded += u.getMarchingUpkeep() * currentSoldierCount;
-                case BESIEGING -> foodNeeded += u.getSiegeUpkeep() * currentSoldierCount;
+                case IDLE -> foodNeeded += currentUnit.getIdleUpkeep() * currentSoldierCount;
+                case MARCHING -> foodNeeded += currentUnit.getMarchingUpkeep() * currentSoldierCount;
+                case BESIEGING -> foodNeeded += currentUnit.getSiegeUpkeep() * currentSoldierCount;
             }
         }
 
