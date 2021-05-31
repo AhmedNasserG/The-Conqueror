@@ -23,5 +23,16 @@ public class Barracks extends MilitaryBuilding {
 		setRecruitmentCost(BarracksValuesUpgrades[getLevel() - 2][1]);
 	}
 
-
+	@Override
+	public Unit recruit() throws BuildingInCoolDownException, MaxRecruitedException {
+		if (isCoolDown()) {
+			throw new BuildingInCoolDownException();
+		}
+		if (getCurrentRecruit() == getMaxRecruit()) {
+			throw new MaxRecruitedException();
+		}
+		setCoolDown(true);
+		setCurrentRecruit(getCurrentRecruit() + 1);
+		return new Infantry(1);
+	}
 }
