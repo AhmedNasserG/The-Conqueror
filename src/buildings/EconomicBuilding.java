@@ -6,4 +6,6 @@ public abstract class EconomicBuilding extends Building{
 		super(cost, upgradeCost);	
 	}
 
+	public abstract int harvest();
+
 }
