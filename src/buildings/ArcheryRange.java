@@ -21,5 +21,16 @@ public class ArcheryRange extends MilitaryBuilding {
         setRecruitmentCost(ArcheryRangeValuesUpgrades[getLevel() - 2][1]);
     }
 
-
+    @Override
+    public Unit recruit() throws BuildingInCoolDownException, MaxRecruitedException {
+        if (isCoolDown()) {
+            throw new BuildingInCoolDownException();
+        }
+        if (getCurrentRecruit() == getMaxRecruit()) {
+            throw new MaxRecruitedException();
+        }
+        setCoolDown(true);
+        setCurrentRecruit(getCurrentRecruit() + 1);
+        return new Archer(1);
+    }
 }
