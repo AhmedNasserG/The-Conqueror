@@ -1,5 +1,9 @@
 package buildings;
 
+import exceptions.BuildingInCoolDownException;
+import exceptions.MaxRecruitedException;
+import units.Unit;
+
 public abstract class MilitaryBuilding extends Building {
 
     private int recruitmentCost;
@@ -13,6 +17,7 @@ public abstract class MilitaryBuilding extends Building {
         this.maxRecruit = 3;
     }
 
+    public abstract Unit recruit() throws BuildingInCoolDownException, MaxRecruitedException;
 
     // Getters
     public int getRecruitmentCost() {
