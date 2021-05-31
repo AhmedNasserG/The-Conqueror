@@ -5,6 +5,7 @@ import exceptions.MaxLevelException;
 
 public class Market extends EconomicBuilding{
 
+	private final int[] marketGoldValue = {-1, 1000, 1500, 2000};
 
 	public Market() {
 		super(1500, 700);
@@ -16,5 +17,8 @@ public class Market extends EconomicBuilding{
 		setUpgradeCost(1000);
 	}
 
-
+	@Override
+	public int harvest() {
+		return marketGoldValue[getLevel()];
+	}
 }
