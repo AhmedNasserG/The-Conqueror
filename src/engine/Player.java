@@ -62,6 +62,40 @@ public class Player {
         // TODO: Should I handle if units array size equals to maxToHold
     }
 
+    public void build(String type,String cityName) throws NotEnoughGoldException {
+        City city = getCity(cityName);
+        Building newBuilding;
+        switch (type) {
+            case "Farm":
+                newBuilding = new Farm();
+                break;
+            case "Market":
+                newBuilding = new Market();
+                break;
+            case "ArcheryRange":
+                newBuilding = new ArcheryRange();
+                break;
+            case "Barracks":
+                newBuilding = new Barracks();
+                break;
+            case "Stable":
+                newBuilding = new Stable();
+                break;
+            default:
+                return;
+        }
+        if (newBuilding.getCost() > treasury) {
+            throw new NotEnoughGoldException();
+        }
+        if (newBuilding instanceof EconomicBuilding) {
+            city.getEconomicalBuildings().add((EconomicBuilding) newBuilding);
+        } else {
+            city.getMilitaryBuildings().add((MilitaryBuilding) newBuilding);
+        }
+        treasury -= newBuilding.getCost();
+        // TODO: Make sure to update the coolDown value after performing the action
+        // TODO: As per the game rules, player can only have one building from each type.
+    }
 
     private City getCity(String cityName) {
         City city = null;
