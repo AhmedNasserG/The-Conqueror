@@ -1,6 +1,8 @@
 package engine;
 
-import units.Army;
+import buildings.*;
+import exceptions.*;
+import units.*;
 
 import java.util.ArrayList;
 
@@ -17,6 +19,15 @@ public class Player {
         this.controlledArmies = new ArrayList<>();
     }
 
+    private City getCity(String cityName) {
+        City city = null;
+        for (City currentCity : controlledCities) {
+            if (currentCity.getName().equals(cityName)) {
+                city = currentCity;
+            }
+        }
+        return city;
+    }
 
     // Getters
     public String getName() {
