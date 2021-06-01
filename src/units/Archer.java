@@ -1,14 +1,20 @@
 package units;
 
+import exceptions.FriendlyFireException;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class Archer extends Unit {
 
     private static final double[][] ArcherValues = {{-1, -1, -1, -1}, {60, 0.4, 0.5, 0.6},
             {60, 0.4, 0.5, 0.6}, {70, 0.5, 0.6, 0.7}};
 
-    // Level Representation : index (0) --> lvl (1), index (1) --> lvl (2), ....
-    private final double[] targetArcherFactor = {0.3,0.4,0.5};
-    private final double[] targetInfantryFactor = {0.2,0.3,0.4};
-    private final double[] targetCavalryFactor = {0.1,0.1,0.2};
+    private final Map<Class, double[]> attackFactors = new HashMap<Class, double[]>() {{
+        put(Archer.class, new double[]{-1, 0.3, 0.4, 0.5});
+        put(Infantry.class, new double[]{-1, 0.2, 0.3, 0.4});
+        put(Cavalry.class, new double[]{-1, 0.1, 0.1, 0.2});
+    }};
 
     public Archer(int level, int maxSoldierCount, double idleUpkeep, double marchingUpkeep, double siegeUpkeep) {
         super(level, maxSoldierCount, idleUpkeep, marchingUpkeep, siegeUpkeep);
@@ -18,15 +24,14 @@ public class Archer extends Unit {
         super(level, (int) ArcherValues[level][0], ArcherValues[level][1], ArcherValues[level][2], ArcherValues[level][3]);
     }
 
-    public double[] getTargetArcherFactor() {
-        return targetArcherFactor;
+    @Override
+    public void attack(Unit target) throws FriendlyFireException {
+        super.attack(target);
+        int attackersCount = getCurrentSoldierCount();
+        int targetCount = target.getCurrentSoldierCount();
+        double attackFactor = attackFactors.get(target.getClass())[getLevel()];
+        target.setCurrentSoldierCount(targetCount - (int) attackFactor * attackersCount);
+        target.getParentArmy().handleAttackedUnit(target);
     }
 
-    public double[] getTargetInfantryFactor() {
-        return targetInfantryFactor;
-    }
-
-    public double[] getTargetCavalryFactor() {
-        return targetCavalryFactor;
-    }
 }
