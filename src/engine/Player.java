@@ -19,6 +19,50 @@ public class Player {
         this.controlledArmies = new ArrayList<>();
     }
 
+    public void recruitUnit(String type, String cityName) throws BuildingInCoolDownException, MaxRecruitedException, NotEnoughGoldException {
+        City city = getCity(cityName);
+        Class buildingType;
+        Unit recruitedUnit;
+        switch (type) {
+            case "Archer":
+                buildingType = ArcheryRange.class;
+                recruitedUnit = new Archer(1);
+                break;
+            case "Infantry":
+                buildingType = Barracks.class;
+                recruitedUnit = new Infantry(1);
+                break;
+            case "Cavalry":
+                buildingType = Stable.class;
+                recruitedUnit = new Cavalry(1);
+                break;
+            default:
+                return;
+        }
+        MilitaryBuilding currentBuilding = null;
+        for (MilitaryBuilding Building : city.getMilitaryBuildings()) {
+            if (Building.getClass().equals(buildingType)) {
+                currentBuilding = Building;
+            }
+        }
+        if (currentBuilding.isCoolDown()) {
+            throw new BuildingInCoolDownException();
+        }
+        if (currentBuilding.getCurrentRecruit() == currentBuilding.getMaxRecruit()) {
+            throw new MaxRecruitedException();
+        }
+        if (currentBuilding.getRecruitmentCost() > treasury) {
+            throw new NotEnoughGoldException();
+        }
+        recruitedUnit.setParentArmy(city.getDefendingArmy());
+        city.getDefendingArmy().getUnits().add(recruitedUnit);
+        currentBuilding.setCurrentRecruit(currentBuilding.getCurrentRecruit() + 1);
+        currentBuilding.setCoolDown(true);
+        treasury -= currentBuilding.getRecruitmentCost();
+        // TODO: Should I handle if units array size equals to maxToHold
+    }
+
+
     private City getCity(String cityName) {
         City city = null;
         for (City currentCity : controlledCities) {
