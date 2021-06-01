@@ -26,19 +26,8 @@ public abstract class Unit {
 
 
     public void attack(Unit target) throws FriendlyFireException {
-        // TODO 2.1.2 : How do I know the type of the unit (Archer/Cavalry/Infantry)?
-        // code below is not correct
-        ArrayList<Unit> armyUnits = parentArmy.getUnits();
-        for(Unit u : armyUnits){
-            int attackerCurrentSoldierCount = u.getCurrentSoldierCount();
-            int targetCurrentSoldierCount = target.getCurrentSoldierCount();
-            double factor = 1.0;
-            int newTargetCurrentSoldierCount = (int) Math.max(targetCurrentSoldierCount - attackerCurrentSoldierCount * factor,0);
-            target.setCurrentSoldierCount(newTargetCurrentSoldierCount);
-
-            if(newTargetCurrentSoldierCount == 0){
-                // game over, i guess?
-            }
+        if (parentArmy.equals(target.getParentArmy())) {
+            throw new FriendlyFireException();
         }
     }
 
