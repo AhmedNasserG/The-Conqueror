@@ -22,8 +22,9 @@ public class Army {
         if (units.size() == maxToHold) {
             throw new MaxCapacityException();
         }
-        units.add(unit);
         unit.getParentArmy().getUnits().remove(unit);
+        units.add(unit);
+
     }
 
     public void handleAttackedUnit(Unit attackedUnit) {
@@ -47,6 +48,7 @@ public class Army {
                 case BESIEGING:
                     foodNeeded += currentUnit.getSiegeUpkeep() * currentSoldierCount;
                     break;
+                default: break;
             }
         }
 
