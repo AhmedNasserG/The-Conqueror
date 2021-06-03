@@ -1,5 +1,6 @@
 package engine;
 
+import exceptions.FriendlyFireException;
 import units.*;
 
 import java.io.IOException;
@@ -102,6 +103,21 @@ public class Game {
                 army.setDistancetoTarget(currentDistance.getDistance());
             }
         }
+    }
+
+    public void occupy(Army a, String cityName){
+        City givenCity = null;
+        for(City c : availableCities){
+            if(c.getName().equals(cityName)){
+                player.getControlledCities().add(c);
+                givenCity = c;
+                break;
+            }
+        }
+
+        givenCity.setDefendingArmy(a);
+        givenCity.setUnderSiege(false);
+        givenCity.setTurnsUnderSiege(0);
     }
 
     public boolean isGameOver(){
