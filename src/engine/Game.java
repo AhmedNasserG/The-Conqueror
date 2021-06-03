@@ -184,7 +184,7 @@ public class Game {
 
         givenCity.setDefendingArmy(a);
         givenCity.setUnderSiege(false);
-        givenCity.setTurnsUnderSiege(0);
+        givenCity.setTurnsUnderSiege(-1);
     }
 
     public void autoResolve(Army attacker, Army defender) throws FriendlyFireException {
