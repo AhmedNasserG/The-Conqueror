@@ -22,6 +22,9 @@ public class Player {
 
     public void recruitUnit(String type, String cityName) throws BuildingInCoolDownException, MaxRecruitedException, NotEnoughGoldException {
         City city = getCity(cityName);
+        if (city == null){
+            return;
+        }
         // NOTE: handle if units array size equals to maxToHold
         if (city.getDefendingArmy().getUnits().size() == city.getDefendingArmy().getMaxToHold()) {
             return;
@@ -117,7 +120,9 @@ public class Player {
 
     public void initiateArmy(City city, Unit unit){
         Army attackingArmy = new Army(city.getName());
-        unit.getParentArmy().getUnits().remove(unit);
+        if (unit.getParentArmy() != null){
+            unit.getParentArmy().getUnits().remove(unit);
+        }
         unit.setParentArmy(attackingArmy);
         attackingArmy.getUnits().add(unit);
         controlledArmies.add(attackingArmy);
@@ -143,7 +148,7 @@ public class Player {
         return city;
     }
 
-    private MilitaryBuilding searchForMilitaryBuilding(City city, Class buildingType){
+    private static MilitaryBuilding searchForMilitaryBuilding(City city, Class buildingType){
         for (MilitaryBuilding Building : city.getMilitaryBuildings()) {
             if (Building.getClass().equals(buildingType)) {
                 return Building;
