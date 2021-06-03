@@ -150,7 +150,7 @@ public class Game {
         double foodNeeded=0.0;
         for(Army a: getPlayer().getControlledArmies())
         {
-            foodNeeded = a.foodNeeded();
+            foodNeeded += a.foodNeeded();
             if (!a.getTarget().equals("")){
                 a.setDistancetoTarget(a.getDistancetoTarget()-1);
             }
@@ -160,6 +160,7 @@ public class Game {
                     a.setTarget("");
                     a.setDistancetoTarget(-1);
                     //TODO: Edit the status of the army
+                    a.setCurrentStatus(Status.IDLE);
                 }
             }
             if (getPlayer().getFood()<foodNeeded)
