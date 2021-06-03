@@ -119,8 +119,8 @@ public class Game {
 
     public void endTurn(){
         currentTurnCount++;
-        double newFood=0.0;
-        double newTreasure=0.0;
+        int newFood=0;
+        int newTreasure=0;
         for (City city: getPlayer().getControlledCities())
         {
             for(EconomicBuilding building : city.getEconomicalBuildings())
@@ -128,7 +128,7 @@ public class Game {
                 building.setCoolDown(false);
                 if(building instanceof Farm)
                     newFood += building.harvest();
-                else if (building instanceof Market)
+                if (building instanceof Market)
                     newTreasure += building.harvest();
             }
             for(MilitaryBuilding building : city.getMilitaryBuildings()) {
@@ -150,8 +150,8 @@ public class Game {
             }
 
         }
-        getPlayer().setFood(newFood);
-        getPlayer().setTreasury(newTreasure);
+        getPlayer().setFood(getPlayer().getFood()+newFood);
+        getPlayer().setTreasury(getPlayer().getTreasury()+newTreasure);
         double foodNeeded=0.0;
         for(Army a: getPlayer().getControlledArmies())
         {
@@ -167,16 +167,12 @@ public class Game {
                     a.setCurrentStatus(Status.IDLE);
                 }
             }
-            if (getPlayer().getFood()<foodNeeded)
-            {
-                for(Unit unit : a.getUnits())
+            getPlayer().setFood(getPlayer().getFood()-foodNeeded);
+            if (getPlayer().getFood()==0) {
+                for (Unit unit : a.getUnits())
                     unit.setCurrentSoldierCount((int) (unit.getCurrentSoldierCount() * 0.9));
+            }
 
-            }
-            else
-            {
-                getPlayer().setFood(getPlayer().getFood()-foodNeeded);
-            }
         }
 
 
