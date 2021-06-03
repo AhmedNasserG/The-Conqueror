@@ -136,6 +136,10 @@ public class Game {
                 building.setCurrentRecruit(0);
             }
 
+
+        }
+        for(City city: availableCities)
+        {
             if(city.isUnderSiege())
             {
                 city.setTurnsUnderSiege(city.getTurnsUnderSiege()+1);
@@ -144,6 +148,7 @@ public class Game {
                     unit.setCurrentSoldierCount((int)(unit.getCurrentSoldierCount()*0.9));
                 }
             }
+
         }
         getPlayer().setFood(newFood);
         getPlayer().setTreasury(newTreasure);
