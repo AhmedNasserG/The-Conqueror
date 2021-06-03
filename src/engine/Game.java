@@ -1,5 +1,9 @@
 package engine;
 
+import buildings.EconomicBuilding;
+import buildings.Farm;
+import buildings.Market;
+import buildings.MilitaryBuilding;
 import exceptions.FriendlyFireException;
 import units.*;
 
@@ -106,6 +110,68 @@ public class Game {
         }
     }
 
+
+    public void endTurn(){
+        currentTurnCount++;
+        double newFood=0.0;
+        double newTreasure=0.0;
+        for (City city: availableCities)
+        {
+            for(EconomicBuilding building : city.getEconomicalBuildings())
+            {
+                building.setCoolDown(false);
+                if(building instanceof Farm)
+                    newFood += building.harvest();
+                else if (building instanceof Market)
+                    newTreasure += building.harvest();
+            }
+            for(MilitaryBuilding building : city.getMilitaryBuildings()) {
+                building.setCoolDown(false);
+                building.setCurrentRecruit(0);
+            }
+
+            if(city.isUnderSiege())
+            {
+                city.setTurnsUnderSiege(city.getTurnsUnderSiege()+1);
+                for (Unit unit : city.getDefendingArmy().getUnits())
+                {
+                    unit.setCurrentSoldierCount((int)(unit.getCurrentSoldierCount()*0.9));
+                }
+            }
+        }
+        getPlayer().setFood(newFood);
+        getPlayer().setTreasury(newTreasure);
+        double foodNeeded=0.0;
+        for(Army a: getPlayer().getControlledArmies())
+        {
+            foodNeeded = a.foodNeeded();
+            if (!a.getTarget().equals("")){
+                a.setDistancetoTarget(a.getDistancetoTarget()-1);
+            }
+            if (a.getDistancetoTarget() == 0) {
+                {
+                    a.setCurrentLocation(a.getTarget());
+                    a.setTarget("");
+                    a.setDistancetoTarget(-1);
+                    //TODO: Edit the status of the army
+                }
+            }
+            if (getPlayer().getFood()<foodNeeded)
+            {
+                for(Unit unit : a.getUnits())
+                    unit.setCurrentSoldierCount((int) (unit.getCurrentSoldierCount() * 0.9));
+
+            }
+            else
+            {
+                getPlayer().setFood(getPlayer().getFood()-foodNeeded);
+            }
+        }
+
+
+
+    }
+
     public void occupy(Army a, String cityName){
         City givenCity = null;
         for(City c : availableCities){
@@ -151,7 +217,6 @@ public class Game {
 
         return false;
     }
-
     public Player getPlayer() {
         return player;
     }
