@@ -26,7 +26,7 @@ public class Player {
             return;
         }
         // NOTE: handle if units array size equals to maxToHold
-        if (city.getDefendingArmy().getUnits().size() == city.getDefendingArmy().getMaxToHold()) {
+        if (city.getDefendingArmy()!=null && city.getDefendingArmy().getUnits().size() == city.getDefendingArmy().getMaxToHold()) {
             return;
         }
         Class buildingType;
@@ -114,8 +114,8 @@ public class Player {
         if(b.getUpgradeCost() > treasury) {
             throw  new NotEnoughGoldException();
         }
-        b.upgrade();
         treasury -= b.getUpgradeCost();
+        b.upgrade();
     }
 
     public void initiateArmy(City city, Unit unit){
