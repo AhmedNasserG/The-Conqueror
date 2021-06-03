@@ -44,13 +44,7 @@ public class Player {
             default:
                 return;
         }
-        MilitaryBuilding currentBuilding = null;
-        for (MilitaryBuilding Building : city.getMilitaryBuildings()) {
-            if (Building.getClass().equals(buildingType)) {
-                currentBuilding = Building;
-                break;
-            }
-        }
+        MilitaryBuilding currentBuilding = searchForMilitaryBuilding(city, buildingType);
         // NOTE: handle if the player doesn't have the building responsible for recruiting this unit
         if (currentBuilding == null) {
             return;
@@ -71,67 +65,44 @@ public class Player {
     }
 
     public void build(String type, String cityName) throws NotEnoughGoldException {
-        City givenCity = null;
-        for(City city: controlledCities){
-            if(city.getName().equals(cityName)) givenCity = city;
-        }
-
-        Building newBuilding = null;
-        switch(type){
-            case "ArcheryRange" : {
-                newBuilding = new ArcheryRange();
-                addToMilBuildings(newBuilding, givenCity);
-                break;
-            }
-            case "Barracks" : {
-                newBuilding = new Barracks();
-                addToMilBuildings(newBuilding, givenCity);
-                break;
-            }
-            case "Stable" : {
-                newBuilding = new Stable();
-                addToMilBuildings(newBuilding, givenCity);
-                break;
-            }
-            case "Farm" : {
+        City city = getCity(cityName);
+        Building newBuilding;
+        switch (type) {
+            case "Farm":
                 newBuilding = new Farm();
-                addToEcoBuildings(newBuilding, givenCity);
                 break;
-            }
-            case "Market" : {
+            case "Market":
                 newBuilding = new Market();
-                addToEcoBuildings(newBuilding, givenCity);
                 break;
-            }
+            case "ArcheryRange":
+                newBuilding = new ArcheryRange();
+                break;
+            case "Barracks":
+                newBuilding = new Barracks();
+                break;
+            case "Stable":
+                newBuilding = new Stable();
+                break;
+            default:
+                return;
         }
-
         if (newBuilding.getCost() > treasury) {
             throw new NotEnoughGoldException();
         }
-
-        treasury -= newBuilding.getCost();
-
-        // TODO: Make sure to update the coolDown value after performing the action
-        // TODO: As per the game rules, player can only have one building from each type.
-    }
-
-    private City getCity(String cityName) {
-        City city = null;
-        for (City currentCity : controlledCities) {
-            if (currentCity.getName().equals(cityName)) {
-                city = currentCity;
+        if (newBuilding instanceof EconomicBuilding) {
+            // NOTE: handle if the city have the same type of building
+            if (searchForEconomicBuilding(city, newBuilding.getClass()) != null){
+                return;
             }
+            city.getEconomicalBuildings().add((EconomicBuilding) newBuilding);
+        } else {
+            // NOTE: handle if the city have the same type of building
+            if (searchForMilitaryBuilding(city, newBuilding.getClass()) != null){
+                return;
+            }
+            city.getMilitaryBuildings().add((MilitaryBuilding) newBuilding);
         }
-        return city;
-    }
-
-    public void addToEcoBuildings (Building b, City c){
-        ArrayList<EconomicBuilding> economicalBuildings = c.getEconomicalBuildings();
-        economicalBuildings.add((EconomicBuilding) b);
-    }
-    public void addToMilBuildings (Building b, City c){
-        ArrayList<MilitaryBuilding> economicalBuildings = c.getMilitaryBuildings();
-        economicalBuildings.add((MilitaryBuilding) b);
+        treasury -= newBuilding.getCost();
     }
 
     public void upgradeBuilding(Building b) throws
@@ -165,6 +136,37 @@ public class Player {
         army.setCurrentStatus(Status.BESIEGING);
         city.setUnderSiege(true);
     }
+
+
+    // Helper Methods
+    private City getCity(String cityName) {
+        City city = null;
+        for (City currentCity : controlledCities) {
+            if (currentCity.getName().equals(cityName)) {
+                city = currentCity;
+            }
+        }
+        return city;
+    }
+
+    private MilitaryBuilding searchForMilitaryBuilding(City city, Class buildingType){
+        for (MilitaryBuilding Building : city.getMilitaryBuildings()) {
+            if (Building.getClass().equals(buildingType)) {
+                return Building;
+            }
+        }
+        return null;
+    }
+
+    private EconomicBuilding searchForEconomicBuilding(City city, Class buildingType){
+        for (EconomicBuilding Building : city.getEconomicalBuildings()) {
+            if (Building.getClass().equals(buildingType)) {
+                return Building;
+            }
+        }
+        return null;
+    }
+
 
     // Getters
     public String getName() {
