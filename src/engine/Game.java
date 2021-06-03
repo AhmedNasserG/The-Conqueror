@@ -104,16 +104,12 @@ public class Game {
     }
 
     public void targetCity(Army army, String targetName){
-//        if (army.getCurrentStatus() != Status.IDLE){
-//            return;
-//        }
         army.setTarget(targetName);
-//        army.setCurrentStatus(Status.MARCHING);
         for (Distance currentDistance : distances) {
-            if (currentDistance.getFrom().equals(army.getCurrentLocation()) && currentDistance.getTo().equals(targetName) && army.getCurrentStatus().equals(Status.IDLE)){
+            if ((currentDistance.getFrom().equals(army.getCurrentLocation()) && currentDistance.getTo().equals(targetName)) ||
+                    (currentDistance.getFrom().equals(targetName) && currentDistance.getTo().equals(army.getCurrentLocation()))){
                 {
                     army.setDistancetoTarget(currentDistance.getDistance());
-                    army.setCurrentStatus(Status.MARCHING);
                 }
 
             }
