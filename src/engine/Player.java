@@ -116,19 +116,11 @@ public class Player {
     }
 
     public void initiateArmy(City city, Unit unit){
-        Army newArmy = new Army(city.getName());
-
-        Army defendingArmy = city.getDefendingArmy();
-        ArrayList<Unit> defendingArmyUnits = defendingArmy.getUnits();
-        defendingArmyUnits.remove(unit);
-        defendingArmy.setUnits(defendingArmyUnits);
-
-        Army parentArmy = unit.getParentArmy();
-        ArrayList<Unit> parentArmyUnits = parentArmy.getUnits();
-        parentArmyUnits.add(unit);
-        parentArmy.setUnits(parentArmyUnits);
-
-        controlledArmies.add(newArmy);
+        Army attackingArmy = new Army(city.getName());
+        unit.getParentArmy().getUnits().remove(unit);
+        unit.setParentArmy(attackingArmy);
+        attackingArmy.getUnits().add(unit);
+        controlledArmies.add(attackingArmy);
     }
 
     public void laySiege(Army army, City city) throws TargetNotReachedException, FriendlyCityException {
