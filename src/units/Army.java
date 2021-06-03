@@ -23,6 +23,7 @@ public class Army {
             throw new MaxCapacityException();
         }
         unit.getParentArmy().getUnits().remove(unit);
+        unit.setParentArmy(this);
         units.add(unit);
 
     }
