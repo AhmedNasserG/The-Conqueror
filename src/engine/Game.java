@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.HashSet;
+import java.util.Random;
 
 
 public class Game {
@@ -118,6 +119,26 @@ public class Game {
         givenCity.setDefendingArmy(a);
         givenCity.setUnderSiege(false);
         givenCity.setTurnsUnderSiege(0);
+    }
+
+    public void autoResolve(Army attacker, Army defender) throws FriendlyFireException {
+        ArrayList<Unit> attackerUnits = attacker.getUnits();
+        ArrayList<Unit> defenderUnits = defender.getUnits();
+
+        Random rand = new Random();
+        int turn = 0;
+        while(attackerUnits.size() > 0 || defenderUnits.size() > 0){
+            int idx1 = rand.nextInt(attackerUnits.size()), idx2 = rand.nextInt(attackerUnits.size());
+            Unit attackUnit = attackerUnits.get(idx1), defendUnit = defenderUnits.get(idx2);
+
+            if(turn == 0){ // Attacker Army turn
+                attackUnit.attack(defendUnit);
+            }
+            else{ // Defender Army turn
+                defendUnit.attack(attackUnit);
+            }
+            turn ^= 1;
+        }
     }
 
     public boolean isGameOver(){
