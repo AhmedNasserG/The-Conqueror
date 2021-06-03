@@ -167,7 +167,7 @@ public class Game {
                     a.setCurrentStatus(Status.IDLE);
                 }
             }
-            getPlayer().setFood(getPlayer().getFood()-foodNeeded);
+            getPlayer().setFood(Math.max(getPlayer().getFood()-foodNeeded,0));
             if (getPlayer().getFood()==0) {
                 for (Unit unit : a.getUnits())
                     unit.setCurrentSoldierCount((int) (unit.getCurrentSoldierCount() * 0.9));
