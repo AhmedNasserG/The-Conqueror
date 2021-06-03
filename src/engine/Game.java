@@ -110,8 +110,12 @@ public class Game {
         army.setTarget(targetName);
 //        army.setCurrentStatus(Status.MARCHING);
         for (Distance currentDistance : distances) {
-            if (currentDistance.getFrom().equals(army.getCurrentLocation()) && currentDistance.getTo().equals(targetName)){
-                army.setDistancetoTarget(currentDistance.getDistance());
+            if (currentDistance.getFrom().equals(army.getCurrentLocation()) && currentDistance.getTo().equals(targetName) && army.getCurrentStatus().equals(Status.IDLE)){
+                {
+                    army.setDistancetoTarget(currentDistance.getDistance());
+                    army.setCurrentStatus(Status.MARCHING);
+                }
+
             }
         }
     }
