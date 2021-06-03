@@ -117,6 +117,12 @@ public class Player {
         if(b.getUpgradeCost() > treasury) {
             throw  new NotEnoughGoldException();
         }
+        if (b.getLevel() == 3) {
+            throw new MaxLevelException();
+        }
+        if (b.isCoolDown()) {
+            throw new BuildingInCoolDownException();
+        }
         treasury -= b.getUpgradeCost();
         b.upgrade();
     }
