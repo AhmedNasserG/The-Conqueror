@@ -51,7 +51,9 @@ public class Game {
         ArrayList<Unit> unitsArray = new ArrayList<>();
         while ((currentLine = br.readLine()) != null) {
             String[] line = currentLine.split(",");
-            loadUnit(unitsArray, line[0], Integer.parseInt(line[1]));
+            Unit newUnit = loadUnit(line[0], Integer.parseInt(line[1]));
+            newUnit.setParentArmy(army);
+            army.getUnits().add(newUnit);
         }
 
         if (army != null) {
@@ -59,17 +61,15 @@ public class Game {
         }
     }
 
-    private void loadUnit(ArrayList<Unit> unitsArray, String type, int level) {
+    private Unit loadUnit(String type, int level) {
         switch (type) {
             case "Archer":
-                unitsArray.add(new Archer(level));
-                break;
+                return new Archer(level);
             case "Infantry":
-                unitsArray.add(new Infantry(level));
-                break;
+                return new Infantry(level);
             case "Cavalry":
-                unitsArray.add(new Cavalry(level));
-                break;
+                return new Cavalry(level);
+            default: return null;
         }
     }
 
