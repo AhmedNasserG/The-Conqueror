@@ -104,8 +104,12 @@ public class Game {
     public void targetCity(Army army, String targetName){
         army.setTarget(targetName);
         for (Distance currentDistance : distances) {
-            if (currentDistance.getFrom().equals(army.getCurrentLocation()) && currentDistance.getTo().equals(targetName)){
-                army.setDistancetoTarget(currentDistance.getDistance());
+            if (currentDistance.getFrom().equals(army.getCurrentLocation()) && currentDistance.getTo().equals(targetName) && army.getCurrentStatus().equals(Status.IDLE)){
+                {
+                    army.setDistancetoTarget(currentDistance.getDistance());
+                    army.setCurrentStatus(Status.MARCHING);
+                }
+
             }
         }
     }
