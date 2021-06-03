@@ -58,8 +58,10 @@ public class Game {
         while ((currentLine = br.readLine()) != null) {
             String[] line = currentLine.split(",");
             Unit newUnit = loadUnit(line[0], Integer.parseInt(line[1]));
-            newUnit.setParentArmy(army);
-            army.getUnits().add(newUnit);
+            if (newUnit != null) {
+                newUnit.setParentArmy(army);
+                army.getUnits().add(newUnit);
+            }
         }
 
         if (army != null) {
@@ -102,7 +104,11 @@ public class Game {
     }
 
     public void targetCity(Army army, String targetName){
+//        if (army.getCurrentStatus() != Status.IDLE){
+//            return;
+//        }
         army.setTarget(targetName);
+//        army.setCurrentStatus(Status.MARCHING);
         for (Distance currentDistance : distances) {
             if (currentDistance.getFrom().equals(army.getCurrentLocation()) && currentDistance.getTo().equals(targetName)){
                 army.setDistancetoTarget(currentDistance.getDistance());

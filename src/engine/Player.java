@@ -26,7 +26,10 @@ public class Player {
             return;
         }
         // NOTE: handle if units array size equals to maxToHold
-        if (city.getDefendingArmy()!=null && city.getDefendingArmy().getUnits().size() == city.getDefendingArmy().getMaxToHold()) {
+        if (city.getDefendingArmy() == null) {
+            city.setDefendingArmy(new Army(cityName));
+        }
+        if (city.getDefendingArmy().getUnits().size() == city.getDefendingArmy().getMaxToHold()) {
             return;
         }
         Class buildingType;
