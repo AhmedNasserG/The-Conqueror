@@ -121,7 +121,7 @@ public class Game {
         currentTurnCount++;
         double newFood=0.0;
         double newTreasure=0.0;
-        for (City city: availableCities)
+        for (City city: getPlayer().getControlledCities())
         {
             for(EconomicBuilding building : city.getEconomicalBuildings())
             {
@@ -150,7 +150,7 @@ public class Game {
         double foodNeeded=0.0;
         for(Army a: getPlayer().getControlledArmies())
         {
-            foodNeeded += a.foodNeeded();
+            foodNeeded = a.foodNeeded();
             if (!a.getTarget().equals("")){
                 a.setDistancetoTarget(a.getDistancetoTarget()-1);
             }
@@ -159,7 +159,6 @@ public class Game {
                     a.setCurrentLocation(a.getTarget());
                     a.setTarget("");
                     a.setDistancetoTarget(-1);
-                    //TODO: Edit the status of the army
                     a.setCurrentStatus(Status.IDLE);
                 }
             }
