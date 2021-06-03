@@ -73,7 +73,6 @@ public class Game {
         }
     }
 
-
     private void loadCitiesAndDistances() throws IOException {
         HashSet<String> cities = new HashSet<>();
 
@@ -93,6 +92,15 @@ public class Game {
 
         for (String city : cities) {
             availableCities.add(new City(city));
+        }
+    }
+
+    public void targetCity(Army army, String targetName){
+        army.setTarget(targetName);
+        for (Distance currentDistance : distances) {
+            if (currentDistance.getFrom().equals(army.getCurrentLocation()) && currentDistance.getTo().equals(targetName)){
+                army.setDistancetoTarget(currentDistance.getDistance());
+            }
         }
     }
 
