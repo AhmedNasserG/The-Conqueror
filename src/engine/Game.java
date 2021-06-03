@@ -127,7 +127,7 @@ public class Game {
 
         Random rand = new Random();
         int turn = 0;
-        while(attackerUnits.size() > 0 || defenderUnits.size() > 0){
+        while(attackerUnits.size() > 0 && defenderUnits.size() > 0){
             int idx1 = rand.nextInt(attackerUnits.size()), idx2 = rand.nextInt(attackerUnits.size());
             Unit attackUnit = attackerUnits.get(idx1), defendUnit = defenderUnits.get(idx2);
 
@@ -138,6 +138,10 @@ public class Game {
                 defendUnit.attack(attackUnit);
             }
             turn ^= 1;
+        }
+
+        if(defenderUnits.size() == 0){
+            occupy(attacker, defender.getCurrentLocation());
         }
     }
 
