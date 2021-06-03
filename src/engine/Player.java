@@ -22,6 +22,10 @@ public class Player {
 
     public void recruitUnit(String type, String cityName) throws BuildingInCoolDownException, MaxRecruitedException, NotEnoughGoldException {
         City city = getCity(cityName);
+        // NOTE: handle if units array size equals to maxToHold
+        if (city.getDefendingArmy().getUnits().size() == city.getDefendingArmy().getMaxToHold()) {
+            return;
+        }
         Class buildingType;
         Unit recruitedUnit;
         switch (type) {
@@ -44,7 +48,12 @@ public class Player {
         for (MilitaryBuilding Building : city.getMilitaryBuildings()) {
             if (Building.getClass().equals(buildingType)) {
                 currentBuilding = Building;
+                break;
             }
+        }
+        // NOTE: handle if the player doesn't have the building responsible for recruiting this unit
+        if (currentBuilding == null) {
+            return;
         }
         if (currentBuilding.isCoolDown()) {
             throw new BuildingInCoolDownException();
@@ -58,9 +67,7 @@ public class Player {
         recruitedUnit.setParentArmy(city.getDefendingArmy());
         city.getDefendingArmy().getUnits().add(recruitedUnit);
         currentBuilding.setCurrentRecruit(currentBuilding.getCurrentRecruit() + 1);
-        currentBuilding.setCoolDown(true);
         treasury -= currentBuilding.getRecruitmentCost();
-        // TODO: Should I handle if units array size equals to maxToHold
     }
 
     public void build(String type, String cityName) throws NotEnoughGoldException {
