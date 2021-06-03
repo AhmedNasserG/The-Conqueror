@@ -126,6 +126,10 @@ public class Player {
         if (unit.getParentArmy() != null){
             unit.getParentArmy().getUnits().remove(unit);
         }
+
+        Army defendingArmy = city.getDefendingArmy();
+        defendingArmy.getUnits().remove(unit);
+
         unit.setParentArmy(attackingArmy);
         attackingArmy.getUnits().add(unit);
         controlledArmies.add(attackingArmy);
