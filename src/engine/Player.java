@@ -108,9 +108,11 @@ public class Player {
     public void upgradeBuilding(Building b) throws
             NotEnoughGoldException, BuildingInCoolDownException, MaxLevelException {
 
-        if(b.getUpgradeCost() > treasury) throw  new NotEnoughGoldException();
-
+        if(b.getUpgradeCost() > treasury) {
+            throw  new NotEnoughGoldException();
+        }
         b.upgrade();
+        treasury -= b.getUpgradeCost();
     }
 
     public void initiateArmy(City city, Unit unit){
