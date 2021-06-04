@@ -21,4 +21,7 @@ public class Farm extends EconomicBuilding{
 	public int harvest() {
 		return farmGoldValue[getLevel()];
 	}
+	public String getName(){
+		return "Farm";
+	}
 }

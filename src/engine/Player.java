@@ -51,6 +51,8 @@ public class Player {
                 return;
         }
         MilitaryBuilding currentBuilding = searchForMilitaryBuilding(city, buildingType);
+        //TODO: We should use the Recruit method!
+        //recruitedUnit = currentBuilding.recruit();
         // NOTE: handle if the player doesn't have the building responsible for recruiting this unit
         if (currentBuilding == null) {
             return;
@@ -64,10 +66,10 @@ public class Player {
         if (currentBuilding.getRecruitmentCost() > treasury) {
             throw new NotEnoughGoldException();
         }
-        recruitedUnit.setParentArmy(city.getDefendingArmy());
         city.getDefendingArmy().getUnits().add(recruitedUnit);
-        currentBuilding.setCurrentRecruit(currentBuilding.getCurrentRecruit() + 1);
+        recruitedUnit.setParentArmy(city.getDefendingArmy());
         treasury -= currentBuilding.getRecruitmentCost();
+
     }
 
     public void build(String type, String cityName) throws NotEnoughGoldException {
@@ -108,6 +110,7 @@ public class Player {
             }
             city.getMilitaryBuildings().add((MilitaryBuilding) newBuilding);
         }
+
         treasury -= newBuilding.getCost();
     }
 

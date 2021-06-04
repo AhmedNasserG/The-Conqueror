@@ -33,4 +33,5 @@ public class Stable extends MilitaryBuilding {
 		setCurrentRecruit(getCurrentRecruit() + 1);
 		return new Cavalry(1);
 	}
+
 }

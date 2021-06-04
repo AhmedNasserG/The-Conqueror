@@ -152,10 +152,9 @@ public class Game {
         }
         getPlayer().setFood(getPlayer().getFood()+newFood);
         getPlayer().setTreasury(getPlayer().getTreasury()+newTreasure);
-        double foodNeeded=0.0;
         for(Army a: getPlayer().getControlledArmies())
         {
-            foodNeeded = a.foodNeeded();
+            int foodNeeded = (int)a.foodNeeded();
             if (!a.getTarget().equals("")){
                 a.setDistancetoTarget(a.getDistancetoTarget()-1);
             }

@@ -22,6 +22,7 @@ public abstract class Unit {
         this.idleUpkeep = idleUpkeep;
         this.marchingUpkeep = marchingUpkeep;
         this.siegeUpkeep = siegeUpkeep;
+        this.parentArmy = null;
     }
 
 

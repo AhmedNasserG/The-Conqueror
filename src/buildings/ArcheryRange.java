@@ -32,4 +32,6 @@ public class ArcheryRange extends MilitaryBuilding {
         setCurrentRecruit(getCurrentRecruit() + 1);
         return new Archer(1);
     }
+
+
 }

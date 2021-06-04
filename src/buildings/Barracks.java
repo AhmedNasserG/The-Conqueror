@@ -35,4 +35,5 @@ public class Barracks extends MilitaryBuilding {
 		setCurrentRecruit(getCurrentRecruit() + 1);
 		return new Infantry(1);
 	}
+
 }

@@ -30,6 +30,7 @@ public abstract class Building {
     }
 
     // Getters
+
     public int getCost() {
         return cost;
     }
