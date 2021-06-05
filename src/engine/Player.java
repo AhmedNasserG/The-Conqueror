@@ -19,7 +19,6 @@ public class Player {
         this.controlledArmies = new ArrayList<>();
     }
 
-
     public void recruitUnit(String type, String cityName) throws BuildingInCoolDownException, MaxRecruitedException, NotEnoughGoldException {
         City city = getCity(cityName);
         if (city == null){
@@ -32,40 +31,29 @@ public class Player {
         if (city.getDefendingArmy().getUnits().size() == city.getDefendingArmy().getMaxToHold()) {
             return;
         }
+
         Class buildingType;
-        Unit recruitedUnit;
         switch (type) {
             case "Archer":
                 buildingType = ArcheryRange.class;
-                recruitedUnit = new Archer(1);
                 break;
             case "Infantry":
                 buildingType = Barracks.class;
-                recruitedUnit = new Infantry(1);
                 break;
             case "Cavalry":
                 buildingType = Stable.class;
-                recruitedUnit = new Cavalry(1);
                 break;
             default:
                 return;
         }
         MilitaryBuilding currentBuilding = searchForMilitaryBuilding(city, buildingType);
-        //TODO: We should use the Recruit method!
-        //recruitedUnit = currentBuilding.recruit();
-        // NOTE: handle if the player doesn't have the building responsible for recruiting this unit
         if (currentBuilding == null) {
             return;
-        }
-        if (currentBuilding.isCoolDown()) {
-            throw new BuildingInCoolDownException();
-        }
-        if (currentBuilding.getCurrentRecruit() == currentBuilding.getMaxRecruit()) {
-            throw new MaxRecruitedException();
         }
         if (currentBuilding.getRecruitmentCost() > treasury) {
             throw new NotEnoughGoldException();
         }
+        Unit recruitedUnit = currentBuilding.recruit();
         city.getDefendingArmy().getUnits().add(recruitedUnit);
         recruitedUnit.setParentArmy(city.getDefendingArmy());
         treasury -= currentBuilding.getRecruitmentCost();
