@@ -28,9 +28,8 @@ public class ArcheryRange extends MilitaryBuilding {
         if (getCurrentRecruit() == getMaxRecruit()) {
             throw new MaxRecruitedException();
         }
-        setCoolDown(true);
         setCurrentRecruit(getCurrentRecruit() + 1);
-        return new Archer(1);
+        return new Archer(getLevel());
     }
 
 
