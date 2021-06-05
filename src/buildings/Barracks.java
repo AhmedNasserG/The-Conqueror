@@ -31,9 +31,8 @@ public class Barracks extends MilitaryBuilding {
 		if (getCurrentRecruit() == getMaxRecruit()) {
 			throw new MaxRecruitedException();
 		}
-		setCoolDown(true);
 		setCurrentRecruit(getCurrentRecruit() + 1);
-		return new Infantry(1);
+		return new Infantry(getLevel());
 	}
 
 }
