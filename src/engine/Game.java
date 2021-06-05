@@ -34,7 +34,6 @@ public class Game {
         for (City city : availableCities) {
             if (city.getName().equals(playerCity)) {
                 player.getControlledCities().add(city);
-                city.setDefendingArmy(null);
             } else {
                 loadArmy(city.getName(), city.getName().toLowerCase() + "_army.csv");
             }
@@ -187,7 +186,9 @@ public class Game {
                 break;
             }
         }
-
+            if (givenCity == null) {
+                return;
+            }
             givenCity.setDefendingArmy(a);
             givenCity.setUnderSiege(false);
             givenCity.setTurnsUnderSiege(-1);
@@ -219,9 +220,7 @@ public class Game {
 
     public boolean isGameOver(){
         if(availableCities.size() == player.getControlledCities().size()) return true;
-        if(currentTurnCount > maxTurnCount) return true;
-
-        return false;
+        return currentTurnCount > maxTurnCount;
     }
     public Player getPlayer() {
         return player;
