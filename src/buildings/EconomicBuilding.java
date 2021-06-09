@@ -1,11 +1,11 @@
 package buildings;
 
-public abstract class EconomicBuilding extends Building{
+public abstract class EconomicBuilding extends Building {
 
-	public EconomicBuilding(int cost,int upgradeCost) {
-		super(cost, upgradeCost);	
-	}
+    public EconomicBuilding(int cost, int upgradeCost) {
+        super(cost, upgradeCost);
+    }
 
-	public abstract int harvest();
+    public abstract int harvest();
 
 }

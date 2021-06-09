@@ -25,7 +25,6 @@ public class Army {
         unit.getParentArmy().getUnits().remove(unit);
         unit.setParentArmy(this);
         units.add(unit);
-
     }
 
     public void handleAttackedUnit(Unit attackedUnit) {
@@ -49,10 +48,10 @@ public class Army {
                 case BESIEGING:
                     foodNeeded += currentUnit.getSiegeUpkeep() * currentSoldierCount;
                     break;
-                default: break;
+                default:
+                    break;
             }
         }
-
         return foodNeeded;
     }
 

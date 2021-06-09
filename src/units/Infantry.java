@@ -30,7 +30,7 @@ public class Infantry extends Unit {
         int attackersCount = getCurrentSoldierCount();
         int targetCount = target.getCurrentSoldierCount();
         double attackFactor = attackFactors.get(target.getClass())[getLevel()];
-        target.setCurrentSoldierCount(Math.max((int)(targetCount -  attackFactor * attackersCount), 0));
+        target.setCurrentSoldierCount(Math.max((int) (targetCount - attackFactor * attackersCount), 0));
         target.getParentArmy().handleAttackedUnit(target);
     }
 }

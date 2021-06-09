@@ -9,6 +9,7 @@ import units.Unit;
 public class ArcheryRange extends MilitaryBuilding {
 
     private final int[][] ArcheryRangeValuesUpgrades = {{700, 450}, {-1, 500}};
+
     public ArcheryRange() {
         super(1500, 800, 400);
     }

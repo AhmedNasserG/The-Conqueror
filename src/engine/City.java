@@ -6,7 +6,7 @@ import units.Army;
 
 import java.util.ArrayList;
 
-public class City{
+public class City {
 
     private String name;
     private ArrayList<EconomicBuilding> economicalBuildings;
@@ -16,7 +16,7 @@ public class City{
     private boolean underSiege;
 
 
-    public City(String name){
+    public City(String name) {
         this.name = name;
         this.economicalBuildings = new ArrayList<>();
         this.militaryBuildings = new ArrayList<>();

@@ -21,17 +21,17 @@ public class Player {
 
     public void recruitUnit(String type, String cityName) throws BuildingInCoolDownException, MaxRecruitedException, NotEnoughGoldException {
         City city = getCity(cityName);
-        if (city == null){
+        if (city == null) {
             return;
         }
-        // NOTE: handle if units array size equals to maxToHold
         if (city.getDefendingArmy() == null) {
             city.setDefendingArmy(new Army(cityName));
         }
-        if (city.getDefendingArmy().getUnits().size() == city.getDefendingArmy().getMaxToHold()) {
+        // NOTE: handle if units array size equals to maxToHold
+        // TODO: check maxToHold
+        if (city.getDefendingArmy().getUnits().size() >= city.getDefendingArmy().getMaxToHold()) {
             return;
         }
-
         Class buildingType;
         switch (type) {
             case "Archer":
@@ -57,7 +57,6 @@ public class Player {
         city.getDefendingArmy().getUnits().add(recruitedUnit);
         recruitedUnit.setParentArmy(city.getDefendingArmy());
         treasury -= currentBuilding.getRecruitmentCost();
-
     }
 
     public void build(String type, String cityName) throws NotEnoughGoldException {
@@ -87,13 +86,13 @@ public class Player {
         }
         if (newBuilding instanceof EconomicBuilding) {
             // NOTE: handle if the city have the same type of building
-            if (searchForEconomicBuilding(city, newBuilding.getClass()) != null){
+            if (searchForEconomicBuilding(city, newBuilding.getClass()) != null) {
                 return;
             }
             city.getEconomicalBuildings().add((EconomicBuilding) newBuilding);
         } else {
             // NOTE: handle if the city have the same type of building
-            if (searchForMilitaryBuilding(city, newBuilding.getClass()) != null){
+            if (searchForMilitaryBuilding(city, newBuilding.getClass()) != null) {
                 return;
             }
             city.getMilitaryBuildings().add((MilitaryBuilding) newBuilding);
@@ -105,8 +104,8 @@ public class Player {
     public void upgradeBuilding(Building b) throws
             NotEnoughGoldException, BuildingInCoolDownException, MaxLevelException {
 
-        if(b.getUpgradeCost() > treasury) {
-            throw  new NotEnoughGoldException();
+        if (b.getUpgradeCost() > treasury) {
+            throw new NotEnoughGoldException();
         }
         if (b.getLevel() == 3) {
             throw new MaxLevelException();
@@ -118,9 +117,10 @@ public class Player {
         b.upgrade();
     }
 
-    public void initiateArmy(City city, Unit unit){
+    public void initiateArmy(City city, Unit unit) {
         Army attackingArmy = new Army(city.getName());
-        if (unit.getParentArmy() != null){
+        // TODO check parent and defending army
+        if (unit.getParentArmy() != null) {
             unit.getParentArmy().getUnits().remove(unit);
         }
 
@@ -132,8 +132,8 @@ public class Player {
     }
 
     public void laySiege(Army army, City city) throws TargetNotReachedException, FriendlyCityException {
-        if(!army.getCurrentLocation().equals(city.getName())) throw new TargetNotReachedException();
-        if(controlledCities.contains(city)) throw new FriendlyCityException();
+        if (!army.getCurrentLocation().equals(city.getName())) throw new TargetNotReachedException();
+        if (controlledCities.contains(city)) throw new FriendlyCityException();
 
         army.setCurrentStatus(Status.BESIEGING);
         city.setUnderSiege(true);
@@ -151,7 +151,7 @@ public class Player {
         return city;
     }
 
-    private static MilitaryBuilding searchForMilitaryBuilding(City city, Class buildingType){
+    private static MilitaryBuilding searchForMilitaryBuilding(City city, Class buildingType) {
         for (MilitaryBuilding Building : city.getMilitaryBuildings()) {
             if (Building.getClass().equals(buildingType)) {
                 return Building;
@@ -160,7 +160,7 @@ public class Player {
         return null;
     }
 
-    private EconomicBuilding searchForEconomicBuilding(City city, Class buildingType){
+    private EconomicBuilding searchForEconomicBuilding(City city, Class buildingType) {
         for (EconomicBuilding Building : city.getEconomicalBuildings()) {
             if (Building.getClass().equals(buildingType)) {
                 return Building;
