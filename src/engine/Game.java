@@ -53,7 +53,6 @@ public class Game {
         FileReader fileReader = new FileReader(path);
         BufferedReader br = new BufferedReader(fileReader);
 
-        ArrayList<Unit> unitsArray = new ArrayList<>();
         while ((currentLine = br.readLine()) != null) {
             String[] line = currentLine.split(",");
             Unit newUnit = loadUnit(line[0], Integer.parseInt(line[1]));
@@ -61,10 +60,6 @@ public class Game {
                 newUnit.setParentArmy(army);
                 army.getUnits().add(newUnit);
             }
-        }
-
-        if (army != null) {
-            army.setUnits(unitsArray);
         }
     }
 
@@ -104,7 +99,6 @@ public class Game {
     }
 
     public void targetCity(Army army, String targetName) {
-        //TODO : check army status
         // TODO : check the current location of the army
         if (army.getCurrentStatus() == Status.MARCHING) {
             return;
@@ -124,9 +118,7 @@ public class Game {
 
 
     public void endTurn() {
-        // TODO : Controlled or Available cities
         // TODO : endTurn onRood
-        // TODO : under seige when reach 3 turns
         // TODO : if the seiged city's army reach zero units should i add it to the controlled cities
         currentTurnCount++;
         int newFood = 0;
@@ -147,7 +139,10 @@ public class Game {
             }
         }
         for (City city : availableCities) {
-            if (city.isUnderSiege() && city.getTurnsUnderSiege() < 3) {
+            if (city.getTurnsUnderSiege() == 3) {
+                city.setUnderSiege(false);
+            }
+            if (city.isUnderSiege()) {
                 city.setTurnsUnderSiege(city.getTurnsUnderSiege() + 1);
                 Army defendingArmy = city.getDefendingArmy();
                 for (Unit unit : defendingArmy.getUnits()) {
