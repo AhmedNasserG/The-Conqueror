@@ -27,11 +27,6 @@ public class Player {
         if (city.getDefendingArmy() == null) {
             city.setDefendingArmy(new Army(cityName));
         }
-        // NOTE: handle if units array size equals to maxToHold
-        // TODO: check maxToHold
-        if (city.getDefendingArmy().getUnits().size() >= city.getDefendingArmy().getMaxToHold()) {
-            return;
-        }
         Class buildingType;
         switch (type) {
             case "Archer":
