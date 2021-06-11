@@ -114,12 +114,12 @@ public class Game {
 
             }
         }
+        army.setCurrentLocation("onRoad");
     }
 
 
     public void endTurn() {
         // TODO : endTurn onRood
-        // TODO : if the seiged city's army reach zero units should i add it to the controlled cities
         currentTurnCount++;
         int newFood = 0;
         int newTreasure = 0;
@@ -198,7 +198,7 @@ public class Game {
         int turn = 0;
         while (attackerUnits.size() > 0 && defenderUnits.size() > 0) {
             int idx1 = rand.nextInt(attackerUnits.size());
-            int idx2 = rand.nextInt(attackerUnits.size());
+            int idx2 = rand.nextInt(defenderUnits.size());
             Unit attackUnit = attackerUnits.get(idx1);
             Unit defendUnit = defenderUnits.get(idx2);
 
@@ -213,6 +213,9 @@ public class Game {
         if (defenderUnits.size() == 0) {
             occupy(attacker, defender.getCurrentLocation());
         }
+//        if (attackerUnits.size() == 0) {
+//            // TODO : remove if the army is empty
+//        }
     }
 
     public boolean isGameOver() {

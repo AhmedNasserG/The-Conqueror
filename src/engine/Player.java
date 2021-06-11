@@ -114,11 +114,6 @@ public class Player {
 
     public void initiateArmy(City city, Unit unit) {
         Army attackingArmy = new Army(city.getName());
-        // TODO check parent and defending army
-        if (unit.getParentArmy() != null) {
-            unit.getParentArmy().getUnits().remove(unit);
-        }
-
         Army defendingArmy = city.getDefendingArmy();
         defendingArmy.getUnits().remove(unit);
         unit.setParentArmy(attackingArmy);
@@ -132,6 +127,7 @@ public class Player {
 
         army.setCurrentStatus(Status.BESIEGING);
         city.setUnderSiege(true);
+        city.setTurnsUnderSiege(0);
     }
 
 
