@@ -104,7 +104,7 @@ public class Game {
             return;
         }
         army.setTarget(targetName);
-        army.setCurrentStatus(Status.MARCHING);
+        //army.setCurrentStatus(Status.MARCHING);
         for (Distance currentDistance : distances) {
             if ((currentDistance.getFrom().equals(army.getCurrentLocation()) && currentDistance.getTo().equals(targetName)) ||
                     (currentDistance.getFrom().equals(targetName) && currentDistance.getTo().equals(army.getCurrentLocation()))) {
@@ -114,7 +114,7 @@ public class Game {
 
             }
         }
-        army.setCurrentLocation("onRoad");
+        //army.setCurrentLocation("onRoad");
     }
 
 
@@ -155,8 +155,11 @@ public class Game {
         getPlayer().setTreasury(getPlayer().getTreasury() + newTreasure);
         for (Army a : getPlayer().getControlledArmies()) {
             int foodNeeded = (int) a.foodNeeded();
-            if (!a.getTarget().equals("")) {
+            if (!a.getTarget().equals("") ) {
                 a.setDistancetoTarget(a.getDistancetoTarget() - 1);
+                if(a.getCurrentStatus() == Status.IDLE)
+                    a.setCurrentStatus(Status.MARCHING);
+
             }
             if (a.getDistancetoTarget() == 0) {
                 a.setCurrentLocation(a.getTarget());
@@ -187,6 +190,7 @@ public class Game {
             return;
         }
         givenCity.setDefendingArmy(a);
+        player.getControlledArmies().add(a);
         givenCity.setUnderSiege(false);
         givenCity.setTurnsUnderSiege(-1);
     }
