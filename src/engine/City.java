@@ -22,7 +22,6 @@ public class City {
         this.militaryBuildings = new ArrayList<>();
         this.defendingArmy = new Army(name);
         this.underSiege = false;
-        // TODO:Check turns under siege
         this.turnsUnderSiege = -1;
     }
 

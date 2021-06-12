@@ -99,12 +99,11 @@ public class Game {
     }
 
     public void targetCity(Army army, String targetName) {
-        // TODO : check the current location of the army
         if (army.getCurrentStatus() == Status.MARCHING) {
             return;
         }
         army.setTarget(targetName);
-        //army.setCurrentStatus(Status.MARCHING);
+        army.setCurrentStatus(Status.MARCHING);
         for (Distance currentDistance : distances) {
             if ((currentDistance.getFrom().equals(army.getCurrentLocation()) && currentDistance.getTo().equals(targetName)) ||
                     (currentDistance.getFrom().equals(targetName) && currentDistance.getTo().equals(army.getCurrentLocation()))) {
@@ -114,12 +113,11 @@ public class Game {
 
             }
         }
-        //army.setCurrentLocation("onRoad");
+        army.setCurrentLocation("onRoad");
     }
 
 
     public void endTurn() {
-        // TODO : endTurn onRood
         currentTurnCount++;
         int newFood = 0;
         int newTreasure = 0;
@@ -154,12 +152,9 @@ public class Game {
         getPlayer().setFood(getPlayer().getFood() + newFood);
         getPlayer().setTreasury(getPlayer().getTreasury() + newTreasure);
         for (Army a : getPlayer().getControlledArmies()) {
-            int foodNeeded = (int) a.foodNeeded();
-            if (!a.getTarget().equals("") ) {
+            double foodNeeded = a.foodNeeded();
+            if (!a.getTarget().equals("")) {
                 a.setDistancetoTarget(a.getDistancetoTarget() - 1);
-                if(a.getCurrentStatus() == Status.IDLE)
-                    a.setCurrentStatus(Status.MARCHING);
-
             }
             if (a.getDistancetoTarget() == 0) {
                 a.setCurrentLocation(a.getTarget());
@@ -167,8 +162,9 @@ public class Game {
                 a.setDistancetoTarget(-1);
                 a.setCurrentStatus(Status.IDLE);
             }
-            getPlayer().setFood(Math.max(getPlayer().getFood() - foodNeeded, 0));
-            if (getPlayer().getFood() == 0) {
+            double calcFood = getPlayer().getFood() - foodNeeded;
+            getPlayer().setFood(Math.max(calcFood, 0));
+            if (calcFood < 0) {
                 for (Unit unit : a.getUnits()) {
                     unit.setCurrentSoldierCount((int) (unit.getCurrentSoldierCount() * 0.9));
                     a.handleAttackedUnit(unit);
@@ -190,7 +186,6 @@ public class Game {
             return;
         }
         givenCity.setDefendingArmy(a);
-        player.getControlledArmies().add(a);
         givenCity.setUnderSiege(false);
         givenCity.setTurnsUnderSiege(-1);
     }
@@ -217,9 +212,6 @@ public class Game {
         if (defenderUnits.size() == 0) {
             occupy(attacker, defender.getCurrentLocation());
         }
-//        if (attackerUnits.size() == 0) {
-//            // TODO : remove if the army is empty
-//        }
     }
 
     public boolean isGameOver() {
