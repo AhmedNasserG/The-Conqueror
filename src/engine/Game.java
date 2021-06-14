@@ -29,6 +29,7 @@ public class Game {
         this.maxTurnCount = 30;
         this.currentTurnCount = 1;
 
+        player.setTreasury(5000);
         loadCitiesAndDistances();
 
         for (City city : availableCities) {
@@ -99,43 +100,44 @@ public class Game {
     }
 
     public void targetCity(Army army, String targetName) {
-        if (army.getCurrentStatus() == Status.MARCHING) {
-            return;
-        }
-        army.setTarget(targetName);
-        army.setCurrentStatus(Status.MARCHING);
-        for (Distance currentDistance : distances) {
-            if ((currentDistance.getFrom().equals(army.getCurrentLocation()) && currentDistance.getTo().equals(targetName)) ||
-                    (currentDistance.getFrom().equals(targetName) && currentDistance.getTo().equals(army.getCurrentLocation()))) {
-                {
-                    army.setDistancetoTarget(currentDistance.getDistance());
-                }
+        String armyMovesFrom = army.getCurrentLocation();
+        int armyCurrentDistanceToTarget = 0;
 
+        if (army.getCurrentStatus() == Status.MARCHING) {
+            armyMovesFrom = army.getTarget();
+            armyCurrentDistanceToTarget = army.getDistancetoTarget();
+        }
+
+        for (Distance currentDistance : distances) {
+            if ((currentDistance.getFrom().equals(armyMovesFrom) && currentDistance.getTo().equals(targetName)) ||
+                    (currentDistance.getFrom().equals(targetName) && currentDistance.getTo().equals(armyMovesFrom))) {
+                armyCurrentDistanceToTarget += currentDistance.getDistance();
+                army.setDistancetoTarget(armyCurrentDistanceToTarget);
+                army.setTarget(targetName);
             }
         }
-        army.setCurrentLocation("onRoad");
     }
-
-
+    
     public void endTurn() {
         currentTurnCount++;
-        int newFood = 0;
-        int newTreasure = 0;
+        int totalUpkeep = 0;
+
         for (City city : getPlayer().getControlledCities()) {
             for (EconomicBuilding building : city.getEconomicalBuildings()) {
                 building.setCoolDown(false);
                 if (building instanceof Farm) {
-                    newFood += building.harvest();
-                }
-                if (building instanceof Market) {
-                    newTreasure += building.harvest();
+                    player.setFood(player.getFood() + building.harvest());
+                } else if (building instanceof Market) {
+                    player.setTreasury(player.getTreasury() + building.harvest());
                 }
             }
             for (MilitaryBuilding building : city.getMilitaryBuildings()) {
                 building.setCoolDown(false);
                 building.setCurrentRecruit(0);
             }
+            totalUpkeep += city.getDefendingArmy().foodNeeded();
         }
+
         for (City city : availableCities) {
             if (city.getTurnsUnderSiege() == 3) {
                 city.setUnderSiege(false);
@@ -144,50 +146,56 @@ public class Game {
                 city.setTurnsUnderSiege(city.getTurnsUnderSiege() + 1);
                 Army defendingArmy = city.getDefendingArmy();
                 for (Unit unit : defendingArmy.getUnits()) {
-                    unit.setCurrentSoldierCount((int) (unit.getCurrentSoldierCount() * 0.9));
-                    defendingArmy.handleAttackedUnit(unit);
+                    unit.setCurrentSoldierCount(unit.getCurrentSoldierCount() - (int) (unit.getCurrentSoldierCount() * 0.1));
                 }
             }
         }
-        getPlayer().setFood(getPlayer().getFood() + newFood);
-        getPlayer().setTreasury(getPlayer().getTreasury() + newTreasure);
-        for (Army a : getPlayer().getControlledArmies()) {
-            double foodNeeded = a.foodNeeded();
-            if (!a.getTarget().equals("")) {
+
+        for (Army a : player.getControlledArmies()) {
+            totalUpkeep += a.foodNeeded();
+            if (!a.getTarget().equals("") && a.getCurrentStatus() == Status.IDLE) {
+                a.setCurrentStatus(Status.MARCHING);
+                a.setCurrentLocation("onRoad");
+            }
+
+            if (a.getDistancetoTarget() > 0 && !a.getTarget().equals("")) {
                 a.setDistancetoTarget(a.getDistancetoTarget() - 1);
             }
             if (a.getDistancetoTarget() == 0) {
                 a.setCurrentLocation(a.getTarget());
                 a.setTarget("");
-                a.setDistancetoTarget(-1);
                 a.setCurrentStatus(Status.IDLE);
             }
-            double calcFood = getPlayer().getFood() - foodNeeded;
-            getPlayer().setFood(Math.max(calcFood, 0));
-            if (calcFood < 0) {
-                for (Unit unit : a.getUnits()) {
-                    unit.setCurrentSoldierCount((int) (unit.getCurrentSoldierCount() * 0.9));
-                    a.handleAttackedUnit(unit);
+        }
+
+        if (totalUpkeep <= player.getFood()) {
+            player.setFood(player.getFood() - totalUpkeep);
+        } else {
+            player.setFood(0);
+            for (Army a : player.getControlledArmies()) {
+                for (Unit u : a.getUnits()) {
+                    u.setCurrentSoldierCount(u.getCurrentSoldierCount() - (int) (u.getCurrentSoldierCount() * 0.1));
                 }
             }
         }
     }
 
     public void occupy(Army a, String cityName) {
-        City givenCity = null;
+        City city = null;
         for (City c : availableCities) {
             if (c.getName().equals(cityName)) {
-                player.getControlledCities().add(c);
-                givenCity = c;
-                break;
+                city = c;
             }
         }
-        if (givenCity == null) {
+        if (city == null) {
             return;
         }
-        givenCity.setDefendingArmy(a);
-        givenCity.setUnderSiege(false);
-        givenCity.setTurnsUnderSiege(-1);
+        player.getControlledCities().add(city);
+        player.getControlledArmies().remove(a);
+        city.setDefendingArmy(a);
+        city.setUnderSiege(false);
+        city.setTurnsUnderSiege(-1);
+        a.setCurrentStatus(Status.IDLE);
     }
 
     public void autoResolve(Army attacker, Army defender) throws FriendlyFireException {
