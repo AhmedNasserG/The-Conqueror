@@ -13,7 +13,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.HashSet;
 import java.util.Random;
-
+// I'm unfortunately a useless comment :'(
+// I'm here before anything related to the GUI. DON'T REMOVE ME !
 
 public class Game {
     private Player player;
