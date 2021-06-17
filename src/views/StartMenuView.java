@@ -21,7 +21,7 @@ public class StartMenuView extends JFrame implements ActionListener {
             JButton newButton = new JButton(buttonName);
             newButton.setAlignmentX(Component.CENTER_ALIGNMENT);
             newButton.addActionListener(this);
-            newButton.setActionCommand("Exit");
+            newButton.setActionCommand(buttonName);
             newPanel.add(newButton);
             newPanel.add(Box.createVerticalStrut(15));
 
@@ -53,16 +53,23 @@ public class StartMenuView extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
-            case "New Game" -> {
+            case "New Game" : {
                 System.out.println("NEW GAME");
+                break;
             }
-            case "About" -> {
+            case "About" : {
                 System.out.println("ABOUT");
+                break;
             }
-            case "Help" -> {
+            case "Help" :{
                 System.out.println("HELP");
+                break;
             }
-            case "Exit" -> System.exit(0);
+            case "Exit" :
+            {
+                System.exit(0);
+                break;
+            }
         }
     }
 
