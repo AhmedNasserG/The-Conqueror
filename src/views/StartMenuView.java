@@ -54,7 +54,9 @@ public class StartMenuView extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "New Game" : {
-                System.out.println("NEW GAME");
+
+                this.setVisible(false);
+                new NewGameView();
                 break;
             }
             case "About" : {
