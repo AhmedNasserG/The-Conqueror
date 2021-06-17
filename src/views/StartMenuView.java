@@ -11,8 +11,26 @@ public class StartMenuView extends JFrame implements ActionListener {
     JButton helpButton;
     JButton exitButton;
 
+    public JPanel menuPanel (String[] buttonsArray ){
+        JPanel newPanel = new JPanel();
+        newPanel.setLayout(new BoxLayout(newPanel,BoxLayout.Y_AXIS));
+        newPanel.add(Box.createRigidArea(new Dimension(0,this.getHeight()-4*170)));
+        for(String buttonName:buttonsArray )
+        {
+
+            JButton newButton = new JButton(buttonName);
+            newButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+            newButton.addActionListener(this);
+            if(buttonName.equals("Exit")) {
+                newButton.setActionCommand("Exit");
+                }
+            newPanel.add(newButton);
+            newPanel.add(Box.createVerticalStrut(15));
 
 
+        }
+        return newPanel;
+    }
     public StartMenuView() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -20,9 +38,10 @@ public class StartMenuView extends JFrame implements ActionListener {
         this.setTitle("The Conqueror");
         this.setVisible(true);
         this.setLayout(new FlowLayout());
-        JPanel menuPanel = new JPanel();
+        String[] buttonNames = new String[]{"New Game", "About", "Help", "Exit"};
+        JPanel menuPanel = menuPanel(buttonNames);
 
-
+/*
         menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));
         newGameButton = new JButton("New Game");
         aboutButton = new JButton("About");
@@ -49,7 +68,7 @@ public class StartMenuView extends JFrame implements ActionListener {
         menuPanel.add(Box.createRigidArea(new Dimension(0,15)));
         menuPanel.add(exitButton);
 
-
+*/
 
        // menuPanel.setBackground(Color.CYAN);
 
@@ -70,7 +89,7 @@ public class StartMenuView extends JFrame implements ActionListener {
             System.out.println("ABOUT");
         } else if (e.getSource() == helpButton) {
             System.out.println("HELP");
-        } else if (e.getSource() == exitButton) {
+        } else if (e.getActionCommand().equals("Exit")) {
             System.exit(0);
         }
     }
