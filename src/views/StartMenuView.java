@@ -5,26 +5,26 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class StartMenuView extends JFrame implements ActionListener {
-    JButton newGameButton;
-    JButton aboutButton;
-    JButton helpButton;
-    JButton exitButton;
 
+
+public class StartMenuView extends JFrame implements ActionListener {
+
+    public JButton createButton( String name){
+        JButton newButton = new JButton(name);
+        newButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        newButton.addActionListener(this);
+        newButton.setActionCommand(name);
+        return newButton;
+
+    }
     public JPanel menuPanel (String[] buttonsArray ){
         JPanel newPanel = new JPanel();
         newPanel.setLayout(new BoxLayout(newPanel,BoxLayout.Y_AXIS));
         newPanel.add(Box.createRigidArea(new Dimension(0,this.getHeight()-4*170)));
         for(String buttonName:buttonsArray )
         {
-
-            JButton newButton = new JButton(buttonName);
-            newButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-            newButton.addActionListener(this);
-            newButton.setActionCommand(buttonName);
-            newPanel.add(newButton);
+            newPanel.add(createButton(buttonName));
             newPanel.add(Box.createVerticalStrut(15));
-
 
         }
         return newPanel;
