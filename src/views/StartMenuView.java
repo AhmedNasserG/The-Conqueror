@@ -11,34 +11,47 @@ public class StartMenuView extends JFrame implements ActionListener {
     JButton helpButton;
     JButton exitButton;
 
+
+
     public StartMenuView() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         this.setSize(screenSize.width, screenSize.height);
         this.setTitle("The Conqueror");
         this.setVisible(true);
-
+        this.setLayout(new FlowLayout());
         JPanel menuPanel = new JPanel();
-        menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));
 
+
+        menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));
         newGameButton = new JButton("New Game");
         aboutButton = new JButton("About");
         helpButton = new JButton("Help");
         exitButton = new JButton("Exit");
 
-        exitButton.setBounds(10,10,30,10);
 
         newGameButton.addActionListener(this);
+        newGameButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         aboutButton.addActionListener(this);
+        aboutButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         helpButton.addActionListener(this);
+        helpButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         exitButton.addActionListener(this);
+        exitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+
+        menuPanel.add(Box.createRigidArea(new Dimension(0,this.getHeight()/2-4*30)));
         menuPanel.add(newGameButton);
+        menuPanel.add(Box.createRigidArea(new Dimension(0,15)));
         menuPanel.add(aboutButton);
+        menuPanel.add(Box.createRigidArea(new Dimension(0,15)));
         menuPanel.add(helpButton);
+        menuPanel.add(Box.createRigidArea(new Dimension(0,15)));
         menuPanel.add(exitButton);
 
-        menuPanel.setBackground(Color.CYAN);
+
+
+       // menuPanel.setBackground(Color.CYAN);
 
         this.add(menuPanel);
         this.validate();
