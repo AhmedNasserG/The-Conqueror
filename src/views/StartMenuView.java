@@ -15,7 +15,6 @@ public class StartMenuView extends JFrame implements ActionListener {
         newButton.addActionListener(this);
         newButton.setActionCommand(name);
         return newButton;
-
     }
     public JPanel menuPanel (String[] buttonsArray ){
         JPanel newPanel = new JPanel();
@@ -54,17 +53,20 @@ public class StartMenuView extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "New Game" : {
-
                 this.setVisible(false);
                 new NewGameView();
                 break;
             }
             case "About" : {
                 System.out.println("ABOUT");
+                this.setVisible(false);
+                //new NewGameView();
                 break;
             }
             case "Help" :{
                 System.out.println("HELP");
+                this.setVisible(false);
+               // new NewGameView();
                 break;
             }
             case "Exit" :

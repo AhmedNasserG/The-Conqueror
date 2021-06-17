@@ -7,17 +7,21 @@ import java.awt.event.ActionListener;
 
 
 public class NewGameView extends JFrame implements ActionListener {
+    JRadioButton[] newRadios;
 
-    public static JPanel newRadioGroup (String[] names){
+
+    public  JPanel newRadioGroup (String[] names){
         JPanel newPanel = new JPanel();
         newPanel.setLayout(new FlowLayout());
         ButtonGroup cityGroup = new ButtonGroup();
         JLabel cityLabel  = new JLabel(names[0]);
         newPanel.add(cityLabel);
-        for(int i=1; i<names.length;i++) {
-            JRadioButton newRadio = new JRadioButton(names[i]);
-            cityGroup.add(newRadio);
-            newPanel.add(newRadio);
+        newRadios = new JRadioButton[names.length-1];
+        for(int i=0; i<newRadios.length;i++) {
+            newRadios[i] = new JRadioButton(names[i+1]);
+            newRadios[i].addActionListener(this);
+            cityGroup.add(newRadios[i]);
+            newPanel.add(newRadios[i]);
         }
         return newPanel;
     }
@@ -56,7 +60,9 @@ public class NewGameView extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent e){
         if(e.getActionCommand().equals("Play")) {
-        System.out.println("Let's Go");
+            if( newRadios[0].isSelected()) {
+                System.out.println("Cairo is selected");
+            }
         }
     }
 }
