@@ -57,11 +57,7 @@ public class BattleView extends JFrame {
 
         public MyTextArea(int a, int b) {
             super(a,b);
-            try{
-                img = ImageIO.read(new File("res/img/nasserFaday7.jpeg"));
-            } catch(IOException e) {
-                System.out.println(e.toString());
-            }
+
         }
 
         @Override
