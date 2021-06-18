@@ -10,6 +10,7 @@ import java.io.IOException;
 
 
 public class NewGameView extends JFrame implements ActionListener {
+    //TODO: We need to unHardCode the cities part so that if we have more than those three cities.
     private JRadioButton[] newRadios;
     private JTextField nameTextField;
     private String playerName;
@@ -33,7 +34,7 @@ public class NewGameView extends JFrame implements ActionListener {
         panelName.add(nameLabel);
         panelName.add(nameTextField);
 
-        JPanel panelCity = newRadioGroup(new String[]{"Choose your city:", "Cairo", "Rome", "Sparta"});
+        JPanel panelCity = newRadioGroup(new String[]{"Cairo", "Rome", "Sparta"});
         JButton newGame = new JButton("Play");
         newGame.setSize(15, 20);
         newGame.setActionCommand("Play");
@@ -50,11 +51,11 @@ public class NewGameView extends JFrame implements ActionListener {
         JPanel newPanel = new JPanel();
         newPanel.setLayout(new FlowLayout());
         ButtonGroup cityGroup = new ButtonGroup();
-        JLabel cityLabel = new JLabel(names[0]);
+        JLabel cityLabel = new JLabel("Choose your city:");
         newPanel.add(cityLabel);
-        newRadios = new JRadioButton[names.length - 1];
+        newRadios = new JRadioButton[names.length];
         for (int i = 0; i < newRadios.length; i++) {
-            newRadios[i] = new JRadioButton(names[i + 1]);
+            newRadios[i] = new JRadioButton(names[i]);
             newRadios[i].addActionListener(this);
             cityGroup.add(newRadios[i]);
             newPanel.add(newRadios[i]);
