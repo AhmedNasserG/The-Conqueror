@@ -13,7 +13,7 @@ import java.io.IOException;
 
 public class NewGameView extends JFrame implements ActionListener {
     private JRadioButton[] newRadios;
-    private JLabel nameLabel;
+    private JTextField nameTextField;
     private String playerName;
     private String cityName;
     private NewGameListener listener;
@@ -30,8 +30,8 @@ public class NewGameView extends JFrame implements ActionListener {
 
         JPanel panelName = new JPanel();
         panelName.setLayout(new FlowLayout());
-        nameLabel = new JLabel("Enter your name: ");
-        JTextField nameTextField = new JTextField(15);
+        JLabel nameLabel = new JLabel("Enter your name: ");
+        nameTextField = new JTextField(15);
         panelName.add(nameLabel);
         panelName.add(nameTextField);
 
@@ -83,7 +83,7 @@ public class NewGameView extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         if (e.getActionCommand().equals("Play")) {
-            playerName = nameLabel.getText();
+            playerName = nameTextField.getText();
             cityName = "Cairo";
             try {
                 listener.onPlayClicked();
