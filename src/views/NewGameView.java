@@ -79,19 +79,29 @@ public class NewGameView extends JFrame implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-        //TODO: handle if name is empty or very large
         //TODO: handle if no radio is selected
         playerName = nameTextField.getText();
         if (e.getSource() instanceof JRadioButton) {
             JRadioButton selectedRadio = (JRadioButton) e.getSource();
             cityName = selectedRadio.getText();
         } else if (e.getActionCommand().equals("Play")) {
-            try {
-                listener.onPlayClicked();
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
+            if(playerName.equals("")){
+                JOptionPane.showMessageDialog(null, "Please enter your name, it can't be empty");
             }
-            System.out.println(cityName);
-        }
+            else if(playerName.length()>20){
+
+                JOptionPane.showMessageDialog(null, "Can you please choose a simpler name ?");
+
+            }
+            else {
+                try {
+                    listener.onPlayClicked();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            }
+
+                System.out.println(cityName);
+            }
     }
 }
