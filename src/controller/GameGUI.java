@@ -48,8 +48,7 @@ public class GameGUI implements ActionListener, NewGameListener, StartMenuListen
         game = new Game(playerName, cityName);
         view.getNewGameView().dispose();
         view.setCityView(new CityView());
-//        view.getCityView().setPlayerName(game.getPlayer().getName());
-        view.getCityView().setPlayerName("playerName");
+        view.getCityView().setPlayerName(game.getPlayer().getName());
         view.getCityView().setCurrentTurnCount(game.getCurrentTurnCount());
         view.getCityView().setFood(game.getPlayer().getFood());
         view.getCityView().setTreasury(game.getPlayer().getTreasury());

@@ -27,7 +27,7 @@ public class Game {
         this.player = new Player(playerName);
         this.availableCities = new ArrayList<>();
         this.distances = new ArrayList<>();
-        this.maxTurnCount = 30;
+        this.maxTurnCount = 50;
         this.currentTurnCount = 1;
 
         player.setTreasury(5000);
@@ -118,7 +118,7 @@ public class Game {
             }
         }
     }
-    
+
     public void endTurn() {
         currentTurnCount++;
         int totalUpkeep = 0;
