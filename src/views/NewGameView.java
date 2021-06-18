@@ -16,6 +16,8 @@ public class NewGameView extends JFrame implements ActionListener {
     private String playerName;
     private String cityName;
     private NewGameListener listener;
+    private JRadioButton selectedRadio;
+
 
     public NewGameView() {
 
@@ -80,13 +82,15 @@ public class NewGameView extends JFrame implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-        //TODO: handle if no radio is selected
         playerName = nameTextField.getText();
         if (e.getSource() instanceof JRadioButton) {
-            JRadioButton selectedRadio = (JRadioButton) e.getSource();
+            selectedRadio = (JRadioButton) e.getSource();
             cityName = selectedRadio.getText();
+            System.out.println(selectedRadio);
         } else if (e.getActionCommand().equals("Play")) {
-            if (validText(playerName)) {
+            if (selectedRadio == null) {
+                JOptionPane.showMessageDialog(null, "Please Choose a City");
+            } else if (validText(playerName)) {
                 try {
                     listener.onPlayClicked();
                 } catch (IOException ioException) {
@@ -100,7 +104,7 @@ public class NewGameView extends JFrame implements ActionListener {
         if (text.equals("")) {
             JOptionPane.showMessageDialog(null, "Please enter your name, it can't be empty");
             return false;
-        } else if (text.length() > 20) {
+        } else if (text.length() > 30) {
             JOptionPane.showMessageDialog(null, "Can you please choose a simpler name ?");
             return false;
         }
