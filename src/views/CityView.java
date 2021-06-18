@@ -1,12 +1,16 @@
 package views;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class CityView extends JFrame {
+    private String playerName;
+    private int currentTurnCount;
+    private double treasury;
+    private double food;
+
     public CityView() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -26,7 +30,7 @@ public class CityView extends JFrame {
 
         worldMapLabel.setBackground(Color.DARK_GRAY);
 
-        StatusPanel statusPanel = new StatusPanel("Ahmed Nasser", 50, 100, 6000);
+        StatusPanel statusPanel = new StatusPanel(playerName, 50, 100, 6000);
 
         statusPanel.setBounds(0, 0, screenSize.width - 100, 100);
         worldMapLabel.setBounds(screenSize.width - 100, 0, 100, 100);
@@ -60,6 +64,22 @@ public class CityView extends JFrame {
             add(foodCountLabel);
 
         }
+    }
+
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
+
+    public void setCurrentTurnCount(int currentTurnCount) {
+        this.currentTurnCount = currentTurnCount;
+    }
+
+    public void setTreasury(double treasury) {
+        this.treasury = treasury;
+    }
+
+    public void setFood(double food) {
+        this.food = food;
     }
 
     public static void main(String[] args) {
