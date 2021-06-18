@@ -29,7 +29,7 @@ public class NewGameView extends JFrame implements ActionListener {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         this.setSize(screenSize.width, screenSize.height);
-//        this.pack();
+
         this.setTitle("Choosing City");
         this.setVisible(true);
         this.setLayout(new BoxLayout(this.getContentPane(),BoxLayout.Y_AXIS));
