@@ -1,33 +1,41 @@
 package views;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
 
-public class BattleView extends JFrame {
-    private MyTextArea battleLog;
+public class BattleView extends Frame {
+    private JTextArea battleLog;
     private JPanel leftSidePanel;
-    private JPanel centerPanel;
+    private JPanel battlePanel;
 
     public BattleView(){
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        this.setSize(screenSize.width, screenSize.height);
-
+        super();
         this.setLayout(new BorderLayout());
 
+        initBattleLog();
+        initBattlePanel("AUTO RESOLVE");
+
+        add(battlePanel, BorderLayout.CENTER);
+        leftSidePanel.setBackground(Color.black);
+        add(leftSidePanel, BorderLayout.WEST);
+        add(new StatusPanel(), BorderLayout.NORTH);
+
+        this.setVisible(true);
+        this.revalidate();
+        this.repaint();
+    }
+
+    public void initBattleLog(){
         leftSidePanel = new JPanel();
         leftSidePanel.setLayout(new BorderLayout());
-        centerPanel = new JPanel();
 
-        battleLog = new MyTextArea(20,40);
+        battlePanel = new JPanel();
+
+        battleLog = new JTextArea(20,40);
         battleLog.setEditable(false);
         battleLog.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         battleLog.setFont(new Font(Font.MONOSPACED, Font.BOLD, 16));
-        battleLog.setBackground(new Color(1,1,1, (float) 0.01));;
-        JScrollPane scrollPane = new JScrollPane(battleLog);
 
         StringBuilder sb = new StringBuilder();
         for (int i = 1; i < 1000; i++) {
@@ -35,35 +43,23 @@ public class BattleView extends JFrame {
         }
         battleLog.setText(sb.toString());
 
+        JScrollPane scrollPane = new JScrollPane(battleLog);
         leftSidePanel.add(scrollPane, BorderLayout.SOUTH);
+    }
 
-        this.add(centerPanel, BorderLayout.CENTER);
-        this.add(leftSidePanel, BorderLayout.WEST);
-        this.add(new StatusPanel(), BorderLayout.NORTH);
+    public void initBattlePanel(String attackMode){
+        this.battlePanel = new JPanel();
 
-        this.setVisible(true);
-        this.revalidate();
-        this.repaint();
+        JLabel modeLabel = new JLabel(attackMode);
+        modeLabel.setFont(new Font(Font.MONOSPACED, Font.BOLD, 100));
+        modeLabel.setBorder(BorderFactory.createEmptyBorder(25,350,0, 0));
+
+        battlePanel.setLayout(new BorderLayout());
+        battlePanel.add(modeLabel, BorderLayout.NORTH);
     }
 
     public static void main(String[] args) {
         new BattleView();
     }
 
-
-    static class MyTextArea extends JTextArea {
-
-        private Image img;
-
-        public MyTextArea(int a, int b) {
-            super(a,b);
-
-        }
-
-        @Override
-        protected void paintComponent(Graphics g) {
-            g.drawImage(img,0,0,null);
-            super.paintComponent(g);
-        }
-    }
 }

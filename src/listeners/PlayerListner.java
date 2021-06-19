@@ -1,8 +1,8 @@
 package listeners;
 
 public interface PlayerListner {
-    public void onArmyIntiate();
-    public void onBuildingUpgrade();
-    public void onBuild();
+    void onArmyIntiate();
+    void onBuildingUpgrade();
+    void onBuild();
 
 }
