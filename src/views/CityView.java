@@ -1,5 +1,8 @@
 package views;
 
+import buildings.*;
+import engine.City;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -7,34 +10,79 @@ import java.awt.event.MouseEvent;
 
 public class CityView extends Frame {
 
+    private City cityToView;
     private StatusPanel statusPanel;
+    private JPanel cityGrid;
 
-    public CityView() {
+
+    public CityView(City cityToView) {
         super();
+        this.cityToView = cityToView;
         this.setLayout(null);
+
+        statusPanel = new StatusPanel();
 
         ImageIcon worldMapIcon = new ImageIcon("res/img/map.png");
         JLabel worldMapLabel = new JLabel(new ImageIcon(worldMapIcon.getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
-
-
-        worldMapLabel.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent me) {
-                System.out.println("CLICKED");
-            }
-        });
-
         worldMapLabel.setBackground(Color.DARK_GRAY);
 
-        statusPanel = new StatusPanel();
+        cityGrid = new JPanel();
+        cityGrid.setBackground(Color.lightGray);
+
+        JPanel buildPanel = new JPanel();
+        buildPanel.setBackground(Color.BLUE);
+
+        JPanel armysPanel = new JPanel();
+        armysPanel.setBackground(Color.ORANGE);
+
 
         statusPanel.setBounds(0, 0, getWidth() - 100, 100);
         worldMapLabel.setBounds(getWidth() - 100, 0, 100, 100);
 
+        cityGrid.setBounds((getWidth() - 710) / 2, 100, 410, 410);
+        cityGrid.setLayout(new GridLayout(3, 3, 5, 5));
+
+
+        updateCityGrid();
+
+        buildPanel.setBounds(0, 510, getWidth() - 300, 300);
+        armysPanel.setBounds(getWidth() - 300, 100, 300, getHeight() - 100);
+
         add(statusPanel);
         add(worldMapLabel);
+        add(cityGrid);
+        add(buildPanel);
+        add(armysPanel);
+
         setVisible(true);
     }
 
+    public void updateCityGrid() {
+        int i = 0;
+        for (Building b : cityToView.getEconomicalBuildings()) {
+            BuildingTile t = new BuildingTile(b);
+            t.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent me) {
+                    new BuildingPopUp(b);
+                }
+            });
+            cityGrid.add(t);
+            i++;
+        }
+        for (Building b : cityToView.getMilitaryBuildings()) {
+            BuildingTile t = new BuildingTile(b);
+            t.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent me) {
+                    new BuildingPopUp(b);
+                }
+            });
+            cityGrid.add(t);
+            i++;
+        }
+        for (; i < 9; i++) {
+            cityGrid.add(new BuildingTile());
+        }
+    }
 
     public void setPlayerName(String playerName) {
         statusPanel.getPlayerNameLabel().setText(playerName);
@@ -53,6 +101,11 @@ public class CityView extends Frame {
     }
 
     public static void main(String[] args) {
-        new CityView();
+        City city = new City("Alex");
+        city.getMilitaryBuildings().add(new ArcheryRange());
+        city.getMilitaryBuildings().add(new Barracks());
+        city.getEconomicalBuildings().add(new Market());
+        city.getEconomicalBuildings().add(new Farm());
+        new CityView(city);
     }
 }
