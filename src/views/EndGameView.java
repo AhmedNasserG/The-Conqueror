@@ -5,12 +5,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class EndGameView extends JFrame implements ActionListener {
+public class EndGameView extends Frame implements ActionListener {
     public EndGameView(boolean gameWon){
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        this.setSize(screenSize.width, screenSize.height);
-
+        super();
         this.setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         JPanel textPanel = new JPanel();
         JPanel btnPanel = new JPanel();
