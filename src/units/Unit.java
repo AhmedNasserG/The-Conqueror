@@ -1,6 +1,7 @@
 package units;
 
 import exceptions.FriendlyFireException;
+import listeners.UnitListener;
 
 import java.util.ArrayList;
 
@@ -14,6 +15,12 @@ public abstract class Unit {
     private double siegeUpkeep;
     private Army parentArmy;
 
+    UnitListener listener;
+
+    public void setListener(UnitListener listener) {
+        this.listener = listener;
+    }
+
 
     public Unit(int level, int maxSoldierCount, double idleUpkeep, double marchingUpkeep, double siegeUpkeep) {
         this.level = level;
@@ -23,6 +30,7 @@ public abstract class Unit {
         this.marchingUpkeep = marchingUpkeep;
         this.siegeUpkeep = siegeUpkeep;
         this.parentArmy = null;
+
     }
 
 
@@ -30,6 +38,8 @@ public abstract class Unit {
         if (parentArmy.equals(target.getParentArmy())) {
             throw new FriendlyFireException();
         }
+
+        listener.onAttack(this, target);
     }
 
     // Getters

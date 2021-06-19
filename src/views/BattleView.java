@@ -1,38 +1,59 @@
 package views;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class BattleView extends Frame {
     private JTextArea battleLog;
     private JPanel leftSidePanel;
     private JPanel battlePanel;
+    private String battleMode;
+    private StringBuilder battleResultsSB;
+    private JLabel battleResultsDisplay;
 
-    public BattleView(){
+
+    public JLabel getBattleResultsDisplay() {
+        return battleResultsDisplay;
+    }
+
+    public void setBattleResultsDisplay(JLabel battleResultsDisplay) {
+        this.battleResultsDisplay = battleResultsDisplay;
+    }
+
+    public JPanel getBattlePanel() {
+        return battlePanel;
+    }
+
+    public void setBattlePanel(JPanel battlePanel) {
+        this.battlePanel = battlePanel;
+    }
+
+    public BattleView(String battleMode) {
         super();
+        this.battleMode = battleMode;
         this.setLayout(new BorderLayout());
 
         initBattleLog();
-        initBattlePanel("AUTO RESOLVE");
+        initBattlePanel();
 
         add(battlePanel, BorderLayout.CENTER);
         leftSidePanel.setBackground(Color.black);
         add(leftSidePanel, BorderLayout.WEST);
         add(new StatusPanel(), BorderLayout.NORTH);
 
+
         this.setVisible(true);
         this.revalidate();
         this.repaint();
     }
 
-    public void initBattleLog(){
+    public void initBattleLog() {
         leftSidePanel = new JPanel();
         leftSidePanel.setLayout(new BorderLayout());
 
         battlePanel = new JPanel();
 
-        battleLog = new JTextArea(20,40);
+        battleLog = new JTextArea(20, 40);
         battleLog.setEditable(false);
         battleLog.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         battleLog.setFont(new Font(Font.MONOSPACED, Font.BOLD, 16));
@@ -47,19 +68,21 @@ public class BattleView extends Frame {
         leftSidePanel.add(scrollPane, BorderLayout.SOUTH);
     }
 
-    public void initBattlePanel(String attackMode){
+    public void initBattlePanel() {
         this.battlePanel = new JPanel();
 
-        JLabel modeLabel = new JLabel(attackMode);
+        JLabel modeLabel = new JLabel(battleMode);
         modeLabel.setFont(new Font(Font.MONOSPACED, Font.BOLD, 100));
-        modeLabel.setBorder(BorderFactory.createEmptyBorder(25,350,0, 0));
+        modeLabel.setBorder(BorderFactory.createEmptyBorder(25, 350, 0, 0));
+
 
         battlePanel.setLayout(new BorderLayout());
         battlePanel.add(modeLabel, BorderLayout.NORTH);
     }
 
+
     public static void main(String[] args) {
-        new BattleView();
+        new BattleView("AUTO RESOLVE");
     }
 
 }

@@ -1,6 +1,6 @@
 package listeners;
 
 public interface WorldMapListener {
-    void onManualAttackChosen();
-    void onAutoResolveChosen();
+    void onManualAttackChosen() throws InterruptedException;
+    void onAutoResolveChosen() throws InterruptedException;
 }

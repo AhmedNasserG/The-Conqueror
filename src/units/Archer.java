@@ -1,11 +1,22 @@
 package units;
 
 import exceptions.FriendlyFireException;
+import listeners.BattleListener;
+import listeners.UnitListener;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class Archer extends Unit {
+public class Archer extends Unit implements UnitListener {
+
+    private int casualtiesCount;
+
+    private BattleListener listener;
+
+
+    public void setListener(BattleListener listener) {
+        this.listener = listener;
+    }
 
     private static final double[][] ArcherValues = {{-1, -1, -1, -1}, {60, 0.4, 0.5, 0.6},
             {60, 0.4, 0.5, 0.6}, {70, 0.5, 0.6, 0.7}};
@@ -27,11 +38,26 @@ public class Archer extends Unit {
     @Override
     public void attack(Unit target) throws FriendlyFireException {
         super.attack(target);
+
         int attackersCount = getCurrentSoldierCount();
         int targetCount = target.getCurrentSoldierCount();
         double attackFactor = attackFactors.get(target.getClass())[getLevel()];
-        target.setCurrentSoldierCount(Math.max(targetCount - (int)(attackFactor * attackersCount), 0));
+        this.casualtiesCount = (int)(attackFactor * attackersCount);
+
+        target.setCurrentSoldierCount(Math.max(targetCount - casualtiesCount, 0));
         target.getParentArmy().handleAttackedUnit(target);
     }
 
+    @Override
+    public void onAttack(Unit attacker, Unit target) throws FriendlyFireException {
+        this.attack(target);
+
+        String attackerUnit = attacker.getClass().getName();
+        String targetUnit = target.getClass().getName();
+
+        String res = attackerUnit + " Attacked " + targetUnit + '\n' +
+                "Defending Army Has Lost: " + casualtiesCount;
+
+        listener.onBattleUpdated(attacker, target, res);
+    }
 }
