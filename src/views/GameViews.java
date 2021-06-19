@@ -5,11 +5,15 @@ public class GameViews {
     private StartMenuView startMenuView;
     private NewGameView newGameView;
     private CityView cityView;
+    private BattleView battleView;
 
+    public BattleView getBattleView() {
+        return battleView;
+    }
 
-
-
-
+    public void setBattleView(BattleView battleView) {
+        this.battleView = battleView;
+    }
 
     public StartMenuView getStartMenuView() {
         return startMenuView;

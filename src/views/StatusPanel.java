@@ -14,7 +14,7 @@ class StatusPanel extends JPanel {
         FlowLayout layout = new FlowLayout(FlowLayout.LEADING);
         layout.setHgap(20);
         this.setLayout(layout);
-        this.setBackground(Color.CYAN);
+        this.setBackground(Color.darkGray);
 
         playerNameLabel = new JLabel();
         turnCountLabel = new JLabel();

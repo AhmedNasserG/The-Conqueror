@@ -18,7 +18,7 @@ public class EndGameView extends Frame implements ActionListener {
 
         if(gameWon) gameVerdictText.setText("VICTORY!!!");
         else gameVerdictText.setText("DEFEAT");
-        gameVerdictText.setFont(new Font("", Font.BOLD, 150));
+        gameVerdictText.setFont(new Font(Font.MONOSPACED, Font.BOLD, 150));
 
         replayBtn.addActionListener(this);
         exitBtn.addActionListener(this);
