@@ -29,6 +29,22 @@ public abstract class Building {
         coolDown = true;
     }
 
+    public String getBuildingName() {
+        String imgStr = "";
+        if (ArcheryRange.class.equals(this.getClass())) {
+            imgStr = "archery_range";
+        } else if (Stable.class.equals(this.getClass())) {
+            imgStr = "stable";
+        } else if (Barracks.class.equals(this.getClass())) {
+            imgStr = "barracks";
+        } else if (Market.class.equals(this.getClass())) {
+            imgStr = "market";
+        } else if (Farm.class.equals(this.getClass())) {
+            imgStr = "farm";
+        }
+        return imgStr;
+    }
+
     // Getters
 
     public int getCost() {
