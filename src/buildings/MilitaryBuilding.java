@@ -19,6 +19,18 @@ public abstract class MilitaryBuilding extends Building {
 
     public abstract Unit recruit() throws BuildingInCoolDownException, MaxRecruitedException;
 
+    public String getRecruitableUnitTypeName() {
+        String type = "";
+        if (ArcheryRange.class.equals(this.getClass())) {
+            type = "Archers";
+        } else if (Stable.class.equals(this.getClass())) {
+            type = "Cavalries";
+        } else if (Barracks.class.equals(this.getClass())) {
+            type = "Infantries";
+        }
+        return type;
+    }
+
     // Getters
     public int getRecruitmentCost() {
         return recruitmentCost;
