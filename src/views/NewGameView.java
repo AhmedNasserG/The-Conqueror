@@ -9,8 +9,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 
 
-public class NewGameView extends JFrame implements ActionListener {
-    //TODO: We need to unHardCode the cities part so that if we have more than those three cities.
+public class NewGameView extends Frame implements ActionListener {
     private JRadioButton[] newRadios;
     private JTextField nameTextField;
     private String playerName;
@@ -20,12 +19,8 @@ public class NewGameView extends JFrame implements ActionListener {
 
 
     public NewGameView() {
+        super("New Game");
 
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        this.setSize(screenSize.width, screenSize.height);
-
-        this.setTitle("Choosing City");
         this.setVisible(true);
         this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 
@@ -86,7 +81,6 @@ public class NewGameView extends JFrame implements ActionListener {
         if (e.getSource() instanceof JRadioButton) {
             selectedRadio = (JRadioButton) e.getSource();
             cityName = selectedRadio.getText();
-            System.out.println(selectedRadio);
         } else if (e.getActionCommand().equals("Play")) {
             if (selectedRadio == null) {
                 JOptionPane.showMessageDialog(null, "Please Choose a City");

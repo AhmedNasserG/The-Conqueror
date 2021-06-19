@@ -5,15 +5,13 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class CityView extends JFrame {
+public class CityView extends Frame {
+
     private StatusPanel statusPanel;
 
     public CityView() {
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        setSize(screenSize.width, screenSize.height);
+        super();
         this.setLayout(null);
-
 
         ImageIcon worldMapIcon = new ImageIcon("res/img/map.png");
         JLabel worldMapLabel = new JLabel(new ImageIcon(worldMapIcon.getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
@@ -29,8 +27,8 @@ public class CityView extends JFrame {
 
         statusPanel = new StatusPanel();
 
-        statusPanel.setBounds(0, 0, screenSize.width - 100, 100);
-        worldMapLabel.setBounds(screenSize.width - 100, 0, 100, 100);
+        statusPanel.setBounds(0, 0, getWidth() - 100, 100);
+        worldMapLabel.setBounds(getWidth() - 100, 0, 100, 100);
 
         add(statusPanel);
         add(worldMapLabel);

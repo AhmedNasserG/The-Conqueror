@@ -9,22 +9,17 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 
 
-public class StartMenuView extends JFrame implements ActionListener {
+public class StartMenuView extends Frame implements ActionListener {
 
     private NewGameView newGameView;
     private StartMenuListener listener;
 
     public StartMenuView() {
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        this.setSize(screenSize.width, screenSize.height);
-        this.setTitle("The Conqueror");
+        super("The Conqueror");
         this.setVisible(true);
         this.setLayout(new FlowLayout());
         String[] buttonNames = new String[]{"New Game", "About", "Help", "Exit"};
         JPanel menuPanel = menuPanel(buttonNames);
-
-        // menuPanel.setBackground(Color.CYAN);
 
         this.add(menuPanel);
         this.setVisible(true);
