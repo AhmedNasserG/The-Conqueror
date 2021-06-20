@@ -2,17 +2,18 @@ package views;
 
 import buildings.*;
 import engine.City;
+import listeners.CityViewListener;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+
 
 public class CityView extends Frame {
 
     private City cityToView;
     private StatusPanel statusPanel;
     private JPanel cityGrid;
+    private CityViewListener listener;
 
 
     public CityView(City cityToView) {
@@ -58,30 +59,25 @@ public class CityView extends Frame {
     }
 
     public void updateCityGrid() {
+        cityGrid.removeAll();
         int i = 0;
         for (Building b : cityToView.getEconomicalBuildings()) {
             BuildingTile t = new BuildingTile(b);
-            t.addMouseListener(new MouseAdapter() {
-                public void mouseClicked(MouseEvent me) {
-                    new BuildingPopUp(b);
-                }
-            });
+            t.setListener(listener);
             cityGrid.add(t);
             i++;
         }
         for (Building b : cityToView.getMilitaryBuildings()) {
             BuildingTile t = new BuildingTile(b);
-            t.addMouseListener(new MouseAdapter() {
-                public void mouseClicked(MouseEvent me) {
-                    new BuildingPopUp(b);
-                }
-            });
+            t.setListener(listener);
             cityGrid.add(t);
             i++;
         }
         for (; i < 9; i++) {
             cityGrid.add(new BuildingTile());
         }
+        revalidate();
+        repaint();
     }
 
     public void setPlayerName(String playerName) {
@@ -102,10 +98,19 @@ public class CityView extends Frame {
 
     public static void main(String[] args) {
         City city = new City("Alex");
-        city.getMilitaryBuildings().add(new ArcheryRange());
+        ArcheryRange a = new ArcheryRange();
+        a.setCoolDown(false);
+        city.getMilitaryBuildings().add(a);
         city.getMilitaryBuildings().add(new Barracks());
         city.getEconomicalBuildings().add(new Market());
         city.getEconomicalBuildings().add(new Farm());
         new CityView(city);
     }
+
+    public void setListener(CityViewListener listener) {
+        this.listener = listener;
+        updateCityGrid();
+    }
+
+
 }
