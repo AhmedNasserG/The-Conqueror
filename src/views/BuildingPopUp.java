@@ -1,6 +1,10 @@
 package views;
 
 import buildings.*;
+import exceptions.BuildingInCoolDownException;
+import exceptions.MaxLevelException;
+import exceptions.MaxRecruitedException;
+import listeners.BuildingPopUpListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,6 +15,7 @@ public class BuildingPopUp extends Frame implements ActionListener {
     private Building buildingToShow;
     private final int width;
     private final int height;
+    private BuildingPopUpListener listener;
 
     public BuildingPopUp(Building buildingToShow) {
         super(buildingToShow.getBuildingName());
@@ -20,6 +25,7 @@ public class BuildingPopUp extends Frame implements ActionListener {
         setBounds(width, height, 420, 420);
         setLayout(null);
         BuildingTile buildingTile = new BuildingTile(buildingToShow);
+        buildingTile.removeMouseListener(buildingTile);
         buildingTile.setBounds(420 / 2 - 200 / 3, 10, 400 / 3, 400 / 3);
 
         JLabel buildingStatus = new JLabel(buildingToShow.isCoolDown() ? "Cooling Down" : "IDLE", SwingConstants.CENTER);
@@ -106,12 +112,31 @@ public class BuildingPopUp extends Frame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("Upgrade")) {
-            System.out.println("Upgrade");
-        } else if (e.getActionCommand().equals("Recruit")) {
-            System.out.println("Recruit");
-        } else if (e.getActionCommand().equals("Close")) {
-            this.dispose();
+        switch (e.getActionCommand()) {
+            case "Upgrade":
+                try {
+                    listener.onUpgradeClicked(this);
+                } catch (Exception exception) {
+                }
+                break;
+            case "Recruit":
+                try {
+                    listener.onRecruitClicked(this);
+                } catch (Exception exception) {
+                }
+                break;
+            case "Close":
+                this.dispose();
+                break;
         }
     }
+
+    public void setListener(BuildingPopUpListener listener) {
+        this.listener = listener;
+    }
+
+    public Building getBuildingToShow() {
+        return buildingToShow;
+    }
+
 }
