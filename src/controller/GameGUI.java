@@ -1,10 +1,13 @@
 package controller;
 
+import buildings.*;
+import engine.City;
 import engine.Game;
-import listeners.BattleListener;
-import listeners.NewGameListener;
-import listeners.StartMenuListener;
-import listeners.WorldMapListener;
+import exceptions.BuildingInCoolDownException;
+import exceptions.MaxLevelException;
+import exceptions.MaxRecruitedException;
+import exceptions.NotEnoughGoldException;
+import listeners.*;
 import units.Unit;
 import views.*;
 
@@ -15,7 +18,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 
 public class GameGUI
-        implements ActionListener, NewGameListener, StartMenuListener, WorldMapListener, BattleListener {
+        implements ActionListener, NewGameListener, StartMenuListener, CityViewListener, WorldMapListener, BattleListener {
 
     private Game game;
     private final GameViews view;
@@ -24,8 +27,8 @@ public class GameGUI
         view = new GameViews();
         view.setStartMenuView(new StartMenuView());
         view.getStartMenuView().setListener(this);
-        view.getBattleView().revalidate();
-        view.getBattleView().repaint();
+//        view.getBattleView().revalidate();
+//        view.getBattleView().repaint();
     }
 
 
@@ -51,11 +54,29 @@ public class GameGUI
         String cityName = view.getNewGameView().getCityName();
         game = new Game(playerName, cityName);
         view.getNewGameView().dispose();
-        view.setCityView(new CityView(game.getPlayer().getControlledCities().get(0)));
-        view.getCityView().setPlayerName(game.getPlayer().getName());
-        view.getCityView().setCurrentTurnCount(game.getCurrentTurnCount());
-        view.getCityView().setFood(game.getPlayer().getFood());
-        view.getCityView().setTreasury(game.getPlayer().getTreasury());
+
+        City city = game.getPlayer().getControlledCities().get(0);
+
+        //For TEST only
+        ArcheryRange a = new ArcheryRange();
+        a.setCoolDown(false);
+        city.getMilitaryBuildings().add(a);
+        city.getMilitaryBuildings().add(new Barracks());
+        city.getEconomicalBuildings().add(new Market());
+        city.getEconomicalBuildings().add(new Farm());
+        //---------
+
+        CityView cityView = new CityView(city);
+        cityView.setListener(this);
+
+
+        // Set Status panel
+        cityView.setPlayerName(game.getPlayer().getName());
+        cityView.setCurrentTurnCount(game.getCurrentTurnCount());
+        cityView.setFood(game.getPlayer().getFood());
+        cityView.setTreasury(game.getPlayer().getTreasury());
+
+        view.setCityView(cityView);
         view.getCityView().revalidate();
         view.getCityView().repaint();
 
@@ -91,5 +112,40 @@ public class GameGUI
     public void autoResolveBattle() {
         JPanel battlePanel = view.getBattleView().getBattlePanel();
 
+    }
+
+    @Override
+    public void onUpgradeClicked(BuildingPopUp buildingPopUp) {
+        try {
+            game.getPlayer().upgradeBuilding(buildingPopUp.getBuildingToShow());
+            buildingPopUp.dispose();
+            view.getCityView().updateCityGrid();
+        } catch (BuildingInCoolDownException e) {
+            JOptionPane.showMessageDialog(null, "Sorry The Building is Cooling Down, Please wait to the next turn to upgrade.");
+        } catch (MaxLevelException e) {
+            JOptionPane.showMessageDialog(null, "Sorry The Building Reached Maximum Level Available.");
+        } catch (NotEnoughGoldException e) {
+            JOptionPane.showMessageDialog(null, "Sorry You Have Not Enough Gold To Upgrade.");
+        }
+    }
+
+    @Override
+    public void onRecruitClicked(BuildingPopUp buildingPopUp){
+        try {
+            game.getPlayer().recruitUnit(((MilitaryBuilding)(buildingPopUp.getBuildingToShow())));
+            buildingPopUp.dispose();
+        } catch (BuildingInCoolDownException e) {
+            JOptionPane.showMessageDialog(null, "Sorry The Building is Cooling Down, Please wait to the next turn to upgrade.");
+        } catch (MaxRecruitedException e) {
+            JOptionPane.showMessageDialog(null, "Sorry The Building Already Recruited The Maximum Number of Units Per Turn, Please wait to the next turn to recruit more.");
+        } catch (NotEnoughGoldException e) {
+            JOptionPane.showMessageDialog(null, "Sorry You Have Not Enough Gold To Recruit.");
+        }
+    }
+
+    @Override
+    public void onTileClicked(Building building) {
+        BuildingPopUp buildingPopUp = new BuildingPopUp(building);
+        buildingPopUp.setListener(this);
     }
 }
