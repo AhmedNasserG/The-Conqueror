@@ -1,5 +1,6 @@
 package units;
 
+import buildings.*;
 import exceptions.FriendlyFireException;
 import listeners.UnitListener;
 
@@ -40,6 +41,18 @@ public abstract class Unit {
         }
 
         listener.onAttack(this, target);
+    }
+
+    public String getUnitName() {
+        String imgStr = "";
+        if (Archer.class.equals(this.getClass())) {
+            imgStr = "archer";
+        } else if (Cavalry.class.equals(this.getClass())) {
+            imgStr = "cavalry";
+        } else if (Infantry.class.equals(this.getClass())) {
+            imgStr = "Infantry";
+        }
+        return imgStr;
     }
 
     // Getters
