@@ -1,20 +1,24 @@
 package views;
 
 import buildings.*;
+import listeners.BuildingTileListener;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-class BuildingTile extends JLayeredPane {
+public class BuildingTile extends JLayeredPane implements MouseListener {
     private Building building;
     private JLabel buildingImg;
     private JLabel buildingName;
     private JLabel buildingLevel;
-
+    private BuildingTileListener listener;
 
     public BuildingTile() {
         super();
         setLayout(null);
+        addMouseListener(this);
         buildingImg = new JLabel();
         buildingName = new JLabel("", SwingConstants.CENTER);
         buildingLevel = new JLabel("", SwingConstants.CENTER);
@@ -63,5 +67,32 @@ class BuildingTile extends JLayeredPane {
         return new ImageIcon(icon.getImage().getScaledInstance((400 / 3), (400 / 3), Image.SCALE_DEFAULT));
     }
 
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        listener.onTileClicked(this.building);
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
+
+    public void setListener(BuildingTileListener listener) {
+        this.listener = listener;
+    }
 }
 
