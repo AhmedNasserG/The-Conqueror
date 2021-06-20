@@ -21,7 +21,6 @@ public class Card extends JLayeredPane implements MouseListener {
 
     public Card(){
         super();
-        setLayout(null);
         addMouseListener(this);
         img = new JLabel();
         topLabel = new JLabel("", SwingConstants.CENTER);

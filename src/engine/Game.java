@@ -5,6 +5,8 @@ import buildings.Farm;
 import buildings.Market;
 import buildings.MilitaryBuilding;
 import exceptions.FriendlyFireException;
+import listeners.BattleListener;
+import listeners.UnitListener;
 import units.*;
 
 import java.io.IOException;
@@ -22,6 +24,8 @@ public class Game {
     private ArrayList<Distance> distances;
     private final int maxTurnCount;
     private int currentTurnCount;
+
+    UnitListener listener;
 
     public Game(String playerName, String playerCity) throws IOException {
         this.player = new Player(playerName);
@@ -211,9 +215,11 @@ public class Game {
             Unit defendUnit = defenderUnits.get(idx2);
 
             if (turn == 0) { // Attacker Army turn
-                attackUnit.attack(defendUnit);
+//                attackUnit.attack(defendUnit);
+                listener.onAttack(attackUnit, defendUnit);
             } else { // Defender Army turn
-                defendUnit.attack(attackUnit);
+//                defendUnit.attack(attackUnit);
+                listener.onAttack(defendUnit, attackUnit);
             }
             turn ^= 1;
         }
@@ -254,5 +260,9 @@ public class Game {
 
     public void setPlayer(Player player) {
         this.player = player;
+    }
+
+    public void setListener(UnitListener listener) {
+        this.listener = listener;
     }
 }
