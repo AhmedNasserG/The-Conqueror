@@ -16,13 +16,6 @@ public abstract class Unit {
     private double siegeUpkeep;
     private Army parentArmy;
 
-    UnitListener listener;
-
-    public void setListener(UnitListener listener) {
-        this.listener = listener;
-    }
-
-
     public Unit(int level, int maxSoldierCount, double idleUpkeep, double marchingUpkeep, double siegeUpkeep) {
         this.level = level;
         this.maxSoldierCount = maxSoldierCount;
@@ -39,8 +32,6 @@ public abstract class Unit {
         if (parentArmy.equals(target.getParentArmy())) {
             throw new FriendlyFireException();
         }
-
-        listener.onAttack(this, target);
     }
 
     public String getUnitName() {

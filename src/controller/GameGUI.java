@@ -3,42 +3,66 @@ package controller;
 import buildings.*;
 import engine.City;
 import engine.Game;
-import exceptions.BuildingInCoolDownException;
-import exceptions.MaxLevelException;
-import exceptions.MaxRecruitedException;
-import exceptions.NotEnoughGoldException;
+import exceptions.*;
 import listeners.*;
-import units.Unit;
+import units.*;
 import views.*;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
 public class GameGUI
-        implements ActionListener, NewGameListener, StartMenuListener, CityViewListener, WorldMapListener, BattleListener {
+        implements ActionListener, NewGameListener, StartMenuListener, CityViewListener, WorldMapListener, BattleListener, UnitListener{
 
     private Game game;
     private final GameViews view;
 
-    public GameGUI() throws IOException, InterruptedException {
+    private Army a;
+    private Army b;
+
+    public GameGUI() throws IOException {
         view = new GameViews();
-        view.setStartMenuView(new StartMenuView());
-        view.getStartMenuView().setListener(this);
-//        view.getBattleView().revalidate();
-//        view.getBattleView().repaint();
+        game = new Game("OMAR", "Cairo");
+        game.setListener(this);
+
     }
 
 
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) throws IOException {
+
+
         new GameGUI();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == view.getBattleView().getNextMoveBtn()){
+            try {
+                System.out.println("actionPerformed");
+                game.autoResolve(a,b);
+            } catch (FriendlyFireException friendlyFireException) {
+                friendlyFireException.printStackTrace();
+            }
+        }
+    }
 
+    @Override
+    public void onAttack(Unit attacker, Unit target) throws FriendlyFireException {
+        attacker.attack(target);
+    }
+
+    @Override
+    public void onBattleUpdated(Unit attacker, Unit target, String result) {
+//        JLabel resultsDisplay = new JLabel();
+//
+//        resultsDisplay.setText(result);
+//        resultsDisplay.setFont(new Font(Font.MONOSPACED, Font.BOLD, 30));
+//        view.getBattleView().setBattleResultsDisplay(resultsDisplay);
+//        view.getBattleView().revalidate();
+//        view.getBattleView().repaint();
+        System.out.println("yay");
     }
 
     @Override
@@ -84,29 +108,20 @@ public class GameGUI
 
     @Override
     public void onManualAttackChosen() throws InterruptedException {
-        view.setBattleView(new BattleView("MANUAL ATTACK"));
-        view.getBattleView().setVisible(true);
+//        view.setBattleView(new BattleView("MANUAL ATTACK"));
+//        view.getBattleView().setVisible(true);
         // TODO: hide WorldMapView
     }
 
     @Override
     public void onAutoResolveChosen() throws InterruptedException {
-        view.setBattleView(new BattleView("AUTO RESOLVE"));
-        view.getBattleView().setVisible(true);
+//        view.setBattleView(new BattleView("AUTO RESOLVE"));
+//        view.getBattleView().setVisible(true);
         // TODO: hide WorldMapView
     }
 
 
-    @Override
-    public void onBattleUpdated(Unit attacker, Unit target, String result) {
-        JLabel resultsDisplay = view.getBattleView().getBattleResultsDisplay();
-        resultsDisplay.setText(result);
-        resultsDisplay.setFont(new Font(Font.MONOSPACED, Font.BOLD, 30));
 
-        view.getBattleView().setBattleResultsDisplay(resultsDisplay);
-        view.getBattleView().revalidate();
-        view.getBattleView().repaint();
-    }
 
 
     public void autoResolveBattle() {
