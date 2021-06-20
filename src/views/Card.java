@@ -51,7 +51,7 @@ public class Card extends JLayeredPane implements MouseListener {
         this.building = building;
         img.setIcon(getIcon(building));
         topLabel.setText(building.getBuildingName());
-        bottomLabel.setText("Level " + building.getLevel());
+        bottomLabel.setText("Level: " + building.getLevel());
         add(topLabel, Integer.valueOf(1));
         add(bottomLabel, Integer.valueOf(1));
     }
@@ -61,7 +61,7 @@ public class Card extends JLayeredPane implements MouseListener {
         this.unit = unit;
         img.setIcon(getIcon(unit));
         topLabel.setText(unit.getUnitName());
-        bottomLabel.setText("Level " + unit.getLevel());
+        bottomLabel.setText("Level: " + unit.getLevel());
         add(topLabel, Integer.valueOf(1));
         add(bottomLabel, Integer.valueOf(1));
     }
@@ -70,7 +70,7 @@ public class Card extends JLayeredPane implements MouseListener {
         this();
         this.army = army;
         img.setIcon(getIcon(army));
-        topLabel.setText("Army");
+        topLabel.setText("Army: "+ army.getCurrentLocation());
         bottomLabel.setText(army.getCurrentStatus().toString());
         add(topLabel, Integer.valueOf(1));
         add(bottomLabel, Integer.valueOf(1));
