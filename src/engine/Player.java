@@ -54,6 +54,18 @@ public class Player {
         treasury -= currentBuilding.getRecruitmentCost();
     }
 
+    public void recruitUnit(MilitaryBuilding building) throws MaxRecruitedException, BuildingInCoolDownException, NotEnoughGoldException {
+        String type = building.getRecruitableUnitTypeName();
+        String cityName = "";
+        for (City city : controlledCities) {
+            if (city.getMilitaryBuildings().contains(building)) {
+                cityName = city.getName();
+                break;
+            }
+        }
+        recruitUnit(type, cityName);
+    }
+
     public void build(String type, String cityName) throws NotEnoughGoldException {
         City city = getCity(cityName);
         Building newBuilding;
