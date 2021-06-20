@@ -1,24 +1,27 @@
 package views;
 
 
+import units.Army;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class WorldMapView extends Frame {
     StatusPanel statusPanel;
     JPanel citiesAndText;
     JPanel cityButtons;
-    JPanel armiesPanel;
+
 
 public WorldMapView(){
     this.setVisible(true);
-    this.setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
+    this.setLayout(null);
     statusPanel= new StatusPanel();
-    statusPanel.setBounds(0, 0, getWidth() - 100, 100);
+    statusPanel.setBounds(0, 0, getWidth() , 100);
 
     citiesAndText = new JPanel();
     citiesAndText.setLayout(new BoxLayout(citiesAndText, BoxLayout.Y_AXIS));
-    JLabel chooseLabel = new JLabel("Choose the city you want to view");
+    JLabel chooseLabel = new JLabel("View City");
     chooseLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
     chooseLabel.setFont(chooseLabel.getFont().deriveFont(Font.BOLD,23));
     citiesAndText.add(chooseLabel);
@@ -34,33 +37,23 @@ public WorldMapView(){
     cityButtons.add(spartaButton);
 
     citiesAndText.add(cityButtons);
+    citiesAndText.setBounds((getWidth() - 710) / 2, 280, 410, 410);
 
-    armiesPanel = new JPanel(new GridLayout(1,2));
-
-    JPanel idleArmies = new JPanel(new GridLayout(0,5));
-    idleArmies.setBorder(BorderFactory.createTitledBorder("IDLE Armies stehet hier "));
     //Testing the scroll pane
-    for(int i =0;i<50;i++){
-        idleArmies.add(new JButton("Army" + i));
+    ArrayList<Army> armiesArray = new ArrayList<>();
+    for(int i=0;i<150;i++){
+        armiesArray.add(new Army("army" +i));
     }
-    JScrollPane idlePane = new JScrollPane(idleArmies);
+    //^\\
+    ArmiesPanel armiesPanel = new ArmiesPanel(armiesArray);
+    JScrollPane pane = new JScrollPane(armiesPanel);
+    pane.setBounds(getWidth() - 300, 100, 300, getHeight() - 100);
 
-
-    JPanel otherArmies = new JPanel(new GridLayout(0,5));
-    otherArmies.setBorder(BorderFactory.createTitledBorder("BESIEGING and MARCHING Armies stehet hier "));
-    //Testing the scroll pane
-    for(int i =50;i>=0;i--){
-        otherArmies.add(new JButton("Army" + i));
-    }
-    JScrollPane otherPane = new JScrollPane(otherArmies);
-
-    armiesPanel.add(idleArmies);
-    armiesPanel.add(otherArmies);
 
 
     this.add(statusPanel);
     this.add(citiesAndText);
-    this.add(armiesPanel);
+    this.add(pane);
 
     this.revalidate();
     this.repaint();
