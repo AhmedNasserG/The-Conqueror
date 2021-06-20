@@ -1,45 +1,49 @@
 package views;
 
+import units.*;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class BattleView extends Frame {
     private JTextArea battleLog;
     private JPanel leftSidePanel;
     private JPanel battlePanel;
+    private UnitsPanel playerUnitsPanel;
+    private UnitsPanel targetUnitsPanel;
     private String battleMode;
-    private StringBuilder battleResultsSB;
     private JLabel battleResultsDisplay;
 
+    private JButton nextMoveBtn;
 
-    public JLabel getBattleResultsDisplay() {
-        return battleResultsDisplay;
+    private Army playerArmy;
+    private Army targetArmy;
+
+    public void setPlayerArmy(Army playerArmy) {
+        this.playerArmy = playerArmy;
     }
 
-    public void setBattleResultsDisplay(JLabel battleResultsDisplay) {
-        this.battleResultsDisplay = battleResultsDisplay;
+    public void setTargetArmy(Army targetArmy) {
+        this.targetArmy = targetArmy;
     }
 
-    public JPanel getBattlePanel() {
-        return battlePanel;
-    }
-
-    public void setBattlePanel(JPanel battlePanel) {
-        this.battlePanel = battlePanel;
-    }
-
-    public BattleView(String battleMode) {
+    public BattleView(String battleMode, Army playerArmy, Army targetArmy) {
         super();
+        this.playerArmy = playerArmy;
+        this.targetArmy = targetArmy;
         this.battleMode = battleMode;
         this.setLayout(new BorderLayout());
 
+//        leftSidePanel.setBackground(Color.black);
         initBattleLog();
         initBattlePanel();
 
         add(battlePanel, BorderLayout.CENTER);
-        leftSidePanel.setBackground(Color.black);
         add(leftSidePanel, BorderLayout.WEST);
-        add(new StatusPanel(), BorderLayout.NORTH);
+        add(new StatusPanel("AUTO RESOLVE"), BorderLayout.NORTH);
 
 
         this.setVisible(true);
@@ -70,19 +74,74 @@ public class BattleView extends Frame {
 
     public void initBattlePanel() {
         this.battlePanel = new JPanel();
+        battlePanel.setBackground(Color.orange);
 
-        JLabel modeLabel = new JLabel(battleMode);
-        modeLabel.setFont(new Font(Font.MONOSPACED, Font.BOLD, 100));
-        modeLabel.setBorder(BorderFactory.createEmptyBorder(25, 350, 0, 0));
+        nextMoveBtn = new JButton("NEXT MOVE");
+        battlePanel.add(nextMoveBtn);
 
 
         battlePanel.setLayout(new BorderLayout());
-        battlePanel.add(modeLabel, BorderLayout.NORTH);
+
+        playerUnitsPanel = new UnitsPanel("player", playerArmy);
+        battlePanel.add(nextMoveBtn, BorderLayout.CENTER);
+        battlePanel.add(playerUnitsPanel, BorderLayout.SOUTH);
+    }
+
+    public JLabel getBattleResultsDisplay() {
+        return battleResultsDisplay;
+    }
+
+    public void setBattleResultsDisplay(JLabel battleResultsDisplay) {
+        this.battleResultsDisplay = battleResultsDisplay;
+    }
+
+    public JPanel getBattlePanel() {
+        return battlePanel;
+    }
+
+    public void setBattlePanel(JPanel battlePanel) {
+        this.battlePanel = battlePanel;
+    }
+
+    public JButton getNextMoveBtn() {
+        return nextMoveBtn;
     }
 
 
-    public static void main(String[] args) {
-        new BattleView("AUTO RESOLVE");
+    public static void main(String[] args) throws IOException {
+//        Game g = new Game("Omar", "Cairo");
+//        Player p = g.getPlayer();
+//
+//        Army a = new Army("Cairo");
+//        Army b = new Army("Sparta");
+//
+//        Archer u1 = new Archer(1, 5, 2.0, 2.0, 2.0);
+//        Cavalry u2 = new Cavalry(1, 5, 2.0, 2.0, 2.0);
+//        Infantry u3 = new Infantry(1, 5, 2.0, 2.0, 2.0);
+//
+//        u1.setParentArmy(a);
+//        u2.setParentArmy(a);
+//        u3.setParentArmy(a);
+//
+//        ArrayList<Unit> list = new ArrayList<>();
+//        list.add(u1); list.add(u2); list.add(u3);
+//
+//        a.setUnits(list);
+//
+//        for(Unit u : a.getUnits()){
+//            System.out.println(u.getUnitName());
+//        }
+//
+//
+
+//        new BattleView("AUTO RESOLVE");
+
+//        JFrame frame = new JFrame();
+//        frame.add(new Card(new Archer(1, 5, 2.0, 2.0, 2.0)));
+//        frame.setVisible(true);
     }
+
+
+
 
 }

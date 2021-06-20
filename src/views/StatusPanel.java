@@ -31,6 +31,16 @@ class StatusPanel extends JPanel {
         add(turnCountLabel);
         add(goldCountLabel);
         add(foodCountLabel);
+    }
+
+    public StatusPanel(String battleMode){
+        this();
+
+        JLabel modeLabel = new JLabel(battleMode);
+        modeLabel.setFont(new Font(Font.MONOSPACED, Font.BOLD, 100));
+
+        this.add(modeLabel);
+        modeLabel.setBorder(BorderFactory.createEmptyBorder(0, 700, 0, 0));
 
     }
 
