@@ -3,6 +3,7 @@ package views;
 import buildings.*;
 import engine.City;
 import listeners.CityViewListener;
+import units.Archer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -62,19 +63,19 @@ public class CityView extends Frame {
         cityGrid.removeAll();
         int i = 0;
         for (Building b : cityToView.getEconomicalBuildings()) {
-            BuildingTile t = new BuildingTile(b);
+            Card t = new Card(b);
             t.setListener(listener);
             cityGrid.add(t);
             i++;
         }
         for (Building b : cityToView.getMilitaryBuildings()) {
-            BuildingTile t = new BuildingTile(b);
+            Card t = new Card(b);
             t.setListener(listener);
             cityGrid.add(t);
             i++;
         }
         for (; i < 9; i++) {
-            cityGrid.add(new BuildingTile());
+            cityGrid.add(new Card());
         }
         revalidate();
         repaint();

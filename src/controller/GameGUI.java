@@ -130,9 +130,9 @@ public class GameGUI
     }
 
     @Override
-    public void onRecruitClicked(BuildingPopUp buildingPopUp){
+    public void onRecruitClicked(BuildingPopUp buildingPopUp) {
         try {
-            game.getPlayer().recruitUnit(((MilitaryBuilding)(buildingPopUp.getBuildingToShow())));
+            game.getPlayer().recruitUnit(((MilitaryBuilding) (buildingPopUp.getBuildingToShow())));
             buildingPopUp.dispose();
         } catch (BuildingInCoolDownException e) {
             JOptionPane.showMessageDialog(null, "Sorry The Building is Cooling Down, Please wait to the next turn to upgrade.");
@@ -144,8 +144,10 @@ public class GameGUI
     }
 
     @Override
-    public void onTileClicked(Building building) {
-        BuildingPopUp buildingPopUp = new BuildingPopUp(building);
-        buildingPopUp.setListener(this);
+    public void onCardClicked(Object object) {
+        if (object instanceof Building) {
+            BuildingPopUp buildingPopUp = new BuildingPopUp((Building) object);
+            buildingPopUp.setListener(this);
+        }
     }
 }

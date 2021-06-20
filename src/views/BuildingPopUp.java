@@ -1,9 +1,6 @@
 package views;
 
 import buildings.*;
-import exceptions.BuildingInCoolDownException;
-import exceptions.MaxLevelException;
-import exceptions.MaxRecruitedException;
 import listeners.BuildingPopUpListener;
 
 import javax.swing.*;
@@ -24,7 +21,7 @@ public class BuildingPopUp extends Frame implements ActionListener {
         this.height = (getHeight() - 420) / 2;
         setBounds(width, height, 420, 420);
         setLayout(null);
-        BuildingTile buildingTile = new BuildingTile(buildingToShow);
+        Card buildingTile = new Card(buildingToShow);
         buildingTile.removeMouseListener(buildingTile);
         buildingTile.setBounds(420 / 2 - 200 / 3, 10, 400 / 3, 400 / 3);
 

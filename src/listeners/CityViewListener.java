@@ -1,4 +1,4 @@
 package listeners;
 
-public interface CityViewListener extends  BuildingTileListener, BuildingPopUpListener{
+public interface CityViewListener extends  CardListener, BuildingPopUpListener{
 }
