@@ -22,11 +22,11 @@ public abstract class MilitaryBuilding extends Building {
     public String getRecruitableUnitTypeName() {
         String type = "";
         if (ArcheryRange.class.equals(this.getClass())) {
-            type = "Archers";
+            type = "Archer";
         } else if (Stable.class.equals(this.getClass())) {
-            type = "Cavalries";
+            type = "Cavalry";
         } else if (Barracks.class.equals(this.getClass())) {
-            type = "Infantries";
+            type = "Infantry";
         }
         return type;
     }
