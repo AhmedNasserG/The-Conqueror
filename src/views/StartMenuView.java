@@ -22,7 +22,6 @@ public class StartMenuView extends Frame implements ActionListener {
         JPanel menuPanel = menuPanel(buttonNames);
 
         this.add(menuPanel);
-        this.setVisible(true);
         this.revalidate();
         this.repaint();
     }
