@@ -1,6 +1,7 @@
 package views;
 
 import buildings.Building;
+import engine.City;
 import exceptions.NotEnoughGoldException;
 import listeners.CardListener;
 import units.Army;
@@ -10,6 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Locale;
 
 public class Card extends JLayeredPane implements MouseListener {
     private JLabel img;
@@ -19,6 +21,7 @@ public class Card extends JLayeredPane implements MouseListener {
     private Building building;
     private Unit unit;
     private Army army;
+    private City city;
     private CardListener listener;
 
     public Card() {
@@ -88,6 +91,21 @@ public class Card extends JLayeredPane implements MouseListener {
         bottomLabel.setText(army.getCurrentStatus().toString());
         add(topLabel, Integer.valueOf(1));
         add(bottomLabel, Integer.valueOf(1));
+    }
+    public Card(City city) {
+        this();
+        this.city = city;
+        img.setIcon(getIcon(city));
+        topLabel.setText("City: "+ city.getName());
+        bottomLabel.setText("");
+        add(topLabel, Integer.valueOf(1));
+        add(bottomLabel, Integer.valueOf(1));
+    }
+
+    private Icon getIcon(City city) {
+        ImageIcon icon = new ImageIcon("res/img/" + city.getName().toLowerCase() + ".png");
+        return new ImageIcon(icon.getImage().getScaledInstance((400 / 3), (400 / 3), Image.SCALE_DEFAULT));
+
     }
 
     public ImageIcon getIcon(Building building) {
