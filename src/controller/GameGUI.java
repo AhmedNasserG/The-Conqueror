@@ -31,6 +31,58 @@ public class GameGUI
         view = new GameViews();
         view.setStartMenuView(new StartMenuView());
         view.getStartMenuView().setListener(this);
+
+//        view = new GameViews();
+//        game = new Game("OMAR", "Cairo");
+//        game.setListener(this);
+//        a = new Army("Cairo");
+//        b = new Army("Sparta");
+//
+//        Archer u1 = new Archer(1, 5, 2.0, 2.0, 2.0);
+//        Archer u2 = new Archer(1, 5, 2.0, 2.0, 2.0);
+//        Archer u3 = new Archer(1, 5, 2.0, 2.0, 2.0);
+//        Archer u4 = new Archer(1, 5, 2.0, 2.0, 2.0);
+//        Archer u5 = new Archer(1, 5, 2.0, 2.0, 2.0);
+//        Archer u6 = new Archer(1, 5, 2.0, 2.0, 2.0);
+//        u1.setListener(this);
+//        u2.setListener(this);
+//        u3.setListener(this);
+//        u4.setListener(this);
+//        u5.setListener(this);
+//        u6.setListener(this);
+//
+//        Army p1 = new Army("asd"), p2 = new Army("Asd");
+//
+//
+//        ArrayList<Unit> list = new ArrayList<>();
+//        list.add(u1); list.add(u2); list.add(u3);
+////        for(int i = 0; i < list.size(); i++){
+////            list.get(i).setListener(this);
+////        }
+//        a.setUnits(list);
+//        game.getPlayer().getControlledArmies().add(a);
+//
+//        ArrayList<Unit> list2 = new ArrayList<>();
+//        list2.add(u4); list2.add(u5); list2.add(u6);
+////        for(int i = 0; i < list.size(); i++){
+////            list.get(i).setListener(this);
+////        }
+//        b.setUnits(list2);
+//
+//        u1.setParentArmy(a);
+//        u2.setParentArmy(a);
+//        u3.setParentArmy(a);
+//        u4.setParentArmy(b);
+//        u5.setParentArmy(b);
+//        u6.setParentArmy(b);
+//
+//        BattleView bv = new BattleView("AUTO RESOLVE", a, b, this);
+//        view.setBattleView(bv);
+//        bv.getNextMoveBtn().addActionListener(this);
+//
+//
+//
+//        view.getBattleView().repaint();
     }
 
 
@@ -85,32 +137,34 @@ public class GameGUI
         String playerName = view.getNewGameView().getPlayerName();
         String cityName = view.getNewGameView().getCityName();
         game = new Game(playerName, cityName);
+        view.setWorldMapView(new WorldMapView());
+        view.getWorldMapView().setListener(this);
         view.getNewGameView().dispose();
-
-        City city = game.getPlayer().getControlledCities().get(0);
-
-        //For TEST only
-//        ArcheryRange a = new ArcheryRange();
-//        a.setCoolDown(false);
-//        city.getMilitaryBuildings().add(a);
-//        city.getMilitaryBuildings().add(new Barracks());
-//        city.getEconomicalBuildings().add(new Market());
-//        city.getEconomicalBuildings().add(new Farm());
-        //---------
-
-        CityView cityView = new CityView(city);
-        cityView.setListener(this);
-
-
-        // Set Status panel
-        cityView.setPlayerName(game.getPlayer().getName());
-        cityView.setCurrentTurnCount(game.getCurrentTurnCount());
-        cityView.setFood(game.getPlayer().getFood());
-        cityView.setTreasury(game.getPlayer().getTreasury());
-
-        view.setCityView(cityView);
-        view.getCityView().revalidate();
-        view.getCityView().repaint();
+//
+//        City city = game.getPlayer().getControlledCities().get(0);
+//
+//        //For TEST only
+////        ArcheryRange a = new ArcheryRange();
+////        a.setCoolDown(false);
+////        city.getMilitaryBuildings().add(a);
+////        city.getMilitaryBuildings().add(new Barracks());
+////        city.getEconomicalBuildings().add(new Market());
+////        city.getEconomicalBuildings().add(new Farm());
+//        //---------
+//
+//        CityView cityView = new CityView(city);
+//        cityView.setListener(this);
+//
+//
+//        // Set Status panel
+//        cityView.setPlayerName(game.getPlayer().getName());
+//        cityView.setCurrentTurnCount(game.getCurrentTurnCount());
+//        cityView.setFood(game.getPlayer().getFood());
+//        cityView.setTreasury(game.getPlayer().getTreasury());
+//
+//        view.setCityView(cityView);
+//        view.getCityView().revalidate();
+//        view.getCityView().repaint();
     }
 
     @Override

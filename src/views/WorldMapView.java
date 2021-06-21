@@ -1,6 +1,8 @@
 package views;
 
 
+import listeners.CardListener;
+import listeners.CityViewListener;
 import units.Army;
 
 import javax.swing.*;
@@ -11,6 +13,8 @@ public class WorldMapView extends Frame {
     private StatusPanel statusPanel;
     private JPanel citiesAndText;
     private JPanel cityButtons;
+    private ArrayList<Army> armiesArray;
+    private CityViewListener listener;
 
 
 public WorldMapView(){
@@ -40,20 +44,21 @@ public WorldMapView(){
     citiesAndText.setBounds((getWidth() - 710) / 2, 280, 410, 410);
 
     //Testing the scroll pane
-    ArrayList<Army> armiesArray = new ArrayList<>();
+    armiesArray = new ArrayList<>();
     for(int i=0;i<5;i++){
         armiesArray.add(new Army("army" +i));
     }
     //^\\
-    ArmiesPanel armiesPanel = new ArmiesPanel(armiesArray);
-    JScrollPane pane = new JScrollPane(armiesPanel);
-    pane.setBounds(getWidth() - 300, 100, 300, getHeight() - 100);
-    pane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+//    ArmiesPanel armiesPanel = new ArmiesPanel(armiesArray);
+//    armiesPanel.setListener(listener);
+//    JScrollPane pane = new JScrollPane(armiesPanel);
+//    pane.setBounds(getWidth() - 300, 100, 300, getHeight() - 100);
+//    pane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
 
     this.add(statusPanel);
     this.add(citiesAndText);
-    this.add(pane);
+//    this.add(pane);
 
     this.revalidate();
     this.repaint();
@@ -63,4 +68,12 @@ public WorldMapView(){
         new WorldMapView();
     }
 
+    public void setListener(CityViewListener listener) {
+        this.listener = listener;
+        ArmiesPanel armiesPanel = new ArmiesPanel(armiesArray, listener);
+        JScrollPane pane = new JScrollPane(armiesPanel);
+        pane.setBounds(getWidth() - 300, 100, 300, getHeight() - 100);
+        pane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        add(pane);
+    }
 }
