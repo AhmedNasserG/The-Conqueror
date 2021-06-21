@@ -41,14 +41,14 @@ public WorldMapView(){
 
     //Testing the scroll pane
     ArrayList<Army> armiesArray = new ArrayList<>();
-    for(int i=0;i<150;i++){
+    for(int i=0;i<5;i++){
         armiesArray.add(new Army("army" +i));
     }
     //^\\
     ArmiesPanel armiesPanel = new ArmiesPanel(armiesArray);
     JScrollPane pane = new JScrollPane(armiesPanel);
     pane.setBounds(getWidth() - 300, 100, 300, getHeight() - 100);
-
+    pane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
 
     this.add(statusPanel);

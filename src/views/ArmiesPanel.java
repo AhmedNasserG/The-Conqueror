@@ -11,21 +11,23 @@ public class ArmiesPanel extends JPanel{
     public ArmiesPanel(ArrayList<Army> armiesArray){
         super();
         for(Army army: armiesArray){
-            //TODO: change the button to a card
-            JButton armyButton = new JButton(army.getCurrentLocation());
-            armyButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-            //Card armyCard = new Card(army);
-
-            this.add(armyButton);
-            this.add(armyButton);
+            Card armyCard = new Card(army);
+            armyCard.setAlignmentX(Component.CENTER_ALIGNMENT);
+            this.add(armyCard);
+            this.add(Box.createVerticalStrut(10));
 
         }
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
     }
 
         public static void main(String[] args){
             JFrame armyFrame = new JFrame();
-            JScrollPane scroll = new JScrollPane(new ArmiesPanel(new ArrayList<Army>()));
+            ArrayList<Army> armies = new ArrayList<>();
+            for (int i = 0; i<50; i++)
+                armies.add(new Army("Army" + i));
+
+            JScrollPane scroll = new JScrollPane(new ArmiesPanel(armies));
             armyFrame.setContentPane(scroll);
             armyFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             armyFrame.setSize((400 / 3), (400 / 3));
