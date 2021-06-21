@@ -22,7 +22,7 @@ public class BuildingPopUp extends Frame implements ActionListener {
         setBounds(width, height, 420, 420);
         setLayout(null);
         Card buildingTile = new Card(buildingToShow);
-        buildingTile.removeMouseListener(buildingTile);
+        buildingTile.setEnabled(false);
         buildingTile.setBounds(420 / 2 - 200 / 3, 10, 400 / 3, 400 / 3);
 
         JLabel buildingStatus = new JLabel(buildingToShow.isCoolDown() ? "Cooling Down" : "IDLE", SwingConstants.CENTER);

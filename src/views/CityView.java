@@ -3,12 +3,15 @@ package views;
 import buildings.*;
 import engine.City;
 import listeners.CityViewListener;
+import units.Army;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 
-public class CityView extends Frame {
+public class CityView extends Frame implements ActionListener {
 
     private City cityToView;
     private StatusPanel statusPanel;
@@ -24,8 +27,11 @@ public class CityView extends Frame {
         statusPanel = new StatusPanel();
 
         ImageIcon worldMapIcon = new ImageIcon("res/img/map.png");
-        JLabel worldMapLabel = new JLabel(new ImageIcon(worldMapIcon.getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
-        worldMapLabel.setBackground(Color.DARK_GRAY);
+        JButton worldMapButton = new JButton();
+        worldMapButton.setActionCommand("worldMapButton");
+        worldMapButton.setIcon(new ImageIcon(worldMapIcon.getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
+        worldMapButton.addActionListener(this);
+
 
         cityGrid = new JPanel();
         cityGrid.setBackground(Color.lightGray);
@@ -35,7 +41,7 @@ public class CityView extends Frame {
 
 
         statusPanel.setBounds(0, 0, getWidth() - 100, 100);
-        worldMapLabel.setBounds(getWidth() - 100, 0, 100, 100);
+        worldMapButton.setBounds(getWidth() - 100, 0, 100, 100);
 
         cityGrid.setBounds((getWidth() - 710) / 2, 100, 410, 410);
         cityGrid.setLayout(new GridLayout(3, 3, 5, 5));
@@ -47,7 +53,7 @@ public class CityView extends Frame {
         armysPanel.setBounds(getWidth() - 300, 100, 300, getHeight() - 100);
 
         add(statusPanel);
-        add(worldMapLabel);
+        add(worldMapButton);
         add(cityGrid);
 
 
@@ -146,4 +152,11 @@ public class CityView extends Frame {
     }
 
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getActionCommand().equals("worldMapButton")) {
+            this.dispose();
+            new WorldMapView();
+        }
+    }
 }

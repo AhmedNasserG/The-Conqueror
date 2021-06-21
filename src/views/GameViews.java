@@ -6,6 +6,7 @@ public class GameViews {
     private NewGameView newGameView;
     private CityView cityView;
     private BattleView battleView;
+    private WorldMapView worldMapView;
 
     public BattleView getBattleView() {
         return battleView;
@@ -39,4 +40,11 @@ public class GameViews {
         this.cityView = cityView;
     }
 
+    public WorldMapView getWorldMapView() {
+        return worldMapView;
+    }
+
+    public void setWorldMapView(WorldMapView worldMapView) {
+        this.worldMapView = worldMapView;
+    }
 }
