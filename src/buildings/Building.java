@@ -32,15 +32,15 @@ public abstract class Building {
     public String getBuildingName() {
         String imgStr = "";
         if (ArcheryRange.class.equals(this.getClass())) {
-            imgStr = "archery_range";
+            imgStr = "ArcheryRange";
         } else if (Stable.class.equals(this.getClass())) {
-            imgStr = "stable";
+            imgStr = "Stable";
         } else if (Barracks.class.equals(this.getClass())) {
-            imgStr = "barracks";
+            imgStr = "Barracks";
         } else if (Market.class.equals(this.getClass())) {
-            imgStr = "market";
+            imgStr = "Market";
         } else if (Farm.class.equals(this.getClass())) {
-            imgStr = "farm";
+            imgStr = "Farm";
         }
         return imgStr;
     }
