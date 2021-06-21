@@ -15,15 +15,15 @@ public class ArmyPopUp extends Frame implements ActionListener {
     private final int width;
     private final int height;
 
-    public ArmyPopUp(Army army ){
+    public ArmyPopUp(Army army) {
         super(army.getCurrentLocation());
-        this.army   = army;
+        this.army = army;
         this.width = (getWidth() - 420) / 2;
         this.height = (getHeight() - 420) / 2;
         setBounds(width, height, 420, 420);
         setLayout(null);
         Card armyTile = new Card(army);
-        armyTile.removeMouseListener(armyTile);
+        armyTile.setEnabled(false);
         armyTile.setBounds(420 / 2 - 200 / 3, 10, 400 / 3, 400 / 3);
 
         JPanel backgroundPanel = new JPanel();
@@ -36,12 +36,11 @@ public class ArmyPopUp extends Frame implements ActionListener {
         container2.setLayout(new BoxLayout(container2, BoxLayout.Y_AXIS));
 
 
-
         container2.add(Box.createRigidArea(new Dimension(0, 20)));
         JPanel unitsPanel = new JPanel();
         unitsPanel.setLayout(new FlowLayout());
         unitsPanel.setBorder(BorderFactory.createLineBorder(Color.ORANGE));
-        for(Unit unit : army.getUnits()){
+        for (Unit unit : army.getUnits()) {
             Card unitCard = new Card(unit);
             unitCard.setAlignmentX(Component.CENTER_ALIGNMENT);
             unitsPanel.add(unitCard);
@@ -59,7 +58,7 @@ public class ArmyPopUp extends Frame implements ActionListener {
         JButton closeButton = new JButton("Close");
         closeButton.addActionListener(this);
         closeButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        closeButton.setBounds(420 / 2 - 180 / 3,360,100,30);
+        closeButton.setBounds(420 / 2 - 180 / 3, 360, 100, 30);
 
         add(closeButton);
         add(armyTile);
@@ -75,9 +74,9 @@ public class ArmyPopUp extends Frame implements ActionListener {
         // For testing
         Army salah = new Army("Salah");
         ArrayList<Unit> units = new ArrayList<>();
-        for(int i=0;i<3;i++){
-               units.add(new Cavalry(1));
-               units.add(new Infantry(3));
+        for (int i = 0; i < 3; i++) {
+            units.add(new Cavalry(1));
+            units.add(new Infantry(3));
         }
         salah.setUnits(units);
 
