@@ -43,7 +43,13 @@ public class Archer extends Unit {
         target.setCurrentSoldierCount(target.getCurrentSoldierCount()-(int)(attackFactor*getCurrentSoldierCount()));
         target.getParentArmy().handleAttackedUnit(target);
 
-        listener.onBattleUpdated(this, target, "asd");
+        String attacker = "player";
+
+
+        String res1 = this.getUnitName() + " ATTACKED " + target.getUnitName() + ". ";
+        String res2 = " has lost: " + casualtiesCount + " " + target.getUnitName() + "(s)";
+        listener.onBattleUpdated(this.getParentArmy(), res1, res2);
+
     }
 
 
