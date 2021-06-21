@@ -1,6 +1,7 @@
 package views;
 
 import buildings.Building;
+import exceptions.NotEnoughGoldException;
 import listeners.CardListener;
 import units.Army;
 import units.Unit;
@@ -14,12 +15,13 @@ public class Card extends JLayeredPane implements MouseListener {
     private JLabel img;
     private JLabel topLabel;
     private JLabel bottomLabel;
+    private String whereToBuild;
     private Building building;
     private Unit unit;
     private Army army;
     private CardListener listener;
 
-    public Card(){
+    public Card() {
         super();
         addMouseListener(this);
         img = new JLabel();
@@ -52,6 +54,17 @@ public class Card extends JLayeredPane implements MouseListener {
         img.setIcon(getIcon(building));
         topLabel.setText(building.getBuildingName());
         bottomLabel.setText("Level " + building.getLevel());
+        add(topLabel, Integer.valueOf(1));
+        add(bottomLabel, Integer.valueOf(1));
+    }
+
+    public Card(Building building, String whereToBuild) {
+        this();
+        this.whereToBuild = whereToBuild;
+        this.building = building;
+        img.setIcon(getIcon(building));
+        topLabel.setText(building.getBuildingName());
+        bottomLabel.setText("Cost " + building.getCost());
         add(topLabel, Integer.valueOf(1));
         add(bottomLabel, Integer.valueOf(1));
     }
@@ -98,9 +111,13 @@ public class Card extends JLayeredPane implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         if (building != null) {
-            listener.onCardClicked(this.building);
-        }else if (unit != null) {
-            listener.onCardClicked(this.unit);
+            try {
+                listener.onBuildingCardClicked(this.building, whereToBuild);
+            } catch (NotEnoughGoldException notEnoughGoldException) {
+                notEnoughGoldException.printStackTrace();
+            }
+        } else if (unit != null) {
+            listener.onUnitCardClicked(this.unit);
         } else if (army != null) {
 
         }
