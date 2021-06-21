@@ -1,45 +1,53 @@
 package views;
 
+import listeners.CardListener;
 import units.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 
 public class BattleView extends Frame {
-    private JTextArea battleLog;
+
+
     private JPanel leftSidePanel;
+    private JTextArea battleLog;
+    private JPanel unitInfoPanel;
+    private JPanel buttonsPanel;
+
     private JPanel battlePanel;
+
+
     private UnitsPanel playerUnitsPanel;
     private UnitsPanel targetUnitsPanel;
+    private JPanel battleActionPanel;
     private String battleMode;
     private JLabel battleResultsDisplay;
 
-    private JButton nextMoveBtn;
+    private JButton startAutoResolveBtn;
+    private JButton startManualAttackBtn;
+
+    private CardListener listener;
+
+    static final Dimension SCREENSIZE = Toolkit.getDefaultToolkit().getScreenSize();
+
 
     private Army playerArmy;
     private Army targetArmy;
 
-    public void setPlayerArmy(Army playerArmy) {
-        this.playerArmy = playerArmy;
-    }
 
-    public void setTargetArmy(Army targetArmy) {
-        this.targetArmy = targetArmy;
-    }
 
-    public BattleView(String battleMode, Army playerArmy, Army targetArmy) {
+    public BattleView(String battleMode, Army playerArmy, Army targetArmy, CardListener listener) {
         super();
+        this.listener = listener;
         this.playerArmy = playerArmy;
         this.targetArmy = targetArmy;
         this.battleMode = battleMode;
         this.setLayout(new BorderLayout());
 
-//        leftSidePanel.setBackground(Color.black);
-        initBattleLog();
+        initLeftPanel();
         initBattlePanel();
+
 
         add(battlePanel, BorderLayout.CENTER);
         add(leftSidePanel, BorderLayout.WEST);
@@ -51,39 +59,55 @@ public class BattleView extends Frame {
         this.repaint();
     }
 
-    public void initBattleLog() {
+    public void initLeftPanel() {
         leftSidePanel = new JPanel();
         leftSidePanel.setLayout(new BorderLayout());
 
-        battlePanel = new JPanel();
 
-        battleLog = new JTextArea(20, 40);
+        buttonsPanel = new JPanel();
+        startAutoResolveBtn = new JButton("START AUTORESOLVE");
+        startManualAttackBtn = new JButton("ATTACK");
+        GridLayout gl = new GridLayout(1,2);
+        gl.setHgap(10);
+        buttonsPanel.setLayout(gl);
+        buttonsPanel.add(startAutoResolveBtn);
+        buttonsPanel.add(startManualAttackBtn);
+
+
+        battleLog = new JTextArea(25, 50);
         battleLog.setEditable(false);
-        battleLog.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        battleLog.setFont(new Font(Font.MONOSPACED, Font.BOLD, 16));
+        battleLog.setBorder(BorderFactory.createTitledBorder("BATTLE LOG"));
+        battleLog.setFont(new Font(Font.MONOSPACED, Font.BOLD, 15));
 
-        StringBuilder sb = new StringBuilder();
-        for (int i = 1; i < 1000; i++) {
-            sb.append("MOVE #" + i + ": SALAH ATTACKED NASSER :(\n\n");
-        }
-        battleLog.setText(sb.toString());
 
-        JScrollPane scrollPane = new JScrollPane(battleLog);
-        leftSidePanel.add(scrollPane, BorderLayout.SOUTH);
+        unitInfoPanel = new JPanel();
+        unitInfoPanel.setLayout(new BoxLayout(unitInfoPanel, BoxLayout.Y_AXIS));
+        unitInfoPanel.setPreferredSize(new Dimension(battleLog.getWidth(), SCREENSIZE.height*5 / 13));
+        Card c = new Card(new Archer(1));
+        c.setAlignmentX(Component.CENTER_ALIGNMENT);
+        unitInfoPanel.add(c);
+        c.setOpaque(true);
+
+
+
+        leftSidePanel.add(unitInfoPanel, BorderLayout.NORTH);
+        leftSidePanel.add(buttonsPanel, BorderLayout.CENTER);
+        leftSidePanel.add(new JScrollPane(battleLog), BorderLayout.SOUTH);
     }
 
     public void initBattlePanel() {
         this.battlePanel = new JPanel();
         battlePanel.setBackground(Color.orange);
 
-        nextMoveBtn = new JButton("NEXT MOVE");
-        battlePanel.add(nextMoveBtn);
-
 
         battlePanel.setLayout(new BorderLayout());
 
-        playerUnitsPanel = new UnitsPanel("player", playerArmy);
-        battlePanel.add(nextMoveBtn, BorderLayout.CENTER);
+        playerUnitsPanel = new UnitsPanel("player", playerArmy, listener);
+        targetUnitsPanel = new UnitsPanel("target", targetArmy, listener);
+
+
+
+        battlePanel.add(targetUnitsPanel, BorderLayout.NORTH);
         battlePanel.add(playerUnitsPanel, BorderLayout.SOUTH);
     }
 
@@ -104,7 +128,55 @@ public class BattleView extends Frame {
     }
 
     public JButton getNextMoveBtn() {
-        return nextMoveBtn;
+        return startAutoResolveBtn;
+    }
+
+    public void setPlayerArmy(Army playerArmy) {
+        this.playerArmy = playerArmy;
+    }
+
+    public void setTargetArmy(Army targetArmy) {
+        this.targetArmy = targetArmy;
+    }
+
+    public JTextArea getBattleLog() {
+        return battleLog;
+    }
+
+    public void setBattleLog(JTextArea battleLog) {
+        this.battleLog = battleLog;
+    }
+
+    public Army getPlayerArmy() {
+        return playerArmy;
+    }
+
+    public Army getTargetArmy() {
+        return targetArmy;
+    }
+
+    public JPanel getUnitInfoPanel() {
+        return unitInfoPanel;
+    }
+
+    public void setUnitInfoPanel(JPanel unitInfoPanel) {
+        this.unitInfoPanel = unitInfoPanel;
+    }
+
+    public UnitsPanel getPlayerUnitsPanel() {
+        return playerUnitsPanel;
+    }
+
+    public void setPlayerUnitsPanel(UnitsPanel playerUnitsPanel) {
+        this.playerUnitsPanel = playerUnitsPanel;
+    }
+
+    public UnitsPanel getTargetUnitsPanel() {
+        return targetUnitsPanel;
+    }
+
+    public void setTargetUnitsPanel(UnitsPanel targetUnitsPanel) {
+        this.targetUnitsPanel = targetUnitsPanel;
     }
 
 

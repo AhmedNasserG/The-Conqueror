@@ -9,14 +9,19 @@ import units.*;
 import views.*;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class GameGUI
-        implements ActionListener, NewGameListener, StartMenuListener, CityViewListener, WorldMapListener, BattleListener, UnitListener {
+        implements ActionListener, NewGameListener, StartMenuListener, CityViewListener,
+        WorldMapListener, BattleListener, UnitListener, CardListener {
 
     private Game game;
+
     private final GameViews view;
 
     private Army a;
@@ -26,10 +31,6 @@ public class GameGUI
         view = new GameViews();
         view.setStartMenuView(new StartMenuView());
         view.getStartMenuView().setListener(this);
-//        view = new GameViews();
-//        game = new Game("OMAR", "Cairo");
-//        game.setListener(this);
-
     }
 
 
@@ -57,7 +58,10 @@ public class GameGUI
     }
 
     @Override
-    public void onBattleUpdated(Unit attacker, Unit target, String result) {
+    public void onBattleUpdated(Army unitParentArmy, String result1, String result2) {
+        JTextArea log = view.getBattleView().getBattleLog();
+        String RESULT = result1 + (game.getPlayer().getControlledArmies().contains(unitParentArmy) ? "Target" : "Player") + result2;
+        log.setText((log.getText() + "\n\n" + RESULT));
 //        JLabel resultsDisplay = new JLabel();
 //
 //        resultsDisplay.setText(result);
@@ -65,7 +69,8 @@ public class GameGUI
 //        view.getBattleView().setBattleResultsDisplay(resultsDisplay);
 //        view.getBattleView().revalidate();
 //        view.getBattleView().repaint();
-        System.out.println("yay");
+        System.out.println(RESULT);
+//        System.out.println("yay");
     }
 
     @Override
@@ -106,7 +111,6 @@ public class GameGUI
         view.setCityView(cityView);
         view.getCityView().revalidate();
         view.getCityView().repaint();
-
     }
 
     @Override
@@ -123,11 +127,6 @@ public class GameGUI
         // TODO: hide WorldMapView
     }
 
-
-    public void autoResolveBattle() {
-        JPanel battlePanel = view.getBattleView().getBattlePanel();
-
-    }
 
     @Override
     public void onUpgradeClicked(BuildingPopUp buildingPopUp) {
@@ -158,6 +157,7 @@ public class GameGUI
         }
     }
 
+
     @Override
     public void onBuildingCardClicked(Building building, String whereToBuild) throws NotEnoughGoldException {
         if (whereToBuild != null) {
@@ -177,11 +177,18 @@ public class GameGUI
 
     @Override
     public void onUnitCardClicked(Unit unit) {
-
+        JPanel p = view.getBattleView().getUnitInfoPanel();
+        Card c = new Card(unit);
+        c.setAlignmentX(Component.CENTER_ALIGNMENT);
+        p.add(c);
+        view.getBattleView().revalidate();
+        view.getBattleView().repaint();
+//        p.setBackground(Color.orange);
     }
 
     @Override
     public void onArmyCardClicked(Army army) {
         ArmyPopUp armyPopUp = new ArmyPopUp(army);
     }
+
 }
