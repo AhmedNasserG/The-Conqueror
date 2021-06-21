@@ -182,6 +182,6 @@ public class GameGUI
 
     @Override
     public void onArmyCardClicked(Army army) {
-
+        ArmyPopUp armyPopUp = new ArmyPopUp(army);
     }
 }

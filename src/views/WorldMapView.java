@@ -8,9 +8,9 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class WorldMapView extends Frame {
-    StatusPanel statusPanel;
-    JPanel citiesAndText;
-    JPanel cityButtons;
+    private StatusPanel statusPanel;
+    private JPanel citiesAndText;
+    private JPanel cityButtons;
 
 
 public WorldMapView(){

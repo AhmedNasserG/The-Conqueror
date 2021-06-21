@@ -14,6 +14,9 @@ public class ArmiesPanel extends JPanel{
             //TODO: change the button to a card
             JButton armyButton = new JButton(army.getCurrentLocation());
             armyButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+            //Card armyCard = new Card(army);
+
+            this.add(armyButton);
             this.add(armyButton);
 
         }
