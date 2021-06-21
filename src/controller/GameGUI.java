@@ -14,7 +14,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 
 public class GameGUI
-        implements ActionListener, NewGameListener, StartMenuListener, CityViewListener, WorldMapListener, BattleListener, UnitListener{
+        implements ActionListener, NewGameListener, StartMenuListener, CityViewListener, WorldMapListener, BattleListener, UnitListener {
 
     private Game game;
     private final GameViews view;
@@ -24,8 +24,11 @@ public class GameGUI
 
     public GameGUI() throws IOException {
         view = new GameViews();
-        game = new Game("OMAR", "Cairo");
-        game.setListener(this);
+        view.setStartMenuView(new StartMenuView());
+        view.getStartMenuView().setListener(this);
+//        view = new GameViews();
+//        game = new Game("OMAR", "Cairo");
+//        game.setListener(this);
 
     }
 
@@ -38,10 +41,10 @@ public class GameGUI
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == view.getBattleView().getNextMoveBtn()){
+        if (e.getSource() == view.getBattleView().getNextMoveBtn()) {
             try {
                 System.out.println("actionPerformed");
-                game.autoResolve(a,b);
+                game.autoResolve(a, b);
             } catch (FriendlyFireException friendlyFireException) {
                 friendlyFireException.printStackTrace();
             }
@@ -82,12 +85,12 @@ public class GameGUI
         City city = game.getPlayer().getControlledCities().get(0);
 
         //For TEST only
-        ArcheryRange a = new ArcheryRange();
-        a.setCoolDown(false);
-        city.getMilitaryBuildings().add(a);
-        city.getMilitaryBuildings().add(new Barracks());
-        city.getEconomicalBuildings().add(new Market());
-        city.getEconomicalBuildings().add(new Farm());
+//        ArcheryRange a = new ArcheryRange();
+//        a.setCoolDown(false);
+//        city.getMilitaryBuildings().add(a);
+//        city.getMilitaryBuildings().add(new Barracks());
+//        city.getEconomicalBuildings().add(new Market());
+//        city.getEconomicalBuildings().add(new Farm());
         //---------
 
         CityView cityView = new CityView(city);
@@ -119,9 +122,6 @@ public class GameGUI
 //        view.getBattleView().setVisible(true);
         // TODO: hide WorldMapView
     }
-
-
-
 
 
     public void autoResolveBattle() {
@@ -159,10 +159,29 @@ public class GameGUI
     }
 
     @Override
-    public void onCardClicked(Object object) {
-        if (object instanceof Building) {
-            BuildingPopUp buildingPopUp = new BuildingPopUp((Building) object);
+    public void onBuildingCardClicked(Building building, String whereToBuild) throws NotEnoughGoldException {
+        if (whereToBuild != null) {
+            try {
+                game.getPlayer().build(building.getBuildingName(), whereToBuild);
+                view.getCityView().updateCityGrid();
+            } catch (BuildingInCityAlreadyException e) {
+                JOptionPane.showMessageDialog(null, "Sorry You Already Have " + building.getBuildingName() + " In Your City, Please Choose Another Building.");
+            } catch (NotEnoughGoldException e) {
+                JOptionPane.showMessageDialog(null, "Sorry You Have Not Enough Gold To Build " + building.getBuildingName() + ".");
+            }
+        } else {
+            BuildingPopUp buildingPopUp = new BuildingPopUp(building);
             buildingPopUp.setListener(this);
         }
+    }
+
+    @Override
+    public void onUnitCardClicked(Unit unit) {
+
+    }
+
+    @Override
+    public void onArmyCardClicked(Army army) {
+
     }
 }
