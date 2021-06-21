@@ -120,6 +120,7 @@ public class Card extends JLayeredPane implements MouseListener {
         } else if (unit != null) {
             listener.onUnitCardClicked(this.unit);
         } else if (army != null) {
+            listener.onArmyCardClicked(this.army);
 
         }
     }

@@ -16,6 +16,7 @@ public class ArmiesPanel extends JPanel{
             this.add(armyCard);
             this.add(Box.createVerticalStrut(10));
 
+
         }
         this.setAlignmentX(Component.CENTER_ALIGNMENT);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));

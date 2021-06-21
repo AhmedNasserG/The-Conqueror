@@ -43,11 +43,16 @@ public class ArmyPopUp extends Frame implements ActionListener {
         unitsPanel.setBorder(BorderFactory.createLineBorder(Color.ORANGE));
         for(Unit unit : army.getUnits()){
             Card unitCard = new Card(unit);
+            unitCard.setAlignmentX(Component.CENTER_ALIGNMENT);
             unitsPanel.add(unitCard);
             // TODO: Fix the problem in the unit card not showing
-            //unitsPanel.add(new JButton(unit.getUnitName()));
+            unitsPanel.add(new JButton(unit.getUnitName() + unit.getLevel()));
+            unitsPanel.add(Box.createHorizontalStrut(10));
         }
-        container2.add(new JScrollPane(unitsPanel));
+        JScrollPane unitsPane = new JScrollPane(unitsPanel);
+        unitsPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+
+        container2.add(unitsPane);
         container2.add(Box.createRigidArea(new Dimension(0, 60)));
 
 
@@ -70,8 +75,9 @@ public class ArmyPopUp extends Frame implements ActionListener {
         // For testing
         Army salah = new Army("Salah");
         ArrayList<Unit> units = new ArrayList<>();
-        for(int i=0;i<50;i++){
+        for(int i=0;i<3;i++){
                units.add(new Cavalry(1));
+               units.add(new Infantry(3));
         }
         salah.setUnits(units);
 
@@ -82,18 +88,6 @@ public class ArmyPopUp extends Frame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
-            case "Upgrade":
-                try {
-                    //listener.onUpgradeClicked(this);
-                } catch (Exception exception) {
-                }
-                break;
-            case "Recruit":
-                try {
-                   //listener.onRecruitClicked(this);
-                } catch (Exception exception) {
-                }
-                break;
             case "Close":
                 this.dispose();
                 break;
