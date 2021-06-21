@@ -12,12 +12,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class GameGUI
         implements ActionListener, NewGameListener, StartMenuListener, CityViewListener,
-        WorldMapListener, BattleListener, UnitListener, CardListener{
+        WorldMapListener, BattleListener, UnitListener, CardListener {
 
     private Game game;
 
@@ -41,10 +42,10 @@ public class GameGUI
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == view.getBattleView().getNextMoveBtn()){
+        if (e.getSource() == view.getBattleView().getNextMoveBtn()) {
             try {
                 System.out.println("actionPerformed");
-                game.autoResolve(a,b);
+                game.autoResolve(a, b);
             } catch (FriendlyFireException friendlyFireException) {
                 friendlyFireException.printStackTrace();
             }
@@ -127,7 +128,6 @@ public class GameGUI
     }
 
 
-
     @Override
     public void onUpgradeClicked(BuildingPopUp buildingPopUp) {
         try {
@@ -158,7 +158,6 @@ public class GameGUI
     }
 
 
-
     @Override
     public void onBuildingCardClicked(Building building, String whereToBuild) throws NotEnoughGoldException {
         if (whereToBuild != null) {
@@ -185,11 +184,11 @@ public class GameGUI
         view.getBattleView().revalidate();
         view.getBattleView().repaint();
 //        p.setBackground(Color.orange);
-        System.out.println("ASdasdasd");
     }
 
     @Override
     public void onArmyCardClicked(Army army) {
 
     }
+
 }
