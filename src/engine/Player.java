@@ -66,7 +66,7 @@ public class Player {
         recruitUnit(type, cityName);
     }
 
-    public void build(String type, String cityName) throws NotEnoughGoldException {
+    public void build(String type, String cityName) throws NotEnoughGoldException, BuildingInCityAlreadyException {
         City city = getCity(cityName);
         Building newBuilding;
         switch (type) {
@@ -94,13 +94,13 @@ public class Player {
         if (newBuilding instanceof EconomicBuilding) {
             // NOTE: handle if the city have the same type of building
             if (searchForEconomicBuilding(city, newBuilding.getClass()) != null) {
-                return;
+                throw new BuildingInCityAlreadyException();
             }
             city.getEconomicalBuildings().add((EconomicBuilding) newBuilding);
         } else {
             // NOTE: handle if the city have the same type of building
             if (searchForMilitaryBuilding(city, newBuilding.getClass()) != null) {
-                return;
+                throw new BuildingInCityAlreadyException();
             }
             city.getMilitaryBuildings().add((MilitaryBuilding) newBuilding);
         }
