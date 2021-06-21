@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Locale;
 
 public class Card extends JLayeredPane implements MouseListener {
     private JLabel img;
@@ -18,6 +19,7 @@ public class Card extends JLayeredPane implements MouseListener {
     private String whereToBuild;
     private Building building;
     private Unit unit;
+    private boolean isEnemyUnit;
     private Army army;
     private CardListener listener;
 
@@ -73,11 +75,18 @@ public class Card extends JLayeredPane implements MouseListener {
         this();
         this.unit = unit;
         img.setIcon(getIcon(unit));
-        topLabel.setText(unit.getUnitName());
+        topLabel.setText(unit.getUnitName().toUpperCase(Locale.ROOT));
         bottomLabel.setText("Level " + unit.getLevel());
         add(topLabel, Integer.valueOf(1));
         add(bottomLabel, Integer.valueOf(1));
     }
+
+    public Card(Unit unit, boolean isEnemy) {
+        this(unit);
+        this.isEnemyUnit = isEnemy;
+    }
+
+
 
     public Card(Army army) {
         this();
@@ -116,9 +125,12 @@ public class Card extends JLayeredPane implements MouseListener {
             } catch (NotEnoughGoldException notEnoughGoldException) {
                 notEnoughGoldException.printStackTrace();
             }
-        } else if (unit != null) {
-            listener.onUnitCardClicked(this.unit);
-        } else if (army != null) {
+        }
+        else if (unit != null) {
+            if(!isEnemyUnit) listener.onFriendlyUnitCardClicked(unit);
+            else listener.onEnemyUnitCardClicked(unit);
+        }
+        else if (army != null) {
 
         }
     }

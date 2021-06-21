@@ -8,5 +8,7 @@ import units.Unit;
 public interface CardListener {
     void onBuildingCardClicked(Building building, String whereToBuild) throws NotEnoughGoldException;
     void onUnitCardClicked(Unit unit);
+    void onFriendlyUnitCardClicked(Unit unit);
+    void onEnemyUnitCardClicked(Unit unit);
     void onArmyCardClicked(Army army);
 }

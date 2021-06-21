@@ -11,11 +11,11 @@ import java.util.ArrayList;
 public class UnitsPanel extends JPanel {
 
 
+    static final Dimension SCREENSIZE = Toolkit.getDefaultToolkit().getScreenSize();
 
     public UnitsPanel(String armyOwner, Army army, CardListener listener){
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
-        this.setPreferredSize(new Dimension(screenSize.width, screenSize.height/7));
+        this.setPreferredSize(new Dimension(SCREENSIZE.width, SCREENSIZE.height/7));
 
         this.setLayout(new GridLayout(0,10));
 
@@ -24,9 +24,13 @@ public class UnitsPanel extends JPanel {
 
         ArrayList<Unit> units = army.getUnits();
         for(Unit u : units){
-            Card c = new Card(u);
+            if(u.getCurrentSoldierCount() == 0) continue;
+            Card c;
+            if(armyOwner.equals("player")) c = new Card(u,false);
+            else c = new Card(u, true);
             c.setListener(listener);
             this.add(c);
         }
     }
+
 }

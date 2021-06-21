@@ -17,9 +17,9 @@ public class BattleView extends Frame {
 
     private JPanel battlePanel;
 
-
     private UnitsPanel playerUnitsPanel;
     private UnitsPanel targetUnitsPanel;
+
     private JPanel battleActionPanel;
     private String battleMode;
     private JLabel battleResultsDisplay;
@@ -70,8 +70,13 @@ public class BattleView extends Frame {
         GridLayout gl = new GridLayout(1,2);
         gl.setHgap(10);
         buttonsPanel.setLayout(gl);
-        buttonsPanel.add(startAutoResolveBtn);
-        buttonsPanel.add(startManualAttackBtn);
+
+        if(battleMode.equals("MANUAL ATTACK")) {
+            buttonsPanel.add(startManualAttackBtn);
+        }
+        else {
+            buttonsPanel.add(startAutoResolveBtn);
+        }
 
 
         battleLog = new JTextArea(25, 50);
@@ -81,13 +86,8 @@ public class BattleView extends Frame {
 
 
         unitInfoPanel = new JPanel();
-        unitInfoPanel.setLayout(new BoxLayout(unitInfoPanel, BoxLayout.Y_AXIS));
+        unitInfoPanel.setBorder(BorderFactory.createTitledBorder("UNIT INFO"));
         unitInfoPanel.setPreferredSize(new Dimension(battleLog.getWidth(), SCREENSIZE.height*5 / 13));
-        Card c = new Card(new Archer(1));
-        c.setAlignmentX(Component.CENTER_ALIGNMENT);
-        unitInfoPanel.add(c);
-        c.setOpaque(true);
-
 
 
         leftSidePanel.add(unitInfoPanel, BorderLayout.NORTH);
@@ -127,7 +127,7 @@ public class BattleView extends Frame {
         this.battlePanel = battlePanel;
     }
 
-    public JButton getNextMoveBtn() {
+    public JButton getStartAutoResolveBtn() {
         return startAutoResolveBtn;
     }
 

@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class GameGUI
         implements ActionListener, NewGameListener, StartMenuListener, CityViewListener,
-        WorldMapListener, BattleListener, UnitListener, CardListener{
+        WorldMapListener, BattleListener, UnitListener, CardListener, UnitPopUpListener{
 
     private Game game;
 
@@ -28,8 +28,8 @@ public class GameGUI
 
     public GameGUI() throws IOException {
         view = new GameViews();
-        view.setStartMenuView(new StartMenuView());
-        view.getStartMenuView().setListener(this);
+
+
     }
 
 
@@ -41,7 +41,7 @@ public class GameGUI
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == view.getBattleView().getNextMoveBtn()){
+        if(e.getSource() == view.getBattleView().getStartAutoResolveBtn()){
             try {
                 System.out.println("actionPerformed");
                 game.autoResolve(a,b);
@@ -51,26 +51,6 @@ public class GameGUI
         }
     }
 
-    @Override
-    public void onAttack(Unit attacker, Unit target) throws FriendlyFireException {
-        attacker.attack(target);
-    }
-
-    @Override
-    public void onBattleUpdated(Army unitParentArmy, String result1, String result2) {
-        JTextArea log = view.getBattleView().getBattleLog();
-        String RESULT = result1 + (game.getPlayer().getControlledArmies().contains(unitParentArmy) ? "Target" : "Player") + result2;
-        log.setText((log.getText() + "\n\n" + RESULT));
-//        JLabel resultsDisplay = new JLabel();
-//
-//        resultsDisplay.setText(result);
-//        resultsDisplay.setFont(new Font(Font.MONOSPACED, Font.BOLD, 30));
-//        view.getBattleView().setBattleResultsDisplay(resultsDisplay);
-//        view.getBattleView().revalidate();
-//        view.getBattleView().repaint();
-        System.out.println(RESULT);
-//        System.out.println("yay");
-    }
 
     @Override
     public void onNewGameClicked() throws IOException {
@@ -179,17 +159,108 @@ public class GameGUI
     @Override
     public void onUnitCardClicked(Unit unit) {
         JPanel p = view.getBattleView().getUnitInfoPanel();
-        Card c = new Card(unit);
+        p.removeAll();
+        p.setBorder(BorderFactory.createTitledBorder("UNIT INFO"));
+        p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+        Card c = new Card(unit); // true here is a dummy value
         c.setAlignmentX(Component.CENTER_ALIGNMENT);
         p.add(c);
+
+        UnitInfoLabel l1 = new UnitInfoLabel("   Soldier Count: " + unit.getCurrentSoldierCount());
+        UnitInfoLabel l2 = new UnitInfoLabel("   Max Soldier Count: " + unit.getMaxSoldierCount());
+        UnitInfoLabel l3 = new UnitInfoLabel("   Siege Upkeep: " + unit.getSiegeUpkeep());
+        UnitInfoLabel l4 = new UnitInfoLabel("   Idle Upkeep: " + unit.getIdleUpkeep());
+        UnitInfoLabel l5 = new UnitInfoLabel("   Marching Upkeep: " + unit.getMarchingUpkeep());
+
+        p.add(l1);
+        p.add(Box.createRigidArea(new Dimension(0, 5)));
+        p.add(l2);
+        p.add(Box.createRigidArea(new Dimension(0, 5)));
+        p.add(l3);
+        p.add(Box.createRigidArea(new Dimension(0, 5)));
+        p.add(l4);
+        p.add(Box.createRigidArea(new Dimension(0, 5)));
+        p.add(l5);
+
         view.getBattleView().revalidate();
         view.getBattleView().repaint();
-//        p.setBackground(Color.orange);
-        System.out.println("ASdasdasd");
+        System.out.println("displayed units info");
+    }
+
+    @Override
+    public void onFriendlyUnitCardClicked(Unit unit) {
+        onUnitCardClicked(unit);
+
+        // Selected To Attack
+
+        System.out.println("friendly unit");
+    }
+
+    @Override
+    public void onEnemyUnitCardClicked(Unit unit) {
+        onUnitCardClicked(unit);
+
+        UnitPopUp unitPopUp = new UnitPopUp(unit);
+        unitPopUp.setListener(this);
+
+        System.out.println("enemy unit");
+    }
+
+    @Override
+    public void onAttackPressed(Unit u) {
+
+
+        System.out.println("attacked enemy unit");
+    }
+
+    @Override
+    public void onAttack(Unit attacker, Unit target) throws FriendlyFireException {
+        attacker.attack(target);
+    }
+
+    @Override
+    public void onBattleUpdated(Army unitParentArmy, String result1, String result2) {
+        JTextArea log = view.getBattleView().getBattleLog();
+        String RESULT = "- " + result1 + (game.getPlayer().getControlledArmies().contains(unitParentArmy) ? "Target" : "Player") + result2;
+        log.setText((log.getText() + "\n\n" + RESULT));
+//        JLabel resultsDisplay = new JLabel();
+//
+//        resultsDisplay.setText(result);
+//        resultsDisplay.setFont(new Font(Font.MONOSPACED, Font.BOLD, 30));
+//        view.getBattleView().setBattleResultsDisplay(resultsDisplay);
+//        view.getBattleView().revalidate();
+//        view.getBattleView().repaint();
+        updateUnitsPanels(a,b);
+        view.getBattleView().getStartAutoResolveBtn().setEnabled(false);
+        System.out.println(a.getUnits().size() + " " + b.getUnits().size());
+//        System.out.println(RESULT);
+    }
+
+    public void updateUnitsPanels(Army playerArmy, Army targetArmy){
+//        UnitsPanel playerUnitsPanel = new UnitsPanel("player", playerArmy, this);
+//        UnitsPanel targetUnitsPanel = new UnitsPanel("target", targetArmy, this);
+//
+//
+//        view.getBattleView().setPlayerUnitsPanel(playerUnitsPanel);
+//        view.getBattleView().setTargetUnitsPanel(targetUnitsPanel);
+//
+//        view.getBattleView().getPlayerUnitsPanel().revalidate();
+//        view.getBattleView().getPlayerUnitsPanel().repaint();
+//        view.getBattleView().getPlayerUnitsPanel().removeAll();
+//        view.getBattleView().getTargetUnitsPanel().removeAll();
+
+        view.getBattleView().setPlayerArmy(playerArmy);
+        view.getBattleView().setTargetArmy(targetArmy);
+        view.getBattleView().initBattlePanel();
+
+//        view.getBattleView().revalidate();
+//        view.getBattleView().repaint();
     }
 
     @Override
     public void onArmyCardClicked(Army army) {
 
     }
+
+
 }
