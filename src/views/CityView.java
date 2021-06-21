@@ -3,7 +3,6 @@ package views;
 import buildings.*;
 import engine.City;
 import listeners.CityViewListener;
-import units.Archer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,9 +30,6 @@ public class CityView extends Frame {
         cityGrid = new JPanel();
         cityGrid.setBackground(Color.lightGray);
 
-        JPanel buildPanel = new JPanel();
-        buildPanel.setBackground(Color.BLUE);
-
         JPanel armysPanel = new JPanel();
         armysPanel.setBackground(Color.ORANGE);
 
@@ -47,16 +43,51 @@ public class CityView extends Frame {
 
         updateCityGrid();
 
-        buildPanel.setBounds(0, 510, getWidth() - 300, 300);
+//        buildPanel.setBounds(0, 510, getWidth() - 300, 300);
         armysPanel.setBounds(getWidth() - 300, 100, 300, getHeight() - 100);
 
         add(statusPanel);
         add(worldMapLabel);
         add(cityGrid);
-        add(buildPanel);
+
+
+//        add(getToBuildPanel());
         add(armysPanel);
 
         setVisible(true);
+    }
+
+    private JPanel getToBuildPanel() {
+        JPanel buildPanel = new JPanel();
+        buildPanel.setBackground(Color.BLUE);
+        buildPanel.setBounds(0, getHeight() - 180, getWidth() - 300, 180);
+        buildPanel.setLayout(new BoxLayout(buildPanel, BoxLayout.Y_AXIS));
+
+        JLabel label = new JLabel("Choose a Building to be built in your city if you want ", SwingConstants.CENTER);
+        label.setBackground(Color.ORANGE);
+        label.setAlignmentX(Component.CENTER_ALIGNMENT);
+        label.setOpaque(true);
+
+        JPanel cardsPanel = new JPanel();
+        cardsPanel.setLayout(new GridLayout(1, 5));
+
+        addBuildingCardToBuildingPanel(cardsPanel, new Farm());
+        addBuildingCardToBuildingPanel(cardsPanel, new Market());
+        addBuildingCardToBuildingPanel(cardsPanel, new ArcheryRange());
+        addBuildingCardToBuildingPanel(cardsPanel, new Stable());
+        addBuildingCardToBuildingPanel(cardsPanel, new Barracks());
+
+        buildPanel.add(label);
+        buildPanel.add(cardsPanel);
+        return buildPanel;
+    }
+
+    private void addBuildingCardToBuildingPanel(JPanel cardsPanel, Building building) {
+
+        Card b1 = new Card(building, cityToView.getName());
+        b1.setListener(listener);
+        cardsPanel.add(b1);
+
     }
 
     public void updateCityGrid() {
@@ -111,6 +142,7 @@ public class CityView extends Frame {
     public void setListener(CityViewListener listener) {
         this.listener = listener;
         updateCityGrid();
+        add(getToBuildPanel());
     }
 
 
