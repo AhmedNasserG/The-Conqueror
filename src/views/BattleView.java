@@ -45,6 +45,7 @@ public class BattleView extends Frame {
         this.battleMode = battleMode;
         this.setLayout(new BorderLayout());
 
+        this.battlePanel = new JPanel();
         initLeftPanel();
         initBattlePanel();
 
@@ -96,7 +97,6 @@ public class BattleView extends Frame {
     }
 
     public void initBattlePanel() {
-        this.battlePanel = new JPanel();
         battlePanel.setBackground(Color.orange);
 
 
@@ -105,10 +105,10 @@ public class BattleView extends Frame {
         playerUnitsPanel = new UnitsPanel("player", playerArmy, listener);
         targetUnitsPanel = new UnitsPanel("target", targetArmy, listener);
 
-
-
         battlePanel.add(targetUnitsPanel, BorderLayout.NORTH);
         battlePanel.add(playerUnitsPanel, BorderLayout.SOUTH);
+        battlePanel.revalidate();
+        battlePanel.repaint();
     }
 
     public JLabel getBattleResultsDisplay() {
