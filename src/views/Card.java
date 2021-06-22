@@ -30,6 +30,7 @@ public class Card extends JButton implements ActionListener {
         super();
         layeredPane = new JLayeredPane();
         this.setBorder(null);
+        this.setContentAreaFilled(false);
         addActionListener(this);
         img = new JLabel();
         topLabel = new JLabel("", SwingConstants.CENTER);

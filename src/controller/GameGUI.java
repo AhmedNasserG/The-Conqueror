@@ -12,9 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class GameGUI
         implements ActionListener, NewGameListener, StartMenuListener, CityViewListener,
@@ -29,6 +27,8 @@ public class GameGUI
 
     public GameGUI() throws IOException {
         view = new GameViews();
+        view.setStartMenuView(new StartMenuView());
+        view.getStartMenuView().setListener(this);
 
     }
 
@@ -38,14 +38,14 @@ public class GameGUI
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == view.getBattleView().getStartAutoResolveBtn()){
-            try {
-                System.out.println("actionPerformed");
-                game.autoResolve(a,b);
-            } catch (FriendlyFireException friendlyFireException) {
-                friendlyFireException.printStackTrace();
-            }
-        }
+//        if(e.getSource() == view.getBattleView().getStartAutoResolveBtn()){
+//            try {
+//                System.out.println("actionPerformed");
+//                game.autoResolve(a,b);
+//            } catch (FriendlyFireException friendlyFireException) {
+//                friendlyFireException.printStackTrace();
+//            }
+//        }
         // TODO: Salah you should not just check it is a button because there more than a button to use this method
 //        if (e.getSource() instanceof JButton) {
 //            String cityName = ((JButton) e.getSource()).getText();
@@ -127,13 +127,9 @@ public class GameGUI
 
     }
 
-
-
     @Override
     public void onCityClicked(City city) {
-
 //        CityPopUp cityPopUp = new CityPopUp(city);
-
     }
 
     @Override
@@ -259,6 +255,5 @@ public class GameGUI
     public void onArmyCardClicked(Army army) {
         ArmyPopUp armyPopUp = new ArmyPopUp(army);
     }
-
 
 }
