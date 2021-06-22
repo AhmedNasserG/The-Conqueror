@@ -29,7 +29,6 @@ public class UnitPopUp extends Frame implements ActionListener {
 
         Card unitCard = new Card(u);
         unitCard.setBounds(420 / 2 - 95, 40, 400 / 3, 400 / 3);
-        unitCard.removeMouseListener(unitCard);
 
         JButton closeButton = new JButton("Close");
         closeButton.addActionListener(this);
