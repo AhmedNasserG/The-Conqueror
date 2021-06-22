@@ -21,11 +21,7 @@ public class GameGUI
         WorldMapListener, BattleListener, UnitListener, CardListener {
 
     private Game game;
-
     private final GameViews view;
-
-    private Army a;
-    private Army b;
 
     public GameGUI() throws IOException {
         view = new GameViews();
@@ -102,19 +98,24 @@ public class GameGUI
                 friendlyFireException.printStackTrace();
             }
         } else */
-        if (e.getSource() instanceof JButton) {
-            String cityName = ((JButton) e.getSource()).getText();
-            for (City city : game.getPlayer().getControlledCities()) {
-                if (cityName.equals(city.getName())) {
-                    view.setCityView(new CityView(city));
-                    view.getCityView().setListener(this);
-                    view.getWorldMapView().dispose();
-                    return;
-                }
-            }
-
-            this.onCityClicked(new City(cityName));
-
+        // TODO: Salah you should not just check it is a button because there more than a button to use this method
+//        if (e.getSource() instanceof JButton) {
+//            String cityName = ((JButton) e.getSource()).getText();
+//            for (City city : game.getPlayer().getControlledCities()) {
+//                if (cityName.equals(city.getName())) {
+//                    view.setCityView(new CityView(city));
+//                    view.getCityView().setListener(this);
+//                    view.getWorldMapView().dispose();
+//                    return;
+//                }
+//            }
+//
+//            this.onCityClicked(new City(cityName));
+//        }
+        if (e.getActionCommand().equals("worldMapButton")) {
+            view.getCityView().dispose();
+            view.setWorldMapView(new WorldMapView());
+            view.getWorldMapView().setListener(this);
 
         }
     }
@@ -152,34 +153,38 @@ public class GameGUI
         String playerName = view.getNewGameView().getPlayerName();
         String cityName = view.getNewGameView().getCityName();
         game = new Game(playerName, cityName);
-        view.setWorldMapView(new WorldMapView());
-        view.getWorldMapView().setListener(this);
-        view.getNewGameView().dispose();
+        // to run world map view
+//        view.setWorldMapView(new WorldMapView());
+//        view.getWorldMapView().setListener(this);
+
+        // to run city view
+
 //
-//        City city = game.getPlayer().getControlledCities().get(0);
 //
+        City city = game.getPlayer().getControlledCities().get(0);
+
 //        //For TEST only
-////        ArcheryRange a = new ArcheryRange();
-////        a.setCoolDown(false);
-////        city.getMilitaryBuildings().add(a);
-////        city.getMilitaryBuildings().add(new Barracks());
-////        city.getEconomicalBuildings().add(new Market());
-////        city.getEconomicalBuildings().add(new Farm());
-//        //---------
+        ArcheryRange a = new ArcheryRange();
+        a.setCoolDown(false);
+        city.getMilitaryBuildings().add(a);
+//        city.getMilitaryBuildings().add(new Barracks());
+//        city.getEconomicalBuildings().add(new Market());
+//        city.getEconomicalBuildings().add(new Farm());
+//        //--------
+        CityView cityView = new CityView(city);
+        cityView.setListener(this);
 //
-//        CityView cityView = new CityView(city);
-//        cityView.setListener(this);
 //
+        view.getNewGameView().dispose();
+////        // Set Status panel
+        cityView.setPlayerName(game.getPlayer().getName());
+        cityView.setCurrentTurnCount(game.getCurrentTurnCount());
+        cityView.setFood(game.getPlayer().getFood());
+        cityView.setTreasury(game.getPlayer().getTreasury());
 //
-//        // Set Status panel
-//        cityView.setPlayerName(game.getPlayer().getName());
-//        cityView.setCurrentTurnCount(game.getCurrentTurnCount());
-//        cityView.setFood(game.getPlayer().getFood());
-//        cityView.setTreasury(game.getPlayer().getTreasury());
-//
-//        view.setCityView(cityView);
-//        view.getCityView().revalidate();
-//        view.getCityView().repaint();
+        view.setCityView(cityView);
+        view.getCityView().revalidate();
+        view.getCityView().repaint();
     }
 
     @Override
@@ -199,7 +204,7 @@ public class GameGUI
     @Override
     public void onCityClicked(City city) {
 
-        CityPopUp cityPopUp = new CityPopUp(city);
+//        CityPopUp cityPopUp = new CityPopUp(city);
 
     }
 

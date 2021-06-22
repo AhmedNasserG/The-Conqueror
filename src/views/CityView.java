@@ -3,21 +3,18 @@ package views;
 import buildings.*;
 import engine.City;
 import listeners.CityViewListener;
-import listeners.WorldMapListener;
-import units.Army;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 
-public class CityView extends Frame implements ActionListener {
+public class CityView extends Frame {
 
     private City cityToView;
     private StatusPanel statusPanel;
     private JPanel cityGrid;
     private CityViewListener listener;
+    private JButton worldMapButton;
 
 
     public CityView(City cityToView) {
@@ -28,10 +25,9 @@ public class CityView extends Frame implements ActionListener {
         statusPanel = new StatusPanel();
 
         ImageIcon worldMapIcon = new ImageIcon("res/img/map.png");
-        JButton worldMapButton = new JButton();
+        worldMapButton = new JButton();
         worldMapButton.setActionCommand("worldMapButton");
         worldMapButton.setIcon(new ImageIcon(worldMapIcon.getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
-        worldMapButton.addActionListener(this);
 
 
         cityGrid = new JPanel();
@@ -148,18 +144,9 @@ public class CityView extends Frame implements ActionListener {
 
     public void setListener(CityViewListener listener) {
         this.listener = listener;
+        worldMapButton.addActionListener(listener);
         updateCityGrid();
         add(getToBuildPanel());
     }
 
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("worldMapButton")) {
-            WorldMapView worldMapView = new WorldMapView();
-            worldMapView.setListener((WorldMapListener) listener);
-            this.dispose();
-
-        }
-    }
 }
