@@ -94,13 +94,28 @@ public class GameGUI
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == view.getBattleView().getNextMoveBtn()) {
+        /*if (e.getSource() == view.getBattleView().getNextMoveBtn()) {
             try {
                 System.out.println("actionPerformed");
                 game.autoResolve(a, b);
             } catch (FriendlyFireException friendlyFireException) {
                 friendlyFireException.printStackTrace();
             }
+        } else */
+        if (e.getSource() instanceof JButton) {
+            String cityName = ((JButton) e.getSource()).getText();
+            for (City city : game.getPlayer().getControlledCities()) {
+                if (cityName.equals(city.getName())) {
+                    view.setCityView(new CityView(city));
+                    view.getCityView().setListener(this);
+                    view.getWorldMapView().dispose();
+                    return;
+                }
+            }
+
+            this.onCityClicked(new City(cityName));
+
+
         }
     }
 
@@ -179,6 +194,13 @@ public class GameGUI
 //        view.setBattleView(new BattleView("AUTO RESOLVE"));
 //        view.getBattleView().setVisible(true);
         // TODO: hide WorldMapView
+    }
+
+    @Override
+    public void onCityClicked(City city) {
+
+        CityPopUp cityPopUp = new CityPopUp(city);
+
     }
 
 
