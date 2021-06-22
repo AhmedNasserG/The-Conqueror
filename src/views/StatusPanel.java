@@ -4,6 +4,7 @@ import engine.Game;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class StatusPanel extends JPanel {
 
@@ -13,6 +14,7 @@ public class StatusPanel extends JPanel {
     private JLabel goldCountLabel;
     private JLabel foodCountLabel;
     private JButton endTurnButton;
+    private ActionListener listener;
 
     public StatusPanel() {
         FlowLayout layout = new FlowLayout(FlowLayout.LEADING);
@@ -65,4 +67,8 @@ public class StatusPanel extends JPanel {
         this.game = game;
     }
 
+    public void setListener(ActionListener listener) {
+        this.listener = listener;
+        endTurnButton.addActionListener(listener);
+    }
 }

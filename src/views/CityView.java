@@ -22,7 +22,6 @@ public class CityView extends Frame {
         this.cityToView = cityToView;
         this.setLayout(null);
 
-        statusPanel = new StatusPanel();
         worldMapButton = new JButton();
         cityGrid = new JPanel();
 
@@ -32,7 +31,6 @@ public class CityView extends Frame {
 
         cityGrid.setBackground(Color.lightGray);
 
-        statusPanel.setBounds(0, 0, getWidth() - 100, 100);
         worldMapButton.setBounds(getWidth() - 100, 0, 100, 100);
         cityGrid.setBounds((getWidth() - 710) / 2, 100, 410, 410);
         cityGrid.setLayout(new GridLayout(3, 3, 5, 5));
@@ -41,7 +39,6 @@ public class CityView extends Frame {
         armysPanel.setBackground(Color.ORANGE);
         armysPanel.setBounds(getWidth() - 300, 100, 300, getHeight() - 100);
 
-        add(statusPanel);
         add(worldMapButton);
         add(cityGrid);
         add(armysPanel);
@@ -104,8 +101,10 @@ public class CityView extends Frame {
 
     }
 
-    public StatusPanel getStatusPanel() {
-        return statusPanel;
+    public void setStatusPanel(StatusPanel statusPanel) {
+        this.statusPanel = statusPanel;
+        statusPanel.setBounds(0, 0, getWidth() - 100, 100);
+        add(statusPanel);
     }
 
     public void setListener(CityViewListener listener) {
