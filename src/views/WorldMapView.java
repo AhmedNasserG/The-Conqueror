@@ -1,14 +1,13 @@
 package views;
 
 
-import listeners.CardListener;
-import listeners.CityViewListener;
+import engine.City;
+import engine.Game;
 import listeners.WorldMapListener;
 import units.Army;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class WorldMapView extends Frame {
@@ -17,16 +16,29 @@ public class WorldMapView extends Frame {
     private ArrayList<JButton> buttons;
     private JPanel cityButtons;
     private ArrayList<Army> armiesArray;
-   // private CityViewListener listener;
-    private WorldMapListener worldMapListener;
+    private ArrayList<Army> defendingArmies;
+    private ArrayList<Army> controlledArmies;
 
-public WorldMapView(){
+    private WorldMapListener listener;
+
+public WorldMapView(Game game){
     this.setVisible(true);
     this.setLayout(null);
+
     //TODO: intiate army Button: to add a unit from the defending army(and controlled armies)
-    // to your attacking. The army must not be idle.
-    //TODO: when a city is clicked options to setTarget or attack or lay siege
+    // to your attacking. The army must not be idle. !!Should be in the cityView
+    //Add this button to any defending army panel
+    //TODO: relocateUnit choose a unit and choose an army to put it in the
+    //TODO: a frame to choose army and choose a unit from that unit and choose the army to be gone to
+    //comboboxes :)
+    //TODO: when a city is clicked options to attack (the armies that are there already)
+    // or lay siege
+    //TODO: army pop up should have setTarget the uncontrolled cites
     // TODO: edit and update the status panel
+    //TODO: unit pop that has count and status and so on
+    //TODO: separate the defending from the controlled armies
+    //TODO: city can't be under siege and attacked at the same time
+
     statusPanel= new StatusPanel();
     statusPanel.setBounds(0, 0, getWidth() , 100);
 
@@ -57,11 +69,15 @@ public WorldMapView(){
 
     //Testing the scroll pane
     //TODO: Remove this part and in the controller add the available armies
-    armiesArray = new ArrayList<>();
+    /*armiesArray = new ArrayList<>();
     for(int i=0;i<15;i++){
         armiesArray.add(new Army("army" +i));
+    }*/
+    controlledArmies = game.getPlayer().getControlledArmies();
+    defendingArmies = new ArrayList<>();
+    for(City city: game.getPlayer().getControlledCities()){
+        defendingArmies.add(city.getDefendingArmy());
     }
-
 
     this.add(statusPanel);
     this.add(citiesAndText);
@@ -70,21 +86,19 @@ public WorldMapView(){
     this.repaint();
 }
 
-    public static void main(String[] args) {
-        new WorldMapView();
-    }
 
 
-    public void setListener(WorldMapListener worldMapListener) {
-        this.worldMapListener = worldMapListener;
-        ArmiesPanel armiesPanel = new ArmiesPanel(armiesArray, worldMapListener);
+
+    public void setListener(WorldMapListener listener) {
+        this.listener = listener;
+        ArmiesPanel armiesPanel = new ArmiesPanel(defendingArmies,controlledArmies, listener);
         JScrollPane pane = new JScrollPane(armiesPanel);
         pane.setBounds(getWidth() - 300, 100, 300, getHeight() - 100);
         pane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         add(pane);
         for(JButton button: buttons)
         {
-            button.addActionListener(worldMapListener);
+            button.addActionListener(listener);
         }
     }
 }

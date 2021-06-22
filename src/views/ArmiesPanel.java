@@ -9,17 +9,31 @@ import java.util.ArrayList;
 
 public class ArmiesPanel extends JPanel {
 
-    public ArmiesPanel(ArrayList<Army> armiesArray, CardListener listener) {
+    public ArmiesPanel(ArrayList<Army> defendingArmies,ArrayList<Army> controlledArmies, CardListener listener) {
         super();
-        for (Army army : armiesArray) {
+        JPanel defendingArmyPanel = new JPanel();
+        defendingArmyPanel.setLayout(new BoxLayout(defendingArmyPanel,BoxLayout.Y_AXIS));
+        JPanel controlledArmiesPanel = new JPanel();
+        controlledArmiesPanel.setLayout(new BoxLayout(controlledArmiesPanel,BoxLayout.Y_AXIS));
+        for (Army army : defendingArmies) {
             Card armyCard = new Card(army);
             armyCard.setListener(listener);
             armyCard.setAlignmentX(Component.CENTER_ALIGNMENT);
-            this.add(armyCard);
-            this.add(Box.createVerticalStrut(10));
-
-
+            defendingArmyPanel.add(armyCard);
+            defendingArmyPanel.add(Box.createVerticalStrut(10));
         }
+        for (Army army : controlledArmies) {
+            //Card armyCard = new Card(army);
+            JButton armyCard = new JButton(army.getCurrentLocation());
+            //armyCard.setListener(listener);
+            armyCard.setAlignmentX(Component.CENTER_ALIGNMENT);
+            controlledArmiesPanel.add(armyCard);
+            controlledArmiesPanel.add(Box.createVerticalStrut(10));
+        }
+        defendingArmyPanel.setBorder(BorderFactory.createTitledBorder("Defending Armies"));
+        controlledArmiesPanel.setBorder(BorderFactory.createTitledBorder("Controlled Armies"));
+        this.add(new JScrollPane(defendingArmyPanel));
+        this.add(new JScrollPane(controlledArmiesPanel));
         this.setAlignmentX(Component.CENTER_ALIGNMENT);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -27,12 +41,16 @@ public class ArmiesPanel extends JPanel {
 
     public static void main(String[] args) {
         JFrame armyFrame = new JFrame();
-        ArrayList<Army> armies = new ArrayList<>();
+        ArrayList<Army> defendingArmies = new ArrayList<>();
         for (int i = 0; i < 50; i++)
-            armies.add(new Army("Army" + i));
+            defendingArmies.add(new Army("Def " + i));
 
-        JScrollPane scroll = new JScrollPane(new ArmiesPanel(armies, null));
-        armyFrame.setContentPane(scroll);
+        ArrayList<Army> controlledArmies = new ArrayList<>();
+        for (int i = 0; i < 50; i++)
+            controlledArmies.add(new Army("Def " + i));
+
+        JPanel scroll = new ArmiesPanel(defendingArmies,controlledArmies,null);
+        armyFrame.add(scroll);
         armyFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         armyFrame.setSize((400 / 3), (400 / 3));
         armyFrame.setVisible(true);

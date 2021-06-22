@@ -62,7 +62,7 @@ public class GameGUI
 //        }
         if (e.getActionCommand().equals("worldMapButton")) {
             view.getCityView().dispose();
-            view.setWorldMapView(new WorldMapView());
+            view.setWorldMapView(new WorldMapView(game));
             view.getWorldMapView().setListener(this);
 
         } else if (e.getActionCommand().equals("End Turn")) {
