@@ -3,6 +3,7 @@ package views;
 import buildings.*;
 import engine.City;
 import listeners.CityViewListener;
+import listeners.WorldMapListener;
 import units.Army;
 
 import javax.swing.*;
@@ -155,8 +156,10 @@ public class CityView extends Frame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("worldMapButton")) {
+            WorldMapView worldMapView = new WorldMapView();
+            worldMapView.setListener((WorldMapListener) listener);
             this.dispose();
-            new WorldMapView();
+
         }
     }
 }
