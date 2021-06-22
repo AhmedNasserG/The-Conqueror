@@ -153,38 +153,19 @@ public class GameGUI
         String playerName = view.getNewGameView().getPlayerName();
         String cityName = view.getNewGameView().getCityName();
         game = new Game(playerName, cityName);
-        // to run world map view
+
 //        view.setWorldMapView(new WorldMapView());
 //        view.getWorldMapView().setListener(this);
 
-        // to run city view
-
-//
-//
         City city = game.getPlayer().getControlledCities().get(0);
-
-//        //For TEST only
-        ArcheryRange a = new ArcheryRange();
-        a.setCoolDown(false);
-        city.getMilitaryBuildings().add(a);
-//        city.getMilitaryBuildings().add(new Barracks());
-//        city.getEconomicalBuildings().add(new Market());
-//        city.getEconomicalBuildings().add(new Farm());
-//        //--------
         CityView cityView = new CityView(city);
         cityView.setListener(this);
-//
-//
-        view.getNewGameView().dispose();
-////        // Set Status panel
-        cityView.setPlayerName(game.getPlayer().getName());
-        cityView.setCurrentTurnCount(game.getCurrentTurnCount());
-        cityView.setFood(game.getPlayer().getFood());
-        cityView.setTreasury(game.getPlayer().getTreasury());
-//
+        cityView.getStatusPanel().setGame(game);
+        cityView.getStatusPanel().updateStatusPanel();
         view.setCityView(cityView);
-        view.getCityView().revalidate();
-        view.getCityView().repaint();
+
+        view.getNewGameView().dispose();
+
     }
 
     @Override
@@ -215,6 +196,7 @@ public class GameGUI
             game.getPlayer().upgradeBuilding(buildingPopUp.getBuildingToShow());
             buildingPopUp.dispose();
             view.getCityView().updateCityGrid();
+            view.getCityView().getStatusPanel().updateStatusPanel();
         } catch (BuildingInCoolDownException e) {
             JOptionPane.showMessageDialog(null, "Sorry The Building is Cooling Down, Please wait to the next turn to upgrade.");
         } catch (MaxLevelException e) {
@@ -229,6 +211,7 @@ public class GameGUI
         try {
             game.getPlayer().recruitUnit(((MilitaryBuilding) (buildingPopUp.getBuildingToShow())));
             buildingPopUp.dispose();
+            view.getCityView().getStatusPanel().updateStatusPanel();
         } catch (BuildingInCoolDownException e) {
             JOptionPane.showMessageDialog(null, "Sorry The Building is Cooling Down, Please wait to the next turn to upgrade.");
         } catch (MaxRecruitedException e) {
@@ -238,13 +221,13 @@ public class GameGUI
         }
     }
 
-
     @Override
     public void onBuildingCardClicked(Building building, String whereToBuild) throws NotEnoughGoldException {
         if (whereToBuild != null) {
             try {
                 game.getPlayer().build(building.getBuildingName(), whereToBuild);
                 view.getCityView().updateCityGrid();
+                view.getCityView().getStatusPanel().updateStatusPanel();
             } catch (BuildingInCityAlreadyException e) {
                 JOptionPane.showMessageDialog(null, "Sorry You Already Have " + building.getBuildingName() + " In Your City, Please Choose Another Building.");
             } catch (NotEnoughGoldException e) {
