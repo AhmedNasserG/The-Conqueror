@@ -1,6 +1,9 @@
 package views;
 
+import engine.City;
 import listeners.StartMenuListener;
+import units.Cavalry;
+import units.Unit;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,6 +23,7 @@ public class StartMenuView extends Frame implements ActionListener {
         this.setLayout(new FlowLayout());
         String[] buttonNames = new String[]{"New Game", "About", "Help", "Exit"};
         JPanel menuPanel = menuPanel(buttonNames);
+
 
         this.add(menuPanel);
         this.revalidate();

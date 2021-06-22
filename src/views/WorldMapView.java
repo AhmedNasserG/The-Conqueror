@@ -13,12 +13,11 @@ import java.util.ArrayList;
 public class WorldMapView extends Frame {
     private StatusPanel statusPanel;
     private JPanel citiesAndText;
-    private ArrayList<JButton> buttons;
     private JPanel cityButtons;
     private ArrayList<Army> armiesArray;
     private ArrayList<Army> defendingArmies;
     private ArrayList<Army> controlledArmies;
-
+    private ArrayList<Card> cities;
     private WorldMapListener listener;
 
 public WorldMapView(Game game){
@@ -51,28 +50,21 @@ public WorldMapView(Game game){
     citiesAndText.add(Box.createRigidArea(new Dimension(0, 50)));
 
     cityButtons = new JPanel();
-    cityButtons.setLayout(new FlowLayout());
-    buttons = new ArrayList<JButton>();
-    JButton cairoButton = new JButton("Cairo");
-    JButton romeButton = new JButton("Rome");
-    JButton spartaButton = new JButton("Sparta");
-    buttons.add(cairoButton);
-    buttons.add(romeButton);
-    buttons.add(spartaButton);
+    cityButtons.setLayout(new GridLayout());
 
-    cityButtons.add(cairoButton);
-    cityButtons.add(romeButton);
-    cityButtons.add(spartaButton);
+    cities = new ArrayList<>();
+
+    for(City city: game.getAvailableCities())
+    {
+        Card cityCard = new Card(city);
+        cityButtons.add(cityCard);
+        cities.add(cityCard);
+    }
 
     citiesAndText.add(cityButtons);
     citiesAndText.setBounds((getWidth() - 710) / 2, 280, 410, 410);
 
-    //Testing the scroll pane
-    //TODO: Remove this part and in the controller add the available armies
-    /*armiesArray = new ArrayList<>();
-    for(int i=0;i<15;i++){
-        armiesArray.add(new Army("army" +i));
-    }*/
+
     controlledArmies = game.getPlayer().getControlledArmies();
     defendingArmies = new ArrayList<>();
     for(City city: game.getPlayer().getControlledCities()){
@@ -96,9 +88,9 @@ public WorldMapView(Game game){
         pane.setBounds(getWidth() - 300, 100, 300, getHeight() - 100);
         pane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         add(pane);
-        for(JButton button: buttons)
+        for(Card card: cities)
         {
-            button.addActionListener(listener);
+            card.setListener(listener);
         }
     }
 }

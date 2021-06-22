@@ -46,20 +46,7 @@ public class GameGUI
 //                friendlyFireException.printStackTrace();
 //            }
 //        }
-        // TODO: Salah you should not just check it is a button because there more than a button to use this method
-//        if (e.getSource() instanceof JButton) {
-//            String cityName = ((JButton) e.getSource()).getText();
-//            for (City city : game.getPlayer().getControlledCities()) {
-//                if (cityName.equals(city.getName())) {
-//                    view.setCityView(new CityView(city));
-//                    view.getCityView().setListener(this);
-//                    view.getWorldMapView().dispose();
-//                    return;
-//                }
-//            }
-//
-//            this.onCityClicked(new City(cityName));
-//        }
+
         if (e.getActionCommand().equals("worldMapButton")) {
             view.getCityView().dispose();
             view.setWorldMapView(new WorldMapView(game));
@@ -113,23 +100,38 @@ public class GameGUI
         statusPanel.setGame(game);
         statusPanel.setListener(this);
 
-//        view.setWorldMapView(new WorldMapView());
-//        view.getWorldMapView().setListener(this);
+        view.setWorldMapView(new WorldMapView(game));
+        view.getWorldMapView().setListener(this);
 
-        City city = game.getPlayer().getControlledCities().get(0);
-        CityView cityView = new CityView(city);
-        cityView.setListener(this);
-        cityView.setStatusPanel(statusPanel);
-        statusPanel.updateStatusPanel();
-        view.setCityView(cityView);
-
+        // TODO: Nasser's code
+//        City city = game.getPlayer().getControlledCities().get(0);
+//        CityView cityView = new CityView(city);
+//        cityView.setListener(this);
+//        cityView.setStatusPanel(statusPanel);
+//        statusPanel.updateStatusPanel();
+//        view.setCityView(cityView);
+//
         view.getNewGameView().dispose();
 
     }
-
+//TODO: remove this method;
     @Override
     public void onCityClicked(City city) {
-//        CityPopUp cityPopUp = new CityPopUp(city);
+        CityPopUp cityPopUp = new CityPopUp(city);
+    }
+
+    @Override
+    public void onCityCardClicked(City city) {
+            if(game.getPlayer().getControlledCities().contains(city)){
+                view.setCityView(new CityView(city));
+                view.getCityView().setListener(this);
+                view.getWorldMapView().dispose();
+            }
+            else{
+                CityPopUp cityPopUp = new CityPopUp(city);
+
+            }
+
     }
 
     @Override

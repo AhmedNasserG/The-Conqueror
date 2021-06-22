@@ -153,5 +153,13 @@ public class Card extends JButton implements ActionListener {
             listener.onArmyCardClicked(this.army);
 
         }
+        else if (city != null)
+        {
+            listener.onCityCardClicked(this.city);
+        }
+    }
+
+    public City getCity() {
+        return city;
     }
 }
