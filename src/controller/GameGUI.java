@@ -18,68 +18,18 @@ import java.util.ArrayList;
 
 public class GameGUI
         implements ActionListener, NewGameListener, StartMenuListener, CityViewListener,
-        WorldMapListener, BattleListener, UnitListener, CardListener {
+        WorldMapListener, BattleListener, UnitListener, CardListener, UnitPopUpListener {
 
     private Game game;
     private final GameViews view;
     private StatusPanel statusPanel;
 
+    private Army a;
+    private Army b;
+
     public GameGUI() throws IOException {
         view = new GameViews();
-        view.setStartMenuView(new StartMenuView());
-        view.getStartMenuView().setListener(this);
 
-//        view = new GameViews();
-//        game = new Game("OMAR", "Cairo");
-//        game.setListener(this);
-//        a = new Army("Cairo");
-//        b = new Army("Sparta");
-//
-//        Archer u1 = new Archer(1, 5, 2.0, 2.0, 2.0);
-//        Archer u2 = new Archer(1, 5, 2.0, 2.0, 2.0);
-//        Archer u3 = new Archer(1, 5, 2.0, 2.0, 2.0);
-//        Archer u4 = new Archer(1, 5, 2.0, 2.0, 2.0);
-//        Archer u5 = new Archer(1, 5, 2.0, 2.0, 2.0);
-//        Archer u6 = new Archer(1, 5, 2.0, 2.0, 2.0);
-//        u1.setListener(this);
-//        u2.setListener(this);
-//        u3.setListener(this);
-//        u4.setListener(this);
-//        u5.setListener(this);
-//        u6.setListener(this);
-//
-//        Army p1 = new Army("asd"), p2 = new Army("Asd");
-//
-//
-//        ArrayList<Unit> list = new ArrayList<>();
-//        list.add(u1); list.add(u2); list.add(u3);
-////        for(int i = 0; i < list.size(); i++){
-////            list.get(i).setListener(this);
-////        }
-//        a.setUnits(list);
-//        game.getPlayer().getControlledArmies().add(a);
-//
-//        ArrayList<Unit> list2 = new ArrayList<>();
-//        list2.add(u4); list2.add(u5); list2.add(u6);
-////        for(int i = 0; i < list.size(); i++){
-////            list.get(i).setListener(this);
-////        }
-//        b.setUnits(list2);
-//
-//        u1.setParentArmy(a);
-//        u2.setParentArmy(a);
-//        u3.setParentArmy(a);
-//        u4.setParentArmy(b);
-//        u5.setParentArmy(b);
-//        u6.setParentArmy(b);
-//
-//        BattleView bv = new BattleView("AUTO RESOLVE", a, b, this);
-//        view.setBattleView(bv);
-//        bv.getNextMoveBtn().addActionListener(this);
-//
-//
-//
-//        view.getBattleView().repaint();
     }
 
     public static void main(String[] args) throws IOException {
@@ -88,14 +38,14 @@ public class GameGUI
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        /*if (e.getSource() == view.getBattleView().getNextMoveBtn()) {
+        if(e.getSource() == view.getBattleView().getStartAutoResolveBtn()){
             try {
                 System.out.println("actionPerformed");
-                game.autoResolve(a, b);
+                game.autoResolve(a,b);
             } catch (FriendlyFireException friendlyFireException) {
                 friendlyFireException.printStackTrace();
             }
-        } else */
+        }
         // TODO: Salah you should not just check it is a button because there more than a button to use this method
 //        if (e.getSource() instanceof JButton) {
 //            String cityName = ((JButton) e.getSource()).getText();
@@ -131,15 +81,20 @@ public class GameGUI
         JTextArea log = view.getBattleView().getBattleLog();
         String RESULT = result1 + (game.getPlayer().getControlledArmies().contains(unitParentArmy) ? "Target" : "Player") + result2;
         log.setText((log.getText() + "\n\n" + RESULT));
-//        JLabel resultsDisplay = new JLabel();
-//
-//        resultsDisplay.setText(result);
-//        resultsDisplay.setFont(new Font(Font.MONOSPACED, Font.BOLD, 30));
-//        view.getBattleView().setBattleResultsDisplay(resultsDisplay);
-//        view.getBattleView().revalidate();
-//        view.getBattleView().repaint();
+
+        updateUnitsPanels(a,b);
+        view.getBattleView().getStartAutoResolveBtn().setEnabled(false);
+
         System.out.println(RESULT);
-//        System.out.println("yay");
+    }
+
+    public void updateUnitsPanels(Army playerArmy, Army targetArmy){
+        view.getBattleView().setPlayerArmy(playerArmy);
+        view.getBattleView().setTargetArmy(targetArmy);
+
+        view.getBattleView().getPlayerUnitsPanel().updatePanel(playerArmy);
+        view.getBattleView().getTargetUnitsPanel().updatePanel(targetArmy);
+        view.getBattleView().getBattlePanel().setBackground(Color.BLUE);
     }
 
     @Override
@@ -173,19 +128,6 @@ public class GameGUI
     }
 
 
-    @Override
-    public void onManualAttackChosen() throws InterruptedException {
-//        view.setBattleView(new BattleView("MANUAL ATTACK"));
-//        view.getBattleView().setVisible(true);
-        // TODO: hide WorldMapView
-    }
-
-    @Override
-    public void onAutoResolveChosen() throws InterruptedException {
-//        view.setBattleView(new BattleView("AUTO RESOLVE"));
-//        view.getBattleView().setVisible(true);
-        // TODO: hide WorldMapView
-    }
 
     @Override
     public void onCityClicked(City city) {
@@ -243,20 +185,80 @@ public class GameGUI
         }
     }
 
+
+    @Override
+    public void onManualAttackChosen() throws InterruptedException {
+//        view.setBattleView(new BattleView("MANUAL ATTACK"));
+//        view.getBattleView().setVisible(true);
+        // TODO: hide WorldMapView
+    }
+
+    @Override
+    public void onAutoResolveChosen() throws InterruptedException {
+//        view.setBattleView(new BattleView("AUTO RESOLVE"));
+//        view.getBattleView().setVisible(true);
+        // TODO: hide WorldMapView
+    }
+
+    @Override
+    public void onAttackPressed(Unit u) {
+        System.out.println("attacked enemy unit");
+    }
+
     @Override
     public void onUnitCardClicked(Unit unit) {
         JPanel p = view.getBattleView().getUnitInfoPanel();
+        p.removeAll();
+        p.setBorder(BorderFactory.createTitledBorder("UNIT INFO"));
+        p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
         Card c = new Card(unit);
         c.setAlignmentX(Component.CENTER_ALIGNMENT);
         p.add(c);
+
+        UnitInfoLabel l1 = new UnitInfoLabel("   Soldier Count: " + unit.getCurrentSoldierCount());
+        UnitInfoLabel l2 = new UnitInfoLabel("   Max Soldier Count: " + unit.getMaxSoldierCount());
+        UnitInfoLabel l3 = new UnitInfoLabel("   Siege Upkeep: " + unit.getSiegeUpkeep());
+        UnitInfoLabel l4 = new UnitInfoLabel("   Idle Upkeep: " + unit.getIdleUpkeep());
+        UnitInfoLabel l5 = new UnitInfoLabel("   Marching Upkeep: " + unit.getMarchingUpkeep());
+
+        p.add(l1);
+        p.add(Box.createRigidArea(new Dimension(0, 5)));
+        p.add(l2);
+        p.add(Box.createRigidArea(new Dimension(0, 5)));
+        p.add(l3);
+        p.add(Box.createRigidArea(new Dimension(0, 5)));
+        p.add(l4);
+        p.add(Box.createRigidArea(new Dimension(0, 5)));
+        p.add(l5);
+
         view.getBattleView().revalidate();
         view.getBattleView().repaint();
-//        p.setBackground(Color.orange);
+        System.out.println("displayed units info");
+    }
+
+    @Override
+    public void onFriendlyUnitCardClicked(Unit unit) {
+        onUnitCardClicked(unit);
+
+        // Selected To Attack
+
+        System.out.println("friendly unit");
+    }
+
+    @Override
+    public void onEnemyUnitCardClicked(Unit unit) {
+        onUnitCardClicked(unit);
+
+        UnitPopUp unitPopUp = new UnitPopUp(unit);
+        unitPopUp.setListener(this);
+
+        System.out.println("enemy unit");
     }
 
     @Override
     public void onArmyCardClicked(Army army) {
         ArmyPopUp armyPopUp = new ArmyPopUp(army);
     }
+
 
 }
