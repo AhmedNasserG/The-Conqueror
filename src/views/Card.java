@@ -1,6 +1,7 @@
 package views;
 
 import buildings.Building;
+import engine.City;
 import exceptions.NotEnoughGoldException;
 import listeners.CardListener;
 import units.Army;
@@ -8,24 +9,26 @@ import units.Unit;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.util.Locale;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Card extends JLayeredPane implements MouseListener {
+public class Card extends JButton implements ActionListener {
+    private JLayeredPane layeredPane;
     private JLabel img;
     private JLabel topLabel;
     private JLabel bottomLabel;
     private String whereToBuild;
     private Building building;
     private Unit unit;
-    private boolean isEnemyUnit;
     private Army army;
+    private City city;
     private CardListener listener;
 
     public Card() {
         super();
-        addMouseListener(this);
+        layeredPane = new JLayeredPane();
+        this.setBorder(null);
+        addActionListener(this);
         img = new JLabel();
         topLabel = new JLabel("", SwingConstants.CENTER);
         bottomLabel = new JLabel("", SwingConstants.CENTER);
@@ -43,11 +46,12 @@ public class Card extends JLayeredPane implements MouseListener {
         bottomLabel.setBackground(Color.BLACK);
         bottomLabel.setForeground(Color.white);
 
-        setSize((400 / 3), (400 / 3));
+        setSize((500 / 3), (500 / 3));
         ImageIcon icon = new ImageIcon("res/img/grass.png");
         ImageIcon resizedIcon = new ImageIcon(icon.getImage().getScaledInstance((400 / 3), (400 / 3), Image.SCALE_DEFAULT));
         img.setIcon(resizedIcon);
-        add(img, Integer.valueOf(0));
+        layeredPane.add(img, Integer.valueOf(0));
+        add(layeredPane);
     }
 
     public Card(Building building) {
@@ -55,9 +59,9 @@ public class Card extends JLayeredPane implements MouseListener {
         this.building = building;
         img.setIcon(getIcon(building));
         topLabel.setText(building.getBuildingName());
-        bottomLabel.setText("Level " + building.getLevel());
-        add(topLabel, Integer.valueOf(1));
-        add(bottomLabel, Integer.valueOf(1));
+        bottomLabel.setText("Level: " + building.getLevel());
+        layeredPane.add(topLabel, Integer.valueOf(1));
+        layeredPane.add(bottomLabel, Integer.valueOf(1));
     }
 
     public Card(Building building, String whereToBuild) {
@@ -67,35 +71,43 @@ public class Card extends JLayeredPane implements MouseListener {
         img.setIcon(getIcon(building));
         topLabel.setText(building.getBuildingName());
         bottomLabel.setText("Cost " + building.getCost());
-        add(topLabel, Integer.valueOf(1));
-        add(bottomLabel, Integer.valueOf(1));
+        layeredPane.add(topLabel, Integer.valueOf(1));
+        layeredPane.add(bottomLabel, Integer.valueOf(1));
     }
 
     public Card(Unit unit) {
         this();
         this.unit = unit;
         img.setIcon(getIcon(unit));
-        topLabel.setText(unit.getUnitName().toUpperCase(Locale.ROOT));
-        bottomLabel.setText("Level " + unit.getLevel());
-        add(topLabel, Integer.valueOf(1));
-        add(bottomLabel, Integer.valueOf(1));
+        topLabel.setText(unit.getUnitName());
+        bottomLabel.setText("Level: " + unit.getLevel());
+        layeredPane.add(topLabel, Integer.valueOf(1));
+        layeredPane.add(bottomLabel, Integer.valueOf(1));
     }
-
-    public Card(Unit unit, boolean isEnemy) {
-        this(unit);
-        this.isEnemyUnit = isEnemy;
-    }
-
-
 
     public Card(Army army) {
         this();
         this.army = army;
         img.setIcon(getIcon(army));
-        topLabel.setText("Army");
+        topLabel.setText("Army: "+ army.getCurrentLocation());
         bottomLabel.setText(army.getCurrentStatus().toString());
-        add(topLabel, Integer.valueOf(1));
-        add(bottomLabel, Integer.valueOf(1));
+        layeredPane.add(topLabel, Integer.valueOf(1));
+        layeredPane. add(bottomLabel, Integer.valueOf(1));
+    }
+    public Card(City city) {
+        this();
+        this.city = city;
+        img.setIcon(getIcon(city));
+        topLabel.setText(city.getName());
+        bottomLabel.setText("");
+        layeredPane.add(topLabel, Integer.valueOf(1));
+        layeredPane.add(bottomLabel, Integer.valueOf(1));
+    }
+
+    private Icon getIcon(City city) {
+        ImageIcon icon = new ImageIcon("res/img/" + city.getName().toLowerCase() + ".png");
+        return new ImageIcon(icon.getImage().getScaledInstance((400 / 3), (400 / 3), Image.SCALE_DEFAULT));
+
     }
 
     public ImageIcon getIcon(Building building) {
@@ -117,41 +129,20 @@ public class Card extends JLayeredPane implements MouseListener {
         this.listener = listener;
     }
 
+
     @Override
-    public void mouseClicked(MouseEvent e) {
+    public void actionPerformed(ActionEvent e) {
         if (building != null) {
             try {
                 listener.onBuildingCardClicked(this.building, whereToBuild);
             } catch (NotEnoughGoldException notEnoughGoldException) {
                 notEnoughGoldException.printStackTrace();
             }
-        }
-        else if (unit != null) {
-            if(!isEnemyUnit) listener.onFriendlyUnitCardClicked(unit);
-            else listener.onEnemyUnitCardClicked(unit);
-        }
-        else if (army != null) {
+        } else if (unit != null) {
+            listener.onUnitCardClicked(this.unit);
+        } else if (army != null) {
+            listener.onArmyCardClicked(this.army);
 
         }
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-
     }
 }

@@ -1,4 +1,6 @@
 package listeners;
 
-public interface CityViewListener extends  CardListener, BuildingPopUpListener{
+import java.awt.event.ActionListener;
+
+public interface CityViewListener extends  CardListener, BuildingPopUpListener, ActionListener {
 }

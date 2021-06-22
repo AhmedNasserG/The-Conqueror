@@ -45,6 +45,7 @@ public abstract class MilitaryBuilding extends Building {
     }
 
 
+
     // Setters
     public void setRecruitmentCost(int recruitmentCost) {
         this.recruitmentCost = recruitmentCost;
@@ -53,6 +54,8 @@ public abstract class MilitaryBuilding extends Building {
     public void setCurrentRecruit(int currentRecruit) {
         this.currentRecruit = currentRecruit;
     }
+
+
 
 
 }
