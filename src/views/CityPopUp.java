@@ -23,10 +23,8 @@ public class CityPopUp extends Frame implements ActionListener {
         this.height = (getHeight() - 420) / 2;
         setBounds(width, height, 420, 420);
         setLayout(null);
-        Card armyTile = new Card(city);
-        // TODO: ein problem steht hier vv
-        //  armyTile.removeMouseListener(armyTile);
-        armyTile.setBounds(420 / 2 - 200 / 3, 10, 400 / 3, 400 / 3);
+        Card cityPicture = new Card(city);
+        cityPicture.setBounds(420 / 2 - 200 / 3, 10, 400 / 3, 400 / 3);
 
         JPanel backgroundPanel = new JPanel();
         backgroundPanel.setBounds(0, 0, 420, 170);
@@ -57,7 +55,7 @@ public class CityPopUp extends Frame implements ActionListener {
         closeButton.setBounds(420 / 2 - 180 / 3,360,100,30);
 
         add(closeButton);
-        add(armyTile);
+        add(cityPicture);
         add(backgroundPanel);
         add(container2);
 
