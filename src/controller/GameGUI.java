@@ -53,8 +53,8 @@ public class GameGUI
             Card targetUnitCard = view.getBattleView().getTargetUnitsPanel().getSelectedCard();
 
             if(playerUnitCard == null || targetUnitCard == null){
-                System.out.println("Asd");
-                showMessageDialog(null, "select a unit asshole");
+                System.out.println("units not selected correctly");
+                showMessageDialog(null, "Select a Friendly and a Target unit!");
             }
             else {
                 try {
@@ -103,6 +103,12 @@ public class GameGUI
 
         updateUnitsPanels(a,b);
         view.getBattleView().getStartAutoResolveBtn().setEnabled(false);
+        view.getBattleView().getBattleResultsDisplay().setBorder(BorderFactory.createEmptyBorder(0, 100, 0, 0));
+        view.getBattleView().getBattleResultsDisplay().setText(RESULT);
+        view.getBattleView().getBattleResultsDisplay().setFont(new Font(Font.MONOSPACED, Font.BOLD, 25));
+
+        view.getBattleView().getPlayerUnitsPanel().setSelectedCard(null);
+        view.getBattleView().getTargetUnitsPanel().setSelectedCard(null);
 
         System.out.println(RESULT);
     }
@@ -113,7 +119,6 @@ public class GameGUI
 
         view.getBattleView().getPlayerUnitsPanel().updatePanel(playerArmy);
         view.getBattleView().getTargetUnitsPanel().updatePanel(targetArmy);
-        view.getBattleView().getBattlePanel().setBackground(Color.BLUE);
     }
 
     @Override
@@ -229,10 +234,6 @@ public class GameGUI
     @Override
     public void onAttackPressed(Unit u) throws FriendlyFireException {
         this.onAttack(view.getBattleView().getPlayerUnitsPanel().getSelectedCard().getUnit(), u);
-        view.getBattleView().getTargetUnitsPanel().getSelectedCard().setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-        view.getBattleView().getPlayerUnitsPanel().getSelectedCard().setBorder(BorderFactory.createLineBorder(Color.BLUE, 3));
-        System.out.println(u.getCurrentSoldierCount());
-
     }
 
     public void onUnitCardClicked(Unit unit) {
