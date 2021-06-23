@@ -51,6 +51,8 @@ public class GameGUI
             view.getCityView().dispose();
             view.setWorldMapView(new WorldMapView(game));
             view.getWorldMapView().setListener(this);
+            view.getWorldMapView().setStatusPanel(statusPanel);
+            statusPanel.updateStatusPanel();
 
         } else if (e.getActionCommand().equals("End Turn")) {
             game.endTurn();
@@ -102,15 +104,9 @@ public class GameGUI
 
         view.setWorldMapView(new WorldMapView(game));
         view.getWorldMapView().setListener(this);
+        view.getWorldMapView().setStatusPanel(statusPanel);
+        statusPanel.updateStatusPanel();
 
-        // TODO: Nasser's code
-//        City city = game.getPlayer().getControlledCities().get(0);
-//        CityView cityView = new CityView(city);
-//        cityView.setListener(this);
-//        cityView.setStatusPanel(statusPanel);
-//        statusPanel.updateStatusPanel();
-//        view.setCityView(cityView);
-//
         view.getNewGameView().dispose();
 
     }
@@ -123,13 +119,15 @@ public class GameGUI
     @Override
     public void onCityCardClicked(City city) {
             if(game.getPlayer().getControlledCities().contains(city)){
-                view.setCityView(new CityView(city));
-                view.getCityView().setListener(this);
+                CityView cityView = new CityView(city);
+                cityView.setListener(this);
+                cityView.setStatusPanel(statusPanel);
+                statusPanel.updateStatusPanel();
+                view.setCityView(cityView);
                 view.getWorldMapView().dispose();
             }
             else{
                 CityPopUp cityPopUp = new CityPopUp(city);
-
             }
 
     }

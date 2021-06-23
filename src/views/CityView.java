@@ -3,9 +3,11 @@ package views;
 import buildings.*;
 import engine.City;
 import listeners.CityViewListener;
+import units.Army;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 
 public class CityView extends Frame {
@@ -21,6 +23,8 @@ public class CityView extends Frame {
         super();
         this.cityToView = cityToView;
         this.setLayout(null);
+//        this.setLayout(new GridBagLayout());
+//        GridBagConstraints gbc = new GridBagConstraints();
 
         worldMapButton = new JButton();
         cityGrid = new JPanel();
@@ -32,17 +36,25 @@ public class CityView extends Frame {
         cityGrid.setBackground(Color.lightGray);
 
         worldMapButton.setBounds(getWidth() - 100, 0, 100, 100);
-        cityGrid.setBounds((getWidth() - 710) / 2, 100, 410, 410);
+        cityGrid.setBounds((getWidth() - 710) / 2, getHeight() - 410 - 180, 410, 410);
         cityGrid.setLayout(new GridLayout(3, 3, 5, 5));
 
-        JPanel armysPanel = new JPanel();
-        armysPanel.setBackground(Color.ORANGE);
-        armysPanel.setBounds(getWidth() - 300, 100, 300, getHeight() - 100);
+        JLabel label = new JLabel(cityToView.getName(), SwingConstants.CENTER);
+        label.setBackground(Color.BLUE);
+        label.setAlignmentX(Component.CENTER_ALIGNMENT);
+        label.setOpaque(true);
+        label.setBounds(0, 100, getWidth() - 300, 80);
+
+//        ArrayList<Army> armies = new ArrayList<>();
+//        armies.add(cityToView.getDefendingArmy());
+//        ArmiesPanel armysPanel = new ArmiesPanel(armies,listener);
+//        armysPanel.setBackground(Color.ORANGE);
+//        armysPanel.setBounds(getWidth() - 300, 100, 300, getHeight() - 100);
 
         add(worldMapButton);
         add(cityGrid);
-        add(armysPanel);
-
+//        add(armysPanel);
+        add(label);
         setVisible(true);
     }
 
@@ -105,6 +117,13 @@ public class CityView extends Frame {
         this.statusPanel = statusPanel;
         statusPanel.setBounds(0, 0, getWidth() - 100, 100);
         add(statusPanel);
+
+        ArrayList<Army> armies = new ArrayList<>();
+        armies.add(cityToView.getDefendingArmy());
+        ArmiesPanel armysPanel = new ArmiesPanel(armies, new ArrayList<Army>(), listener);
+        armysPanel.setBackground(Color.ORANGE);
+        armysPanel.setBounds(getWidth() - 300, 100, 300, getHeight() - 100);
+        add(armysPanel);
     }
 
     public void setListener(CityViewListener listener) {
