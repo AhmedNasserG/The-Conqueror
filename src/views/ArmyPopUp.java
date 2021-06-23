@@ -71,9 +71,9 @@ public class ArmyPopUp extends Frame implements ActionListener {
         // For testing
         Army salah = new Army("Salah");
         ArrayList<Unit> units = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 30; i++) {
             units.add(new Cavalry(1));
-            units.add(new Infantry(3));
+            units.add(new Archer(3));
         }
         salah.setUnits(units);
 
