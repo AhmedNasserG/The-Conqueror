@@ -1,6 +1,7 @@
 package views;
 
 import listeners.UnitPopUpListener;
+import units.Archer;
 import units.Unit;
 
 import javax.swing.*;
@@ -76,5 +77,9 @@ public class UnitPopUp extends Frame implements ActionListener {
 
     public void setListener(UnitPopUpListener listener) {
         this.listener = listener;
+    }
+
+    public static void main(String[] args) {
+        new UnitPopUp(new Archer(2));
     }
 }
