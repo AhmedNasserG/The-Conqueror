@@ -9,6 +9,8 @@ public interface WorldMapListener extends ActionListener, CardListener {
     void onAutoResolveChosen() throws InterruptedException;
     void onCityClicked(City city) ;
     void onCityCardClicked(City city);
+    void onAttackClicked();
+    void onLaySiegeClicked();
 }
 
 

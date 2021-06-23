@@ -165,8 +165,19 @@ public class GameGUI
             }
             else{
                 CityPopUp cityPopUp = new CityPopUp(city);
+                cityPopUp.setListener(this);
             }
 
+    }
+
+    @Override
+    public void onAttackClicked() {
+//TODO: Omar's part
+    }
+
+    @Override
+    public void onLaySiegeClicked() {
+//TODO: should do sth here
     }
 
     @Override

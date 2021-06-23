@@ -47,5 +47,6 @@ public class EndGameView extends Frame {
         this.listener = listener;
         replayBtn.addActionListener(listener);
         exitBtn.addActionListener(listener);
+
     }
 }
