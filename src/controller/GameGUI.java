@@ -30,6 +30,8 @@ public class GameGUI
 
     public GameGUI() throws IOException {
         view = new GameViews();
+        view.setStartMenuView(new StartMenuView());
+        view.getStartMenuView().setListener(this);
 
     }
 
@@ -168,6 +170,12 @@ public class GameGUI
     }
 
     @Override
+    public void onNewUnitCardClicked(Unit unit) {
+    newUnitPopUp newUnitPopUp = new newUnitPopUp(unit);
+    newUnitPopUp.setListener(this);
+    }
+
+    @Override
     public void onUpgradeClicked(BuildingPopUp buildingPopUp) {
         try {
             game.getPlayer().upgradeBuilding(buildingPopUp.getBuildingToShow());
@@ -301,6 +309,7 @@ public class GameGUI
     @Override
     public void onArmyCardClicked(Army army) {
         ArmyPopUp armyPopUp = new ArmyPopUp(army);
+        armyPopUp.setListener(this);
     }
 
 }

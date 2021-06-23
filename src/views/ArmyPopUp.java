@@ -2,6 +2,7 @@ package views;
 
 import buildings.Barracks;
 import buildings.MilitaryBuilding;
+import listeners.CardListener;
 import units.*;
 
 import javax.swing.*;
@@ -14,6 +15,8 @@ public class ArmyPopUp extends Frame implements ActionListener {
     private Army army;
     private final int width;
     private final int height;
+    private ArrayList<Card> unitCards;
+    private CardListener listener;
 
     public ArmyPopUp(Army army) {
         super(army.getCurrentLocation());
@@ -40,8 +43,10 @@ public class ArmyPopUp extends Frame implements ActionListener {
         JPanel unitsPanel = new JPanel();
         unitsPanel.setLayout(new GridLayout());
         unitsPanel.setBorder(BorderFactory.createLineBorder(Color.ORANGE));
+        unitCards = new ArrayList<Card>();
         for (Unit unit : army.getUnits()) {
             Card unitCard = new Card(unit);
+            unitCards.add(unitCard);
             unitCard.setAlignmentX(Component.CENTER_ALIGNMENT);
             unitsPanel.add(unitCard);
         }
@@ -88,5 +93,11 @@ public class ArmyPopUp extends Frame implements ActionListener {
                 this.dispose();
                 break;
         }
+    }
+
+    public void setListener(CardListener listener) {
+        this.listener = listener;
+        for(Card c: unitCards)
+            c.setListener(listener);
     }
 }

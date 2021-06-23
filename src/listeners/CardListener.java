@@ -13,4 +13,5 @@ public interface CardListener {
     void onEnemyUnitCardClicked(Card c);
     void onArmyCardClicked(Army army);
     void onCityCardClicked(City city);
+    void onNewUnitCardClicked(Unit unit);
 }
