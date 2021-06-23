@@ -29,7 +29,8 @@ public class Card extends JButton implements ActionListener {
     public Card() {
         super();
         layeredPane = new JLayeredPane();
-        this.setBorder(null);
+        this.setBorder(BorderFactory.createEmptyBorder());
+        this.setPreferredSize(new Dimension(150,10));
         this.setContentAreaFilled(false);
         addActionListener(this);
         img = new JLabel();

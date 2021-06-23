@@ -38,15 +38,12 @@ public class ArmyPopUp extends Frame implements ActionListener {
 
         container2.add(Box.createRigidArea(new Dimension(0, 20)));
         JPanel unitsPanel = new JPanel();
-        unitsPanel.setLayout(new FlowLayout());
+        unitsPanel.setLayout(new GridLayout());
         unitsPanel.setBorder(BorderFactory.createLineBorder(Color.ORANGE));
         for (Unit unit : army.getUnits()) {
             Card unitCard = new Card(unit);
             unitCard.setAlignmentX(Component.CENTER_ALIGNMENT);
             unitsPanel.add(unitCard);
-            // TODO: Fix the problem in the unit card not showing
-            unitsPanel.add(new JButton(unit.getUnitName() + unit.getLevel()));
-            unitsPanel.add(Box.createHorizontalStrut(10));
         }
         JScrollPane unitsPane = new JScrollPane(unitsPanel);
         unitsPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);

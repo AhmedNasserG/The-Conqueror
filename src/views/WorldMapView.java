@@ -34,7 +34,6 @@ public WorldMapView(Game game){
     // or lay siege
     //TODO: army pop up should have setTarget the uncontrolled cites
     // TODO: edit and update the status panel
-    //TODO: unit pop that has count and status and so on
     //TODO: separate the defending from the controlled armies
     //TODO: city can't be under siege and attacked at the same time
 
