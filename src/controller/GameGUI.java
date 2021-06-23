@@ -8,11 +8,14 @@ import listeners.*;
 import units.*;
 import views.*;
 
+import static javax.swing.JOptionPane.showMessageDialog;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class GameGUI
         implements ActionListener, NewGameListener, StartMenuListener, CityViewListener,
@@ -27,8 +30,6 @@ public class GameGUI
 
     public GameGUI() throws IOException {
         view = new GameViews();
-        view.setStartMenuView(new StartMenuView());
-        view.getStartMenuView().setListener(this);
 
     }
 
@@ -38,16 +39,32 @@ public class GameGUI
 
     @Override
     public void actionPerformed(ActionEvent e) {
-//        if(e.getSource() == view.getBattleView().getStartAutoResolveBtn()){
-//            try {
-//                System.out.println("actionPerformed");
-//                game.autoResolve(a,b);
-//            } catch (FriendlyFireException friendlyFireException) {
-//                friendlyFireException.printStackTrace();
-//            }
-//        }
 
-        if (e.getActionCommand().equals("worldMapButton")) {
+        if(e.getActionCommand().equals("START AUTORESOLVE")){
+            try {
+                System.out.println("actionPerformed");
+                game.autoResolve(a,b);
+            } catch (FriendlyFireException friendlyFireException) {
+                friendlyFireException.printStackTrace();
+            }
+        }
+        else if (e.getActionCommand().equals("START MANUAL ATTACK")){
+            Card playerUnitCard = view.getBattleView().getPlayerUnitsPanel().getSelectedCard();
+            Card targetUnitCard = view.getBattleView().getTargetUnitsPanel().getSelectedCard();
+
+            if(playerUnitCard == null || targetUnitCard == null){
+                System.out.println("Asd");
+                showMessageDialog(null, "select a unit asshole");
+            }
+            else {
+                try {
+                    this.onAttack(playerUnitCard.getUnit(), targetUnitCard.getUnit());
+                } catch (FriendlyFireException friendlyFireException) {
+                    friendlyFireException.printStackTrace();
+                }
+            }
+        }
+        else if (e.getActionCommand().equals("worldMapButton")) {
             view.getCityView().dispose();
             view.setWorldMapView(new WorldMapView(game));
             view.getWorldMapView().setListener(this);
@@ -62,7 +79,8 @@ public class GameGUI
                 endGameView.setListener(this);
                 view.setEndGameView(endGameView);
             }
-        }else if(e.getActionCommand().equals("PLAY AGAIN!")){
+        }
+        else if(e.getActionCommand().equals("PLAY AGAIN!")){
             view.setNewGameView(new NewGameView());
             view.getNewGameView().setListener(this);
             view.getEndGameView().dispose();
@@ -195,25 +213,28 @@ public class GameGUI
 
 
     @Override
-    public void onManualAttackChosen() throws InterruptedException {
+    public void onManualAttackChosen() {
 //        view.setBattleView(new BattleView("MANUAL ATTACK"));
 //        view.getBattleView().setVisible(true);
         // TODO: hide WorldMapView
     }
 
     @Override
-    public void onAutoResolveChosen() throws InterruptedException {
+    public void onAutoResolveChosen() {
 //        view.setBattleView(new BattleView("AUTO RESOLVE"));
 //        view.getBattleView().setVisible(true);
         // TODO: hide WorldMapView
     }
 
     @Override
-    public void onAttackPressed(Unit u) {
-        System.out.println("attacked enemy unit");
+    public void onAttackPressed(Unit u) throws FriendlyFireException {
+        this.onAttack(view.getBattleView().getPlayerUnitsPanel().getSelectedCard().getUnit(), u);
+        view.getBattleView().getTargetUnitsPanel().getSelectedCard().setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+        view.getBattleView().getPlayerUnitsPanel().getSelectedCard().setBorder(BorderFactory.createLineBorder(Color.BLUE, 3));
+        System.out.println(u.getCurrentSoldierCount());
+
     }
 
-    @Override
     public void onUnitCardClicked(Unit unit) {
         JPanel p = view.getBattleView().getUnitInfoPanel();
         p.removeAll();
@@ -245,20 +266,33 @@ public class GameGUI
     }
 
     @Override
-    public void onFriendlyUnitCardClicked(Unit unit) {
-        onUnitCardClicked(unit);
+    public void onFriendlyUnitCardClicked(Card c) {
+        onUnitCardClicked(c.getUnit());
 
+        if(view.getBattleView().getPlayerUnitsPanel().getSelectedCard() != null){
+            view.getBattleView().getPlayerUnitsPanel().getSelectedCard().setBorder(null);
+        }
+
+        c.setBorder(BorderFactory.createLineBorder(Color.BLUE, 3));
+        view.getBattleView().getPlayerUnitsPanel().setSelectedCard(c);
         // Selected To Attack
 
         System.out.println("friendly unit");
     }
 
     @Override
-    public void onEnemyUnitCardClicked(Unit unit) {
-        onUnitCardClicked(unit);
+    public void onEnemyUnitCardClicked(Card c) {
+        onUnitCardClicked(c.getUnit());
 
-        UnitPopUp unitPopUp = new UnitPopUp(unit);
-        unitPopUp.setListener(this);
+//        UnitPopUp unitPopUp = new UnitPopUp(c.getUnit());
+//        unitPopUp.setListener(this);
+
+        if(view.getBattleView().getTargetUnitsPanel().getSelectedCard() != null){
+            view.getBattleView().getTargetUnitsPanel().getSelectedCard().setBorder(null);
+        }
+
+        c.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+        view.getBattleView().getTargetUnitsPanel().setSelectedCard(c);
 
         System.out.println("enemy unit");
     }
