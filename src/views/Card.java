@@ -19,6 +19,7 @@ public class Card extends JButton implements ActionListener {
     private JLabel bottomLabel;
     private String whereToBuild;
     private Building building;
+
     private Unit unit;
     private Army army;
     private City city;
@@ -139,6 +140,10 @@ public class Card extends JButton implements ActionListener {
     }
 
 
+    public Unit getUnit() {
+        return unit;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (building != null) {
@@ -148,8 +153,8 @@ public class Card extends JButton implements ActionListener {
                 notEnoughGoldException.printStackTrace();
             }
         } else if (unit != null) {
-            if(!isEnemyUnit) listener.onFriendlyUnitCardClicked(unit);
-            else listener.onEnemyUnitCardClicked(unit);
+            if(!isEnemyUnit) listener.onFriendlyUnitCardClicked(this);
+            else listener.onEnemyUnitCardClicked(this);
         } else if (army != null) {
             listener.onArmyCardClicked(this.army);
 

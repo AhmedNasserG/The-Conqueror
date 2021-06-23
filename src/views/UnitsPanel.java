@@ -13,17 +13,19 @@ public class UnitsPanel extends JPanel {
     private String armyOwner;
     private Army army;
 
+
+    private Card selectedCard;
+
     private CardListener listener;
 
     static final Dimension SCREENSIZE = Toolkit.getDefaultToolkit().getScreenSize();
 
     public UnitsPanel(String armyOwner, Army army, CardListener listener){
-
         this.armyOwner = armyOwner;
         this.army = army;
         this.listener = listener;
 
-        this.setPreferredSize(new Dimension(SCREENSIZE.width, SCREENSIZE.height/7));
+        this.setPreferredSize(new Dimension(SCREENSIZE.width, SCREENSIZE.height/4));
 
         this.setLayout(new GridLayout(0,10));
 
@@ -57,6 +59,14 @@ public class UnitsPanel extends JPanel {
 
         revalidate();
         repaint();
+    }
+
+    public Card getSelectedCard() {
+        return selectedCard;
+    }
+
+    public void setSelectedCard(Card selectedCard) {
+        this.selectedCard = selectedCard;
     }
 
 }

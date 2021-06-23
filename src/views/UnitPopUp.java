@@ -1,5 +1,6 @@
 package views;
 
+import exceptions.FriendlyFireException;
 import listeners.UnitPopUpListener;
 import units.Archer;
 import units.Unit;
@@ -69,7 +70,11 @@ public class UnitPopUp extends Frame implements ActionListener {
             }
 
             case "Attack": {
-                listener.onAttackPressed(enemyUnit);
+                try {
+                    listener.onAttackPressed(enemyUnit);
+                } catch (FriendlyFireException friendlyFireException) {
+                    friendlyFireException.printStackTrace();
+                }
             }
 
         }

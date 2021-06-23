@@ -20,7 +20,6 @@ public class BattleView extends Frame {
     private UnitsPanel playerUnitsPanel;
     private UnitsPanel targetUnitsPanel;
 
-    private JPanel battleActionPanel;
     private String battleMode;
     private JLabel battleResultsDisplay;
 
@@ -67,10 +66,8 @@ public class BattleView extends Frame {
 
         buttonsPanel = new JPanel();
         startAutoResolveBtn = new JButton("START AUTORESOLVE");
-        startManualAttackBtn = new JButton("ATTACK");
-        GridLayout gl = new GridLayout(1,2);
-        gl.setHgap(10);
-        buttonsPanel.setLayout(gl);
+        startManualAttackBtn = new JButton("START MANUAL ATTACK");
+        buttonsPanel.setPreferredSize(new Dimension(leftSidePanel.getWidth(), leftSidePanel.getHeight()/4));
 
         if(battleMode.equals("MANUAL ATTACK")) {
             buttonsPanel.add(startManualAttackBtn);
@@ -115,16 +112,8 @@ public class BattleView extends Frame {
         return battleResultsDisplay;
     }
 
-    public void setBattleResultsDisplay(JLabel battleResultsDisplay) {
-        this.battleResultsDisplay = battleResultsDisplay;
-    }
-
     public JPanel getBattlePanel() {
         return battlePanel;
-    }
-
-    public void setBattlePanel(JPanel battlePanel) {
-        this.battlePanel = battlePanel;
     }
 
     public JButton getStartAutoResolveBtn() {
@@ -143,41 +132,22 @@ public class BattleView extends Frame {
         return battleLog;
     }
 
-    public void setBattleLog(JTextArea battleLog) {
-        this.battleLog = battleLog;
-    }
-
-    public Army getPlayerArmy() {
-        return playerArmy;
-    }
-
-    public Army getTargetArmy() {
-        return targetArmy;
-    }
-
     public JPanel getUnitInfoPanel() {
         return unitInfoPanel;
-    }
-
-    public void setUnitInfoPanel(JPanel unitInfoPanel) {
-        this.unitInfoPanel = unitInfoPanel;
     }
 
     public UnitsPanel getPlayerUnitsPanel() {
         return playerUnitsPanel;
     }
 
-    public void setPlayerUnitsPanel(UnitsPanel playerUnitsPanel) {
-        this.playerUnitsPanel = playerUnitsPanel;
-    }
-
     public UnitsPanel getTargetUnitsPanel() {
         return targetUnitsPanel;
     }
 
-    public void setTargetUnitsPanel(UnitsPanel targetUnitsPanel) {
-        this.targetUnitsPanel = targetUnitsPanel;
+    public JButton getStartManualAttackBtn() {
+        return startManualAttackBtn;
     }
+
 
 
     public static void main(String[] args) throws IOException {
