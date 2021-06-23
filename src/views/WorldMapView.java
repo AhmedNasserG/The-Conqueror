@@ -79,7 +79,7 @@ public class WorldMapView extends Frame {
 
     public void setStatusPanel(StatusPanel statusPanel) {
         this.statusPanel = statusPanel;
-        statusPanel.setBounds(0, 0, getWidth() - 100, 100);
+        statusPanel.setBounds(0, 0, getWidth(), 100);
         add(statusPanel);
     }
 
