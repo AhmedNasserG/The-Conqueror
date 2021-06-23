@@ -37,9 +37,9 @@ public abstract class Unit {
     public String getUnitName() {
         String imgStr = "";
         if (Archer.class.equals(this.getClass())) {
-            imgStr = "archer";
+            imgStr = "Archer";
         } else if (Cavalry.class.equals(this.getClass())) {
-            imgStr = "cavalry";
+            imgStr = "Cavalry";
         } else if (Infantry.class.equals(this.getClass())) {
             imgStr = "Infantry";
         }

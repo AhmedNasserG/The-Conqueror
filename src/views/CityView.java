@@ -4,6 +4,7 @@ import buildings.*;
 import engine.City;
 import listeners.CityViewListener;
 import units.Army;
+import units.Infantry;
 
 import javax.swing.*;
 import java.awt.*;
