@@ -15,6 +15,7 @@ public class CityPopUp extends Frame implements ActionListener {
     private City city;
     private final int width;
     private final int height;
+    private JButton attackButton,laySiegeButton;
 
     public CityPopUp(City city ){
         super(city.getName());
@@ -24,7 +25,7 @@ public class CityPopUp extends Frame implements ActionListener {
         setBounds(width, height, 420, 420);
         setLayout(null);
         Card cityPicture = new Card(city);
-        cityPicture.setBounds(420 / 2 - 200 / 3, 10, 400 / 3, 400 / 3);
+        cityPicture.setBounds(200, 10, 400 / 3, 400 / 3);
 
         JPanel backgroundPanel = new JPanel();
         backgroundPanel.setBounds(0, 0, 420, 170);
@@ -54,6 +55,15 @@ public class CityPopUp extends Frame implements ActionListener {
         closeButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         closeButton.setBounds(420 / 2 - 180 / 3,360,100,30);
 
+
+        attackButton = new JButton("Attack");
+        attackButton.setBounds(30, 40, 120, 35);
+
+        laySiegeButton = new JButton("Lay Siege");
+        laySiegeButton.setBounds(30, 80, 120, 35);
+
+        add(attackButton);
+        add(laySiegeButton);
         add(closeButton);
         add(cityPicture);
         add(backgroundPanel);
