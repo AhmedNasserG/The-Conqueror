@@ -2,26 +2,29 @@ package views;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class EndGameView extends Frame implements ActionListener {
-    public EndGameView(boolean gameWon){
+public class EndGameView extends Frame {
+    private ActionListener listener;
+    private JButton replayBtn;
+    private JButton exitBtn;
+
+    public EndGameView(boolean gameWon) {
         super();
         this.setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         JPanel textPanel = new JPanel();
         JPanel btnPanel = new JPanel();
 
-        JButton replayBtn = new JButton("PLAY AGAIN!");
-        JButton exitBtn = new JButton("EXIT");
+        replayBtn = new JButton("PLAY AGAIN!");
+        exitBtn = new JButton("EXIT");
         JLabel gameVerdictText = new JLabel();
 
-        if(gameWon) gameVerdictText.setText("VICTORY!!!");
+        if (gameWon) gameVerdictText.setText("VICTORY!!!");
         else gameVerdictText.setText("DEFEAT");
         gameVerdictText.setFont(new Font(Font.MONOSPACED, Font.BOLD, 150));
 
-        replayBtn.addActionListener(this);
-        exitBtn.addActionListener(this);
+        replayBtn.addActionListener(listener);
+        exitBtn.addActionListener(listener);
 
         textPanel.add(gameVerdictText);
         btnPanel.add(replayBtn);
@@ -36,20 +39,13 @@ public class EndGameView extends Frame implements ActionListener {
         this.repaint();
     }
 
-
     public static void main(String[] args) {
         new EndGameView(true);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        // TODO: will redo it again but i'll leave as is for now 3ashan ana gebt akhry
-        if(e.getActionCommand().equals("PLAY AGAIN!")){
-            new NewGameView();
-            this.dispose();
-        }
-        else if(e.getActionCommand().equals("EXIT")){
-            System.exit(0);
-        }
+    public void setListener(ActionListener listener) {
+        this.listener = listener;
+        replayBtn.addActionListener(listener);
+        exitBtn.addActionListener(listener);
     }
 }

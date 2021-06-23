@@ -57,6 +57,18 @@ public class GameGUI
         } else if (e.getActionCommand().equals("End Turn")) {
             game.endTurn();
             statusPanel.updateStatusPanel();
+            if (game.isGameOver()) {
+                EndGameView endGameView = new EndGameView(game.getPlayer().getControlledCities().size() == game.getAvailableCities().size());
+                endGameView.setListener(this);
+                view.setEndGameView(endGameView);
+            }
+        }else if(e.getActionCommand().equals("PLAY AGAIN!")){
+            view.setNewGameView(new NewGameView());
+            view.getNewGameView().setListener(this);
+            view.getEndGameView().dispose();
+        }
+        else if(e.getActionCommand().equals("EXIT")){
+            System.exit(0);
         }
     }
 
