@@ -101,13 +101,7 @@ public class Army {
         this.currentLocation = currentLocation;
     }
 
-    public ArrayList<String> getUnitsArray(){
-        ArrayList<String> unitsArray = new ArrayList<>();
-        for(Unit unit: this.getUnits())
-        {
-            unitsArray.add(unit.getUnitName() + ": " + unit.getLevel() );
-        }
-        return  unitsArray;
-
-    }
+//    public String toString (){
+//        return this.getCurrentLocation() + " Army";
+//    }
 }

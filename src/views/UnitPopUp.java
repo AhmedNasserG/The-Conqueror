@@ -26,7 +26,7 @@ public class UnitPopUp extends Frame implements ActionListener {
 
         JLabel enemyUnitLabel = new JLabel("ENEMY UNIT");
         enemyUnitLabel.setFont(new Font(Font.MONOSPACED, Font.BOLD, 20));
-        enemyUnitLabel.setForeground(new Color(153, 6, 6));
+        enemyUnitLabel.setForeground(new Color(0, 0, 0));
         enemyUnitLabel.setBounds(420 / 2 - 85, 1, getWidth(), 50);
 
         Card unitCard = new Card(u);
@@ -68,8 +68,6 @@ public class UnitPopUp extends Frame implements ActionListener {
                 this.dispose();
                 break;
             }
-
-
 
         }
     }

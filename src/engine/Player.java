@@ -194,6 +194,13 @@ public class Player {
         return food;
     }
 
+    public ArrayList<String> getControlledArmiesArray(){
+        ArrayList<String> myArmiesArray = new ArrayList<>();
+        for(Army army: controlledArmies)
+            myArmiesArray.add(army.getCurrentLocation());
+
+        return myArmiesArray;
+    }
 
     // Setters
     public void setTreasury(double treasury) {
