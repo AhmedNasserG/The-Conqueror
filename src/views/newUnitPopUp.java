@@ -14,6 +14,8 @@ import java.util.Locale;
 
 public class newUnitPopUp extends Frame implements ActionListener {
 
+    private JButton closeButton;
+    private JButton relocateButton;
     private UnitPopUpListener listener;
 
     private Unit unit;
@@ -48,12 +50,12 @@ public class newUnitPopUp extends Frame implements ActionListener {
         status.add(unitCurrentSoliderCount);
         status.setBounds(0, 230, 420, 420 - 200);
 
-        JButton relocateButton = new JButton("Relocate Unit");
+        relocateButton = new JButton("Relocate Unit");
         relocateButton.addActionListener(this);
         relocateButton.setActionCommand("Relocate");
         relocateButton.setBounds(120, 290, 150, 40);
 
-        JButton closeButton = new JButton("Close");
+        closeButton = new JButton("Close");
         closeButton.addActionListener(this);
         closeButton.setBounds(145, 335, 100, 40);
 
@@ -74,7 +76,7 @@ public class newUnitPopUp extends Frame implements ActionListener {
                 break;
             }
             case "Relocate": {
-                new RelocateView(unit.getParentArmy());
+                listener.onRelocateCLicked(unit);
                 break;
             }
         }
@@ -82,6 +84,8 @@ public class newUnitPopUp extends Frame implements ActionListener {
 
     public void setListener(UnitPopUpListener listener) {
         this.listener = listener;
+        closeButton.addActionListener(listener);
+        relocateButton.addActionListener(listener);
     }
 
     public static void main(String[] args) {

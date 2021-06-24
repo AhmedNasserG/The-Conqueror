@@ -90,6 +90,10 @@ public class GameGUI
         else if(e.getActionCommand().equals("EXIT")){
             System.exit(0);
         }
+        else if(e.getActionCommand().equals("Relocate Unit")){
+
+        }
+
     }
 
     @Override
@@ -260,10 +264,7 @@ public class GameGUI
         // TODO: hide WorldMapView
     }
 
-    @Override
-    public void onAttackPressed(Unit u) throws FriendlyFireException {
-        this.onAttack(view.getBattleView().getPlayerUnitsPanel().getSelectedCard().getUnit(), u);
-    }
+
 
     public void onUnitCardClicked(Unit unit) {
         JPanel p = view.getBattleView().getUnitInfoPanel();
@@ -341,4 +342,8 @@ public class GameGUI
 
     }
 
+    @Override
+    public void onRelocateCLicked(Unit unit) {
+        new RelocateView(unit.getParentArmy());
+    }
 }

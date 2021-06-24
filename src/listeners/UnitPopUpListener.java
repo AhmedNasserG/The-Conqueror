@@ -3,6 +3,8 @@ package listeners;
 import exceptions.FriendlyFireException;
 import units.Unit;
 
-public interface UnitPopUpListener {
-    public void onAttackPressed(Unit u) throws FriendlyFireException;
+import java.awt.event.ActionListener;
+
+public interface UnitPopUpListener extends ActionListener {
+    public void onRelocateCLicked(Unit unit);
 }

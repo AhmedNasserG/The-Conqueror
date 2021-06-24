@@ -151,6 +151,12 @@ public class Card extends JButton implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+
+        if(e.getActionCommand().equals("Unit Card")){
+        listener.onNewUnitCardClicked(unit);
+        }
+
+        //TODO: Card needs refactor
         if (building != null) {
             try {
                 listener.onBuildingCardClicked(this.building, whereToBuild);

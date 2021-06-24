@@ -69,13 +69,7 @@ public class UnitPopUp extends Frame implements ActionListener {
                 break;
             }
 
-            case "Attack": {
-                try {
-                    listener.onAttackPressed(enemyUnit);
-                } catch (FriendlyFireException friendlyFireException) {
-                    friendlyFireException.printStackTrace();
-                }
-            }
+
 
         }
     }

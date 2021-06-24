@@ -48,6 +48,7 @@ public class ArmyPopUp extends Frame implements ActionListener {
         unitCards = new ArrayList<Card>();
         for (Unit unit : army.getUnits()) {
             Card unitCard = new Card(unit);
+            unitCard.setActionCommand("Unit Card");
             unitCards.add(unitCard);
             unitCard.setAlignmentX(Component.CENTER_ALIGNMENT);
             unitsPanel.add(unitCard);
