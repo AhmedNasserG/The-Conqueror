@@ -27,7 +27,7 @@ public class UnitsPanel extends JPanel {
 
         this.setPreferredSize(new Dimension(army.getUnits().size()*150, SCREENSIZE.height/4));
 
-        this.setLayout(new GridLayout(0,10));
+        this.setLayout(new GridLayout(1,0));
 
         if(armyOwner.equals("player")) this.setBorder(BorderFactory.createTitledBorder("PLAYER UNITS"));
         else this.setBorder(BorderFactory.createTitledBorder("ENEMY UNITS"));
