@@ -1,10 +1,10 @@
 package views;
 
+import engine.City;
 import exceptions.MaxCapacityException;
 import listeners.UnitPopUpListener;
 import units.Archer;
 import units.Army;
-import units.Cavalry;
 import units.Unit;
 
 import javax.swing.*;
@@ -14,33 +14,35 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 
-public class RelocateView extends Frame implements ActionListener {
+public class InitiateArmyPopUp extends Frame implements ActionListener {
 
     private UnitPopUpListener listener;
-    private Army army;
     private Unit unit;
+    private City city;
     private JComboBox myArmies;
-    public RelocateView(Unit unit, ArrayList<Army> armyArrayList){
-        //TODO: fix the button only appears on hover
-        super(unit.getUnitName());
-        this.unit = unit;
+
+
+    public InitiateArmyPopUp(City city){
+        super(city.getDefendingArmy().getCurrentLocation());
+        this.city = city;
+
         int width = (getWidth() - 420) / 2;
         int height = (getHeight() - 420) / 2;
         setBounds(width, height, 420, 420);
         setLayout(null);
 
-        JLabel unitName = new JLabel(unit.getUnitName().toUpperCase());
+        JLabel unitName = new JLabel(city.getName().toUpperCase());
         unitName.setFont(new Font(Font.MONOSPACED, Font.BOLD, 22));
 
         unitName.setBounds(160, 1, getWidth(), 50);
         unitName.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 
-        myArmies = new JComboBox(armyArrayList.toArray());
+        myArmies = new JComboBox(city.getDefendingArmy().getUnits().toArray());
         myArmies.setBounds(135, 150, 150, 40);
 
 
-        JButton relocateButton = new JButton("Relocate");
+        JButton relocateButton = new JButton("Initiate");
         relocateButton.addActionListener(this);
         relocateButton.setBounds(145, 200, 100, 40);
 
@@ -58,18 +60,16 @@ public class RelocateView extends Frame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        army = (Army) myArmies.getSelectedItem();
+        unit = (Unit) myArmies.getSelectedItem();
+
         switch (e.getActionCommand()){
             case "Close": {
                 this.dispose();
                 break;
             }
-            case "Relocate": {
-                try {
-                    listener.onRelocateClicked(unit,army);
-                } catch (MaxCapacityException maxCapacityException) {
-                    maxCapacityException.printStackTrace();
-                }
+            case "Initiate": {
+                    listener.onInitiateClicked(city,unit);
+                    this.dispose();
             }
         }
     }
@@ -80,12 +80,13 @@ public class RelocateView extends Frame implements ActionListener {
 
     public static void main(String[] args) {
 
-        ArrayList<Army> armies = new ArrayList<>();
+        Army army = new Army("Cairo");
+
         for(int i=0;i<30;i++){
-            armies.add(new Army("Army" + i));
+            army.getUnits().add(new Archer( 2));
         }
 
-        new RelocateView(new Archer(1),armies);
+       // new InitiateArmyPopUp(new City("Cario"),army);
 
 
     }
