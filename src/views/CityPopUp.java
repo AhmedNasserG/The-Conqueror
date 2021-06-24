@@ -1,24 +1,19 @@
 package views;
 
-import buildings.Barracks;
-import buildings.MilitaryBuilding;
 import engine.City;
-import listeners.CityPopUpListener;
 import listeners.WorldMapListener;
-import units.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 public class CityPopUp extends Frame implements ActionListener {
     private City city;
     private final int width;
     private final int height;
     private JButton attackButton, laySiegeButton;
-    private CityPopUpListener listener;
+    private WorldMapListener listener;
 
     public CityPopUp(City city) {
         super(city.getName());
@@ -83,7 +78,7 @@ public class CityPopUp extends Frame implements ActionListener {
         new CityPopUp(new City("Rome"));
     }
 
-    public void setListener(CityPopUpListener listener) {
+    public void setListener(WorldMapListener listener) {
         this.listener = listener;
     }
 

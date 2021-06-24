@@ -110,7 +110,7 @@ public class CityView extends Frame {
 
     private void addBuildingCardToBuildingPanel(JPanel cardsPanel, Building building) {
 
-        Card b1 = new Card(building);
+        Card b1 = new Card(building, cityToView.getName());
         b1.setListener(listener);
         b1.setActionCommand("BUILD_BUILDING");
         cardsPanel.add(b1);

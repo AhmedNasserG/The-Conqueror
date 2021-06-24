@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-public class newUnitPopUp extends Frame implements ActionListener {
+public class unitPopUp extends Frame implements ActionListener {
 
     private JButton closeButton;
     private JButton relocateButton;
@@ -18,7 +18,7 @@ public class newUnitPopUp extends Frame implements ActionListener {
 
     private Unit unit;
 
-    public newUnitPopUp(Unit unit){
+    public unitPopUp(Unit unit){
         //TODO: fix the button only appears on hover
         super(unit.getUnitName());
         this.unit = unit;
@@ -87,6 +87,6 @@ public class newUnitPopUp extends Frame implements ActionListener {
     }
 
     public static void main(String[] args) {
-        new newUnitPopUp(new Cavalry(2));
+        new unitPopUp(new Cavalry(2));
     }
 }

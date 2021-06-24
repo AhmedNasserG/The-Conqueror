@@ -19,9 +19,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class GameGUI
+// TODO: remove all ActionListeners
+// TODO: relocate
+// TODO: setTarget
+// TODO:
+
+public class Controller
         implements ActionListener, NewGameListener, StartMenuListener, CityViewListener,
-        WorldMapListener, BattleListener, UnitListener, CardListener, UnitPopUpListener, CityPopUpListener {
+        WorldMapListener, BattleListener, UnitListener, CardListener, UnitPopUpListener {
 
     private Game game;
     private final GameViews view;
@@ -32,7 +37,7 @@ public class GameGUI
     private Army targetArmy;
     private City currentViewedCity;
 
-    public GameGUI() throws IOException {
+    public Controller() throws IOException {
         view = new GameViews();
         view.setStartMenuView(new StartMenuView());
         view.getStartMenuView().setListener(this);
@@ -40,7 +45,7 @@ public class GameGUI
     }
 
     public static void main(String[] args) throws IOException {
-        new GameGUI();
+        new Controller();
     }
 
     @Override
@@ -174,12 +179,6 @@ public class GameGUI
 
     }
 
-    //TODO: remove this method;
-    @Override
-    public void onCityClicked(City city) {
-        CityPopUp cityPopUp = new CityPopUp(city);
-    }
-
     @Override
     public void onCityCardClicked(City city) {
         if (game.getPlayer().getControlledCities().contains(city)) {
@@ -199,24 +198,9 @@ public class GameGUI
     }
 
     @Override
-    public void onAttackClicked() {
-//TODO: Omar's part
-    }
-
-    @Override
-    public void onLaySiegeClicked() {
-//TODO: should do sth here
-    }
-
-    @Override
-    public void onSetTargetClicked() {
-
-    }
-
-    @Override
     public void onNewUnitCardClicked(Unit unit) {
-        newUnitPopUp newUnitPopUp = new newUnitPopUp(unit);
-        newUnitPopUp.setListener(this);
+        unitPopUp unitPopUp = new unitPopUp(unit);
+        unitPopUp.setListener(this);
     }
 
 
