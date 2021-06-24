@@ -103,7 +103,11 @@ public class GameGUI
         String playerName = view.getNewGameView().getPlayerName();
         String cityName = view.getNewGameView().getCityName();
         game = new Game(playerName, cityName);
-        game.getPlayer().getControlledArmies().add(new Army("Sparta"));
+        //TEST ONLY
+        Army testArmy = new Army("Sparta");
+        testArmy.getUnits().add(new Archer(2));
+        game.getPlayer().getControlledArmies().add(testArmy);
+
         statusPanel = new StatusPanel();
         statusPanel.setGame(game);
         statusPanel.setListener(this);
@@ -381,6 +385,15 @@ public class GameGUI
         ArrayList<Army> availableArmiesAtThisCity = new ArrayList<>();
         for (Army army : game.getPlayer().getControlledArmies()) {
             if (army.getCurrentLocation().equals(city.getName())) {
+                for (Unit unit : army.getUnits()) {
+                    if (unit instanceof Archer){
+                        ((Archer) unit).setListener(this);
+                    } else if (unit instanceof Cavalry){
+                        ((Cavalry) unit).setListener(this);
+                    } else if (unit instanceof Infantry){
+                        ((Infantry) unit).setListener(this);
+                    }
+                }
                 availableArmiesAtThisCity.add(army);
             }
         }
