@@ -64,12 +64,14 @@ public class CityView extends Frame {
         int i = 0;
         for (Building b : cityToView.getEconomicalBuildings()) {
             Card t = new Card(b);
+            t.setActionCommand("PREVIEW_BUILDING");
             t.setListener(listener);
             cityGrid.add(t);
             i++;
         }
         for (Building b : cityToView.getMilitaryBuildings()) {
             Card t = new Card(b);
+            t.setActionCommand("PREVIEW_BUILDING");
             t.setListener(listener);
             cityGrid.add(t);
             i++;
@@ -110,6 +112,7 @@ public class CityView extends Frame {
 
         Card b1 = new Card(building, cityToView.getName());
         b1.setListener(listener);
+        b1.setActionCommand("BUILD_BUILDING");
         cardsPanel.add(b1);
 
     }

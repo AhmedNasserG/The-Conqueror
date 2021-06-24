@@ -19,7 +19,6 @@ public class Card extends JButton implements ActionListener {
     private JLabel bottomLabel;
     private String whereToBuild;
     private Building building;
-    private JButton initiateArmyButton;
 
 
     private Unit unit;

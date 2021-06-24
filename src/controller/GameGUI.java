@@ -18,6 +18,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Random;
 
 public class GameGUI
         implements ActionListener, NewGameListener, StartMenuListener, CityViewListener,
@@ -63,6 +64,7 @@ public class GameGUI
             } else {
                 try {
                     this.onAttack(playerUnitCard.getUnit(), targetUnitCard.getUnit());
+                    enemyAttackBack();
                 } catch (FriendlyFireException friendlyFireException) {
                     friendlyFireException.printStackTrace();
                 }
@@ -94,6 +96,10 @@ public class GameGUI
                 InitiateArmyPopUp initiateArmyPopUp = new InitiateArmyPopUp(currentViewedCity);
                 initiateArmyPopUp.setListener(this);
             }
+        } else if (e.getActionCommand().equals("ENEMY_CARD_CLICKED_BV")) {
+            onEnemyUnitCardClicked((Card) e.getSource());
+        } else if (e.getActionCommand().equals("FRIENDLY_CARD_CLICKED_BV")) {
+            onFriendlyUnitCardClicked((Card) e.getSource());
         }
     }
 
@@ -105,6 +111,16 @@ public class GameGUI
             }
         }
         return armies;
+    }
+
+    void enemyAttackBack() throws FriendlyFireException {
+        Random random = new Random();
+        ArrayList<Unit> targetArmyUnits = targetArmy.getUnits();
+        ArrayList<Unit> playerArmyUnits = playerArmy.getUnits();
+        Unit attacker = targetArmyUnits.get(random.nextInt(targetArmyUnits.size()));
+        Unit target = playerArmyUnits.get(random.nextInt(playerArmyUnits.size()));
+
+        onAttack(attacker, target);
     }
 
     @Override
