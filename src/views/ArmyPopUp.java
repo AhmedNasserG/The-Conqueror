@@ -20,7 +20,6 @@ public class ArmyPopUp extends Frame implements ActionListener {
     private ArrayList<Card> unitCards;
     private WorldMapListener listener;
     private JButton setTargetButton;
-    private JButton initiateArmyButton;
 
     public ArmyPopUp(Army army, String text) {
         super(army.getCurrentLocation());
@@ -67,20 +66,12 @@ public class ArmyPopUp extends Frame implements ActionListener {
         closeButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         closeButton.setBounds(420 / 2 - 180 / 3, 360, 100, 30);
 
-        setTargetButton = new JButton("Set Target");
-        setTargetButton.setBounds(30, 80, 120, 35);
-
-        if(text.equals("Defending")){
-        initiateArmyButton = new JButton("Initiate Army");
-        initiateArmyButton.addActionListener(this);
-        initiateArmyButton.setActionCommand("Initiate Army");
-        initiateArmyButton.setBounds(30, 130, 120, 35);
-        initiateArmyButton.setFont(initiateArmyButton.getFont().deriveFont(12));
-        add(initiateArmyButton) ;
+        if (!text.equals("Defending")) {
+            setTargetButton = new JButton("Set Target");
+            setTargetButton.setBounds(30, 80, 120, 35);
+            add(setTargetButton);
         }
 
-
-        add(setTargetButton);
         add(closeButton);
         add(armyTile);
         add(backgroundPanel);
@@ -102,7 +93,7 @@ public class ArmyPopUp extends Frame implements ActionListener {
         salah.setUnits(units);
 
 
-        new ArmyPopUp(salah,"Defending");
+        new ArmyPopUp(salah, "Defending");
     }
 
     @Override
@@ -112,15 +103,11 @@ public class ArmyPopUp extends Frame implements ActionListener {
                 this.dispose();
                 break;
         }
-        if(e.getActionCommand().equals("Initiate Army")){
-            listener.onInitiateArmyClicked();
-        }
-
     }
 
     public void setListener(WorldMapListener listener) {
         this.listener = listener;
-        for(Card card: unitCards)
+        for (Card card : unitCards)
             card.setListener(listener);
     }
 }

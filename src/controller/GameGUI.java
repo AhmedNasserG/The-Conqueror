@@ -17,6 +17,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class GameGUI
         implements ActionListener, NewGameListener, StartMenuListener, CityViewListener,
@@ -29,7 +30,7 @@ public class GameGUI
     private Army playerArmy;
     private City targetCity;
     private Army targetArmy;
-    private City currentViewdCity;
+    private City currentViewedCity;
 
     public GameGUI() throws IOException {
         view = new GameViews();
@@ -67,6 +68,7 @@ public class GameGUI
                 }
             }
         } else if (e.getActionCommand().equals("worldMapButton")) {
+            this.currentViewedCity = null;
             view.getCityView().dispose();
             view.setWorldMapView(new WorldMapView(game));
             view.getWorldMapView().setListener(this);
@@ -87,15 +89,23 @@ public class GameGUI
             view.getEndGameView().dispose();
         } else if (e.getActionCommand().equals("EXIT")) {
             System.exit(0);
+        } else if (e.getActionCommand().equals("Initiate Army")) {
+            if (currentViewedCity != null) {
+                InitiateArmyPopUp initiateArmyPopUp = new InitiateArmyPopUp(currentViewedCity);
+                initiateArmyPopUp.setListener(this);
+            }
         }
-        else if(e.getActionCommand().equals("Initiate Army")){
-        }
-        else if(e.getActionCommand().equals("Initiate")){
-
-        }
-
     }
 
+    ArrayList<Army> getControlledArmiesAtCity(City city) {
+        ArrayList<Army> armies = new ArrayList<>();
+        for (Army army : game.getPlayer().getControlledArmies()) {
+            if (army.getCurrentLocation().equalsIgnoreCase(city.getName())) {
+                armies.add(army);
+            }
+        }
+        return armies;
+    }
 
     @Override
     public void onNewGameClicked() throws IOException {
@@ -135,10 +145,11 @@ public class GameGUI
 
     @Override
     public void onCityCardClicked(City city) {
-        this.currentViewdCity = city;
         if (game.getPlayer().getControlledCities().contains(city)) {
+            currentViewedCity = city;
             CityView cityView = new CityView(city);
             cityView.setListener(this);
+            cityView.setControlledArmiesAtThisCity(getControlledArmiesAtCity(city));
             cityView.setStatusPanel(statusPanel);
             statusPanel.updateStatusPanel();
             view.setCityView(cityView);
@@ -384,16 +395,9 @@ public class GameGUI
     }
 
     @Override
-    public void onInitiateArmyClicked() {
-        InitiateArmyPopUp initiateArmyPopUp= new InitiateArmyPopUp(currentViewdCity);
-        initiateArmyPopUp.setListener(this);
-
-    }
-
-    @Override
     public void onInitiateClicked(City city, Unit unit) {
-        game.getPlayer().initiateArmy(city,unit);
-        System.out.println("Clicked");
+        game.getPlayer().initiateArmy(city, unit);
+        view.getCityView().setControlledArmiesAtThisCity(getControlledArmiesAtCity(city));
     }
 
     @Override
@@ -402,11 +406,11 @@ public class GameGUI
         for (Army army : game.getPlayer().getControlledArmies()) {
             if (army.getCurrentLocation().equals(city.getName())) {
                 for (Unit unit : army.getUnits()) {
-                    if (unit instanceof Archer){
+                    if (unit instanceof Archer) {
                         ((Archer) unit).setListener(this);
-                    } else if (unit instanceof Cavalry){
+                    } else if (unit instanceof Cavalry) {
                         ((Cavalry) unit).setListener(this);
-                    } else if (unit instanceof Infantry){
+                    } else if (unit instanceof Infantry) {
                         ((Infantry) unit).setListener(this);
                     }
                 }

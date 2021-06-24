@@ -4,7 +4,6 @@ import buildings.*;
 import engine.City;
 import listeners.CityViewListener;
 import units.Army;
-import units.Infantry;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,18 +13,21 @@ import java.util.ArrayList;
 public class CityView extends Frame {
 
     private City cityToView;
+    private ArrayList<Army> defendingArmiesAtThisCity;
+    private ArrayList<Army> controlledArmiesAtThisCity;
     private StatusPanel statusPanel;
     private JPanel cityGrid;
     private CityViewListener listener;
     private JButton worldMapButton;
+    private JButton initiateArmyButton;
+    private ArmiesPanel armiesPanel;
 
 
     public CityView(City cityToView) {
         super();
         this.cityToView = cityToView;
         this.setLayout(null);
-//        this.setLayout(new GridBagLayout());
-//        GridBagConstraints gbc = new GridBagConstraints();
+
 
         worldMapButton = new JButton();
         cityGrid = new JPanel();
@@ -46,15 +48,13 @@ public class CityView extends Frame {
         label.setOpaque(true);
         label.setBounds(0, 100, getWidth() - 300, 80);
 
-//        ArrayList<Army> armies = new ArrayList<>();
-//        armies.add(cityToView.getDefendingArmy());
-//        ArmiesPanel armysPanel = new ArmiesPanel(armies,listener);
-//        armysPanel.setBackground(Color.ORANGE);
-//        armysPanel.setBounds(getWidth() - 300, 100, 300, getHeight() - 100);
+
+        initiateArmyButton = new JButton("Initiate Army");
+        initiateArmyButton.setBounds(getWidth() - 500, 100, 200, 80);
+        add(initiateArmyButton);
 
         add(worldMapButton);
         add(cityGrid);
-//        add(armysPanel);
         add(label);
         setVisible(true);
     }
@@ -118,20 +118,25 @@ public class CityView extends Frame {
         this.statusPanel = statusPanel;
         statusPanel.setBounds(0, 0, getWidth() - 100, 100);
         add(statusPanel);
-
-        ArrayList<Army> armies = new ArrayList<>();
-        armies.add(cityToView.getDefendingArmy());
-        ArmiesPanel armiesPanel = new ArmiesPanel(armies, new ArrayList<Army>(), listener);
-        armiesPanel.setBackground(Color.ORANGE);
-        armiesPanel.setBounds(getWidth() - 300, 100, 300, getHeight() - 100);
-        add(armiesPanel);
     }
 
     public void setListener(CityViewListener listener) {
         this.listener = listener;
         worldMapButton.addActionListener(listener);
+        initiateArmyButton.addActionListener(listener);
         updateCityGrid();
         add(getToBuildPanel());
     }
 
+    public void setControlledArmiesAtThisCity(ArrayList<Army> controlledArmiesAtThisCity) {
+        this.controlledArmiesAtThisCity = controlledArmiesAtThisCity;
+        defendingArmiesAtThisCity = new ArrayList<>();
+        defendingArmiesAtThisCity.add(cityToView.getDefendingArmy());
+        armiesPanel = new ArmiesPanel(defendingArmiesAtThisCity, controlledArmiesAtThisCity, listener);
+        armiesPanel.setBackground(Color.ORANGE);
+        armiesPanel.setBounds(getWidth() - 300, 100, 300, getHeight() - 100);
+        add(armiesPanel);
+        armiesPanel.revalidate();
+        armiesPanel.repaint();
+    }
 }
