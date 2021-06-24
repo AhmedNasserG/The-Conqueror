@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 public class GameGUI
         implements ActionListener, NewGameListener, StartMenuListener, CityViewListener,
-        WorldMapListener, BattleListener, UnitListener, CardListener, UnitPopUpListener {
+        WorldMapListener, BattleListener, UnitListener, CardListener, UnitPopUpListener, CityPopUpListener {
 
     private Game game;
     private final GameViews view;
@@ -32,7 +32,8 @@ public class GameGUI
 
     public GameGUI() throws IOException {
         view = new GameViews();
-
+        view.setNewGameView(new NewGameView());
+        view.getNewGameView().setListener(this);
 
     }
 
@@ -43,31 +44,28 @@ public class GameGUI
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        if(e.getActionCommand().equals("START AUTORESOLVE")){
+        if (e.getActionCommand().equals("START AUTORESOLVE")) {
             try {
                 System.out.println("actionPerformed");
                 game.autoResolve(playerArmy, targetArmy);
             } catch (FriendlyFireException friendlyFireException) {
                 friendlyFireException.printStackTrace();
             }
-        }
-        else if (e.getActionCommand().equals("ATTACK")){
+        } else if (e.getActionCommand().equals("ATTACK")) {
             Card playerUnitCard = view.getBattleView().getPlayerUnitsPanel().getSelectedCard();
             Card targetUnitCard = view.getBattleView().getTargetUnitsPanel().getSelectedCard();
 
-            if(playerUnitCard == null || targetUnitCard == null){
+            if (playerUnitCard == null || targetUnitCard == null) {
                 System.out.println("units not selected correctly");
                 showMessageDialog(null, "Select a Friendly and a Target unit!");
-            }
-            else {
+            } else {
                 try {
                     this.onAttack(playerUnitCard.getUnit(), targetUnitCard.getUnit());
                 } catch (FriendlyFireException friendlyFireException) {
                     friendlyFireException.printStackTrace();
                 }
             }
-        }
-        else if (e.getActionCommand().equals("worldMapButton")) {
+        } else if (e.getActionCommand().equals("worldMapButton")) {
             view.getCityView().dispose();
             view.setWorldMapView(new WorldMapView(game));
             view.getWorldMapView().setListener(this);
@@ -82,13 +80,11 @@ public class GameGUI
                 endGameView.setListener(this);
                 view.setEndGameView(endGameView);
             }
-        }
-        else if(e.getActionCommand().equals("PLAY AGAIN!")){
+        } else if (e.getActionCommand().equals("PLAY AGAIN!")) {
             view.setNewGameView(new NewGameView());
             view.getNewGameView().setListener(this);
             view.getEndGameView().dispose();
-        }
-        else if(e.getActionCommand().equals("EXIT")){
+        } else if (e.getActionCommand().equals("EXIT")) {
             System.exit(0);
         }
 
@@ -107,6 +103,7 @@ public class GameGUI
         String playerName = view.getNewGameView().getPlayerName();
         String cityName = view.getNewGameView().getCityName();
         game = new Game(playerName, cityName);
+        game.getPlayer().getControlledArmies().add(new Army("Sparta"));
         statusPanel = new StatusPanel();
         statusPanel.setGame(game);
         statusPanel.setListener(this);
@@ -119,7 +116,8 @@ public class GameGUI
         view.getNewGameView().dispose();
 
     }
-//TODO: remove this method;
+
+    //TODO: remove this method;
     @Override
     public void onCityClicked(City city) {
         CityPopUp cityPopUp = new CityPopUp(city);
@@ -127,18 +125,17 @@ public class GameGUI
 
     @Override
     public void onCityCardClicked(City city) {
-            if(game.getPlayer().getControlledCities().contains(city)){
-                CityView cityView = new CityView(city);
-                cityView.setListener(this);
-                cityView.setStatusPanel(statusPanel);
-                statusPanel.updateStatusPanel();
-                view.setCityView(cityView);
-                view.getWorldMapView().dispose();
-            }
-            else{
-                CityPopUp cityPopUp = new CityPopUp(city);
-                cityPopUp.setListener(this);
-            }
+        if (game.getPlayer().getControlledCities().contains(city)) {
+            CityView cityView = new CityView(city);
+            cityView.setListener(this);
+            cityView.setStatusPanel(statusPanel);
+            statusPanel.updateStatusPanel();
+            view.setCityView(cityView);
+            view.getWorldMapView().dispose();
+        } else {
+            CityPopUp cityPopUp = new CityPopUp(city);
+            cityPopUp.setListener(this);
+        }
 
     }
 
@@ -159,8 +156,8 @@ public class GameGUI
 
     @Override
     public void onNewUnitCardClicked(Unit unit) {
-    newUnitPopUp newUnitPopUp = new newUnitPopUp(unit);
-    newUnitPopUp.setListener(this);
+        newUnitPopUp newUnitPopUp = new newUnitPopUp(unit);
+        newUnitPopUp.setListener(this);
     }
 
     @Override
@@ -219,7 +216,7 @@ public class GameGUI
 
 
     @Override
-    public void onManualAttackChosen(String battleMode, Army playerArmy, City targetCity) {
+    public void onManualAttackChosen(Army playerArmy, City targetCity) {
         this.playerArmy = playerArmy;
         this.targetCity = targetCity;
         this.targetArmy = targetCity.getDefendingArmy();
@@ -232,12 +229,12 @@ public class GameGUI
     }
 
     @Override
-    public void onAutoResolveChosen(String battleMode, Army playerArmy, City targetCity) {
+    public void onAutoResolveChosen(Army playerArmy, City targetCity) {
         this.playerArmy = playerArmy;
         this.targetCity = targetCity;
         this.targetArmy = targetCity.getDefendingArmy();
 
-        BattleView bv = new BattleView("MANUAL ATTACK", playerArmy, targetCity, this);
+        BattleView bv = new BattleView("AUTO RESOLVE", playerArmy, targetCity, this);
         view.setBattleView(bv);
         bv.getStartAutoResolveBtn().addActionListener(this);
 
@@ -264,17 +261,16 @@ public class GameGUI
         view.getBattleView().getPlayerUnitsPanel().setSelectedCard(null);
         view.getBattleView().getTargetUnitsPanel().setSelectedCard(null);
 
-        if(targetArmy.getUnits().size() == 0){
+        if (targetArmy.getUnits().size() == 0) {
             endBattle(true, targetCity);
-        }
-        else if(playerArmy.getUnits().size() == 0) {
+        } else if (playerArmy.getUnits().size() == 0) {
             endBattle(false, targetCity);
         }
 
         System.out.println(RESULT);
     }
 
-    public void updateUnitsPanels(Army playerArmy, Army targetArmy){
+    public void updateUnitsPanels(Army playerArmy, Army targetArmy) {
         view.getBattleView().setPlayerArmy(playerArmy);
         view.getBattleView().setTargetArmy(targetArmy);
 
@@ -282,11 +278,10 @@ public class GameGUI
         view.getBattleView().getTargetUnitsPanel().updatePanel(targetArmy);
     }
 
-    public void endBattle(boolean playerWon, City targetCity){
-        if(playerWon){
+    public void endBattle(boolean playerWon, City targetCity) {
+        if (playerWon) {
             showMessageDialog(null, "YOU WON THE BATTLE!\n\n" + "Enemy's " + targetCity.getName() + " City Has Been Occupied!");
-        }
-        else {
+        } else {
             showMessageDialog(null, "YOU LOST THE BATTLE!\n\nRETREATING");
         }
 
@@ -330,7 +325,7 @@ public class GameGUI
         titledBorder.setTitleColor(Color.BLUE);
         view.getBattleView().getUnitInfoPanel().setBorder(titledBorder);
 
-        if(view.getBattleView().getPlayerUnitsPanel().getSelectedCard() != null){
+        if (view.getBattleView().getPlayerUnitsPanel().getSelectedCard() != null) {
             view.getBattleView().getPlayerUnitsPanel().getSelectedCard().setBorder(null);
         }
 
@@ -349,7 +344,7 @@ public class GameGUI
         view.getBattleView().getUnitInfoPanel().setBorder(titledBorder);
 
 
-        if(view.getBattleView().getTargetUnitsPanel().getSelectedCard() != null){
+        if (view.getBattleView().getTargetUnitsPanel().getSelectedCard() != null) {
             view.getBattleView().getTargetUnitsPanel().getSelectedCard().setBorder(null);
         }
 
@@ -363,11 +358,10 @@ public class GameGUI
     public void onArmyCardClicked(Army army) {
         //Checking if the card is of defending type or not
         ArmyPopUp armyPopUp;
-        if (game.getPlayer().getControlledArmies().contains(army)){
-         armyPopUp = new ArmyPopUp(army,"");
-        }
-        else{
-            armyPopUp = new ArmyPopUp(army,"Defending");
+        if (game.getPlayer().getControlledArmies().contains(army)) {
+            armyPopUp = new ArmyPopUp(army, "");
+        } else {
+            armyPopUp = new ArmyPopUp(army, "Defending");
         }
         armyPopUp.setListener(this);
 
@@ -375,10 +369,27 @@ public class GameGUI
 
     @Override
     public void onRelocateViewClicked(Unit unit) {
-        new RelocateView(unit,game.getPlayer().getControlledArmies());
+        new RelocateView(unit, game.getPlayer().getControlledArmies());
     }
 
     public void onRelocateClicked(Unit unit, Army army) throws MaxCapacityException {
-    army.relocateUnit(unit);
+        army.relocateUnit(unit);
+    }
+
+    @Override
+    public void onAttackCityClicked(City city) {
+        ArrayList<Army> availableArmiesAtThisCity = new ArrayList<>();
+        for (Army army : game.getPlayer().getControlledArmies()) {
+            if (army.getCurrentLocation().equals(city.getName())) {
+                availableArmiesAtThisCity.add(army);
+            }
+        }
+        AttackCityPopup attackCityPopup = new AttackCityPopup(city, availableArmiesAtThisCity);
+        attackCityPopup.setListener(this);
+    }
+
+    @Override
+    public void onLaySiegeCityButton(City city) {
+
     }
 }

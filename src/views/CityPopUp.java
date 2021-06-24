@@ -3,6 +3,7 @@ package views;
 import buildings.Barracks;
 import buildings.MilitaryBuilding;
 import engine.City;
+import listeners.CityPopUpListener;
 import listeners.WorldMapListener;
 import units.*;
 
@@ -16,12 +17,12 @@ public class CityPopUp extends Frame implements ActionListener {
     private City city;
     private final int width;
     private final int height;
-    private JButton attackButton,laySiegeButton;
-    private WorldMapListener listener;
+    private JButton attackButton, laySiegeButton;
+    private CityPopUpListener listener;
 
-    public CityPopUp(City city ){
+    public CityPopUp(City city) {
         super(city.getName());
-        this.city   = city;
+        this.city = city;
         this.width = (getWidth() - 420) / 2;
         this.height = (getHeight() - 420) / 2;
         setBounds(width, height, 420, 420);
@@ -39,7 +40,6 @@ public class CityPopUp extends Frame implements ActionListener {
         container2.setLayout(new BoxLayout(container2, BoxLayout.Y_AXIS));
 
 
-
         container2.add(Box.createRigidArea(new Dimension(0, 20)));
         JPanel unitsPanel = new JPanel();
         unitsPanel.setLayout(new FlowLayout());
@@ -55,14 +55,18 @@ public class CityPopUp extends Frame implements ActionListener {
         JButton closeButton = new JButton("Close");
         closeButton.addActionListener(this);
         closeButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        closeButton.setBounds(420 / 2 - 180 / 3,360,100,30);
+        closeButton.setBounds(420 / 2 - 180 / 3, 360, 100, 30);
 
 
         attackButton = new JButton("Attack");
+        attackButton.setActionCommand("Start Attack On City");
         attackButton.setBounds(30, 40, 120, 35);
 
         laySiegeButton = new JButton("Lay Siege");
         laySiegeButton.setBounds(30, 80, 120, 35);
+
+        attackButton.addActionListener(this);
+        laySiegeButton.addActionListener(this);
 
         add(attackButton);
         add(laySiegeButton);
@@ -79,10 +83,8 @@ public class CityPopUp extends Frame implements ActionListener {
         new CityPopUp(new City("Rome"));
     }
 
-    public void setListener(WorldMapListener listener) {
+    public void setListener(CityPopUpListener listener) {
         this.listener = listener;
-        attackButton.addActionListener(listener);
-        laySiegeButton.addActionListener(listener);
     }
 
     @Override
@@ -91,6 +93,10 @@ public class CityPopUp extends Frame implements ActionListener {
             case "Close":
                 this.dispose();
                 break;
+            case "Start Attack On City":
+                this.dispose();
+                listener.onAttackCityClicked(city);
+
         }
     }
 }
