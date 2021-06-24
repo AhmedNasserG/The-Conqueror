@@ -17,8 +17,10 @@ public class ArmyPopUp extends Frame implements ActionListener {
     private final int height;
     private ArrayList<Card> unitCards;
     private CardListener listener;
+    private JButton setTargetButton;
+    private JButton initiateArmyButton;
 
-    public ArmyPopUp(Army army) {
+    public ArmyPopUp(Army army, String text) {
         super(army.getCurrentLocation());
         this.army = army;
         this.width = (getWidth() - 420) / 2;
@@ -27,7 +29,7 @@ public class ArmyPopUp extends Frame implements ActionListener {
         setLayout(null);
         Card armyTile = new Card(army);
         armyTile.setEnabled(false);
-        armyTile.setBounds(420 / 2 - 200 / 3, 10, 400 / 3, 400 / 3);
+        armyTile.setBounds(200, 10, 400 / 3, 400 / 3);
 
         JPanel backgroundPanel = new JPanel();
         backgroundPanel.setBounds(0, 0, 420, 170);
@@ -62,6 +64,20 @@ public class ArmyPopUp extends Frame implements ActionListener {
         closeButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         closeButton.setBounds(420 / 2 - 180 / 3, 360, 100, 30);
 
+        setTargetButton = new JButton("Set Target");
+        setTargetButton.setBounds(30, 80, 120, 35);
+
+        if(text.equals("Defending")){
+        initiateArmyButton = new JButton("Initiate Army");
+        initiateArmyButton.addActionListener(this);
+        initiateArmyButton.setActionCommand("Initiate Army");
+        initiateArmyButton.setBounds(30, 130, 120, 35);
+        initiateArmyButton.setFont(initiateArmyButton.getFont().deriveFont(12));
+        add(initiateArmyButton) ;
+        }
+
+
+        add(setTargetButton);
         add(closeButton);
         add(armyTile);
         add(backgroundPanel);
@@ -76,14 +92,14 @@ public class ArmyPopUp extends Frame implements ActionListener {
         // For testing
         Army salah = new Army("Salah");
         ArrayList<Unit> units = new ArrayList<>();
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < 5; i++) {
             units.add(new Cavalry(1));
             units.add(new Archer(3));
         }
         salah.setUnits(units);
 
 
-        new ArmyPopUp(salah);
+        new ArmyPopUp(salah,"Defending");
     }
 
     @Override

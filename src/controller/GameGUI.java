@@ -181,9 +181,19 @@ public class GameGUI
     }
 
     @Override
+    public void onSetTargetClicked() {
+
+    }
+
+    @Override
     public void onNewUnitCardClicked(Unit unit) {
     newUnitPopUp newUnitPopUp = new newUnitPopUp(unit);
     newUnitPopUp.setListener(this);
+    }
+
+    @Override
+    public void onInitiateArmyClicked() {
+//TODO: initiate new Army
     }
 
     @Override
@@ -319,8 +329,16 @@ public class GameGUI
 
     @Override
     public void onArmyCardClicked(Army army) {
-        ArmyPopUp armyPopUp = new ArmyPopUp(army);
+        //Checking if the card is of defending type or not
+        ArmyPopUp armyPopUp;
+        if (game.getPlayer().getControlledArmies().contains(army)){
+         armyPopUp = new ArmyPopUp(army,"");
+        }
+        else{
+            armyPopUp = new ArmyPopUp(army,"Defending");
+        }
         armyPopUp.setListener(this);
+
     }
 
 }

@@ -11,6 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 public class Card extends JButton implements ActionListener {
     private JLayeredPane layeredPane;
@@ -19,6 +20,8 @@ public class Card extends JButton implements ActionListener {
     private JLabel bottomLabel;
     private String whereToBuild;
     private Building building;
+    private JButton initiateArmyButton;
+
 
     private Unit unit;
     private Army army;
@@ -102,8 +105,20 @@ public class Card extends JButton implements ActionListener {
         topLabel.setText("Army: "+ army.getCurrentLocation());
         bottomLabel.setText(army.getCurrentStatus().toString());
         layeredPane.add(topLabel, Integer.valueOf(1));
-        layeredPane. add(bottomLabel, Integer.valueOf(1));
+        layeredPane.add(bottomLabel, Integer.valueOf(1));
     }
+
+    public Card(Army army, String text) {
+        this();
+        this.army = army;
+        img.setIcon(getIcon(army));
+        topLabel.setText("Army: "+ army.getCurrentLocation());
+        bottomLabel.setText(army.getCurrentStatus().toString());
+        layeredPane.add(topLabel, Integer.valueOf(1));
+        layeredPane. add(bottomLabel, Integer.valueOf(1));
+
+    }
+
     public Card(City city) {
         this();
         this.city = city;
@@ -163,8 +178,17 @@ public class Card extends JButton implements ActionListener {
         {
             listener.onCityCardClicked(this.city);
         }
+
+
     }
 
+
+    public static void main(String[] args) {
+        JFrame newFrame = new Frame();
+        Card Army = new Card(new Army("Cairo"), "salah");
+        newFrame.add(Army);
+        newFrame.setVisible(true);
+    }
     public City getCity() {
         return city;
     }

@@ -27,14 +27,7 @@ public class WorldMapView extends Frame {
         //TODO: intiate army Button: to add a unit from the defending army(and controlled armies)
         // to your attacking. The army must not be idle. !!Should be in the cityView
         //Add this button to any defending army panel
-        //TODO: relocateUnit choose a unit and choose an army to put it in the
-        //TODO: a frame to choose army and choose a unit from that unit and choose the army to be gone to
-        //comboboxes :)
-        //TODO: when a city is clicked options to attack (the armies that are there already)
-        // or lay siege
-        //TODO: army pop up should have setTarget the uncontrolled cites
-        // TODO: edit and update the status panel
-        //TODO: separate the defending from the controlled armies
+
         //TODO: city can't be under siege and attacked at the same time
 
 //        statusPanel= new StatusPanel();

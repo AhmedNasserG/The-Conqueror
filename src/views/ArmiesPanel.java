@@ -16,16 +16,15 @@ public class ArmiesPanel extends JPanel {
         JPanel controlledArmiesPanel = new JPanel();
         controlledArmiesPanel.setLayout(new BoxLayout(controlledArmiesPanel,BoxLayout.Y_AXIS));
         for (Army army : defendingArmies) {
-            Card armyCard = new Card(army);
+            Card armyCard = new Card(army,"Defending");
             armyCard.setListener(listener);
             armyCard.setAlignmentX(Component.CENTER_ALIGNMENT);
             defendingArmyPanel.add(armyCard);
             defendingArmyPanel.add(Box.createVerticalStrut(10));
         }
         for (Army army : controlledArmies) {
-            //Card armyCard = new Card(army);
-            JButton armyCard = new JButton(army.getCurrentLocation());
-            //armyCard.setListener(listener);
+            Card armyCard = new Card(army);
+            armyCard.setListener(listener);
             armyCard.setAlignmentX(Component.CENTER_ALIGNMENT);
             controlledArmiesPanel.add(armyCard);
             controlledArmiesPanel.add(Box.createVerticalStrut(10));
