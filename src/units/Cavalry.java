@@ -1,11 +1,17 @@
 package units;
 
 import exceptions.FriendlyFireException;
+import listeners.BattleListener;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class Cavalry extends Unit {
+
+    private int casualtiesCount;
+
+    private BattleListener listener;
+
 
     private static final double[][] CavalryValues = {{-1, -1, -1, -1}, {40, 0.6, 0.7, 0.75},
             {40, 0.6, 0.7, 0.75}, {60, 0.7, 0.8, 0.9}};
@@ -27,10 +33,25 @@ public class Cavalry extends Unit {
     @Override
     public void attack(Unit target) throws FriendlyFireException {
         super.attack(target);
+
         int attackersCount = getCurrentSoldierCount();
         int targetCount = target.getCurrentSoldierCount();
         double attackFactor = attackFactors.get(target.getClass())[getLevel()];
-        target.setCurrentSoldierCount(Math.max(targetCount - (int)(attackFactor * attackersCount), 0));
+        this.casualtiesCount = (int)(attackFactor * attackersCount);
+
+        target.setCurrentSoldierCount(target.getCurrentSoldierCount()-(int)(attackFactor*getCurrentSoldierCount()));
         target.getParentArmy().handleAttackedUnit(target);
+
+        String attacker = "player";
+
+
+        String res1 = this.getUnitName() + " ATTACKED " + target.getUnitName() + ". ";
+        String res2 = " has lost: " + casualtiesCount + " " + target.getUnitName() + "(s)";
+        listener.onBattleUpdated(this.getParentArmy(), res1, res2);
     }
+
+    public void setListener(BattleListener listener) {
+        this.listener = listener;
+    }
+
 }

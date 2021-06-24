@@ -11,6 +11,7 @@ import views.*;
 import static javax.swing.JOptionPane.showMessageDialog;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,8 +31,6 @@ public class GameGUI
 
     public GameGUI() throws IOException {
         view = new GameViews();
-        view.setStartMenuView(new StartMenuView());
-        view.getStartMenuView().setListener(this);
 
     }
 
@@ -50,7 +49,7 @@ public class GameGUI
                 friendlyFireException.printStackTrace();
             }
         }
-        else if (e.getActionCommand().equals("START MANUAL ATTACK")){
+        else if (e.getActionCommand().equals("ATTACK")){
             Card playerUnitCard = view.getBattleView().getPlayerUnitsPanel().getSelectedCard();
             Card targetUnitCard = view.getBattleView().getTargetUnitsPanel().getSelectedCard();
 
@@ -299,6 +298,9 @@ public class GameGUI
     @Override
     public void onFriendlyUnitCardClicked(Card c) {
         onUnitCardClicked(c.getUnit());
+        TitledBorder titledBorder = BorderFactory.createTitledBorder("FRIENDLY UNIT INFO");
+        titledBorder.setTitleColor(Color.BLUE);
+        view.getBattleView().getUnitInfoPanel().setBorder(titledBorder);
 
         if(view.getBattleView().getPlayerUnitsPanel().getSelectedCard() != null){
             view.getBattleView().getPlayerUnitsPanel().getSelectedCard().setBorder(null);
@@ -314,9 +316,10 @@ public class GameGUI
     @Override
     public void onEnemyUnitCardClicked(Card c) {
         onUnitCardClicked(c.getUnit());
+        TitledBorder titledBorder = BorderFactory.createTitledBorder("ENEMY UNIT INFO");
+        titledBorder.setTitleColor(Color.RED);
+        view.getBattleView().getUnitInfoPanel().setBorder(titledBorder);
 
-//        UnitPopUp unitPopUp = new UnitPopUp(c.getUnit());
-//        unitPopUp.setListener(this);
 
         if(view.getBattleView().getTargetUnitsPanel().getSelectedCard() != null){
             view.getBattleView().getTargetUnitsPanel().getSelectedCard().setBorder(null);

@@ -66,7 +66,7 @@ public class BattleView extends Frame {
 
         buttonsPanel = new JPanel();
         startAutoResolveBtn = new JButton("START AUTORESOLVE");
-        startManualAttackBtn = new JButton("START MANUAL ATTACK");
+        startManualAttackBtn = new JButton("ATTACK");
         buttonsPanel.setPreferredSize(new Dimension(leftSidePanel.getWidth(), leftSidePanel.getHeight()/4));
 
         if(battleMode.equals("MANUAL ATTACK")) {
