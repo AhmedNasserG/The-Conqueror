@@ -10,7 +10,6 @@ public class Infantry extends Unit {
 
     private int casualtiesCount;
 
-    private BattleListener listener;
 
     private static final double[][] InfantryValues = {{-1, -1, -1, -1}, {50, 0.5, 0.6, 0.7},
             {50, 0.5, 0.6, 0.7}, {60, 0.6, 0.7, 0.8}};
@@ -46,10 +45,7 @@ public class Infantry extends Unit {
 
         String res1 = this.getUnitName() + " ATTACKED " + target.getUnitName() + ". ";
         String res2 = " has lost: " + casualtiesCount + " " + target.getUnitName() + "(s)";
-        listener.onBattleUpdated(this.getParentArmy(), res1, res2);
+        this.getListener().onBattleUpdated(this.getParentArmy(), res1, res2);
     }
 
-    public void setListener(BattleListener listener) {
-        this.listener = listener;
-    }
 }

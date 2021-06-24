@@ -11,7 +11,6 @@ public class Archer extends Unit {
 
     private int casualtiesCount;
 
-    private BattleListener listener;
 
 
     private static final double[][] ArcherValues = {{-1, -1, -1, -1}, {60, 0.4, 0.5, 0.6},
@@ -48,14 +47,10 @@ public class Archer extends Unit {
 
         String res1 = this.getUnitName() + " ATTACKED " + target.getUnitName() + ". ";
         String res2 = " has lost: " + casualtiesCount + " " + target.getUnitName() + "(s)";
-        listener.onBattleUpdated(this.getParentArmy(), res1, res2);
+        getListener().onBattleUpdated(this.getParentArmy(), res1, res2);
 
     }
 
 
-
-    public void setListener(BattleListener listener) {
-        this.listener = listener;
-    }
 
 }

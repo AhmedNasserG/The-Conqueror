@@ -2,6 +2,7 @@ package units;
 
 import buildings.*;
 import exceptions.FriendlyFireException;
+import listeners.BattleListener;
 import listeners.UnitListener;
 
 import java.util.ArrayList;
@@ -15,6 +16,10 @@ public abstract class Unit {
     private double marchingUpkeep;
     private double siegeUpkeep;
     private Army parentArmy;
+
+
+
+    private BattleListener listener;
 
     public Unit(int level, int maxSoldierCount, double idleUpkeep, double marchingUpkeep, double siegeUpkeep) {
         this.level = level;
@@ -83,4 +88,13 @@ public abstract class Unit {
     public void setParentArmy(Army parentArmy) {
         this.parentArmy = parentArmy;
     }
+
+    public void setListener(BattleListener listener) {
+        this.listener = listener;
+    }
+
+    public BattleListener getListener() {
+        return listener;
+    }
+
 }
