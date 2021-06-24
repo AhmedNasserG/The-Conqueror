@@ -1,5 +1,6 @@
 package views;
 
+import engine.City;
 import listeners.CardListener;
 import units.*;
 
@@ -36,11 +37,11 @@ public class BattleView extends Frame {
 
 
 
-    public BattleView(String battleMode, Army playerArmy, Army targetArmy, CardListener listener) {
+    public BattleView(String battleMode, Army playerArmy, City targetCity, CardListener listener) {
         super();
         this.listener = listener;
         this.playerArmy = playerArmy;
-        this.targetArmy = targetArmy;
+        this.targetArmy = targetCity.getDefendingArmy();
         this.battleMode = battleMode;
         this.setLayout(new BorderLayout());
 
@@ -51,7 +52,7 @@ public class BattleView extends Frame {
 
         add(battlePanel, BorderLayout.CENTER);
         add(leftSidePanel, BorderLayout.WEST);
-        add(new StatusPanel("AUTO RESOLVE"), BorderLayout.NORTH);
+        add(new StatusPanel("BATTLE"), BorderLayout.NORTH);
 
 
         this.setVisible(true);
@@ -80,6 +81,7 @@ public class BattleView extends Frame {
         battleLog = new JTextArea(25, 50);
         battleLog.setEditable(false);
         battleLog.setBorder(BorderFactory.createTitledBorder("BATTLE LOG"));
+        battleLog.setPreferredSize(new Dimension(leftSidePanel.getWidth(), leftSidePanel.getHeight()/2));
         battleLog.setFont(new Font(Font.MONOSPACED, Font.BOLD, 15));
 
 
