@@ -91,9 +91,6 @@ public class GameGUI
         else if(e.getActionCommand().equals("EXIT")){
             System.exit(0);
         }
-        else if(e.getActionCommand().equals("Relocate Unit")){
-
-        }
 
     }
 
@@ -377,7 +374,11 @@ public class GameGUI
     }
 
     @Override
-    public void onRelocateCLicked(Unit unit) {
-        new RelocateView(unit.getParentArmy());
+    public void onRelocateViewClicked(Unit unit) {
+        new RelocateView(unit,game.getPlayer().getControlledArmies());
+    }
+
+    public void onRelocateClicked(Unit unit, Army army) throws MaxCapacityException {
+    army.relocateUnit(unit);
     }
 }

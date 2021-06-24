@@ -1,7 +1,6 @@
 package views;
 
 import listeners.UnitPopUpListener;
-import units.Archer;
 import units.Cavalry;
 import units.Unit;
 
@@ -9,7 +8,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Locale;
 
 
 public class newUnitPopUp extends Frame implements ActionListener {
@@ -76,7 +74,7 @@ public class newUnitPopUp extends Frame implements ActionListener {
                 break;
             }
             case "Relocate": {
-                listener.onRelocateCLicked(unit);
+                listener.onRelocateViewClicked(unit);
                 break;
             }
         }
