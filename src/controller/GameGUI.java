@@ -26,11 +26,13 @@ public class GameGUI
     private final GameViews view;
     private StatusPanel statusPanel;
 
-    private Army a;
-    private Army b;
+    private Army playerArmy;
+    private City targetCity;
+    private Army targetArmy;
 
     public GameGUI() throws IOException {
         view = new GameViews();
+
 
     }
 
@@ -44,7 +46,7 @@ public class GameGUI
         if(e.getActionCommand().equals("START AUTORESOLVE")){
             try {
                 System.out.println("actionPerformed");
-                game.autoResolve(a,b);
+                game.autoResolve(playerArmy, targetArmy);
             } catch (FriendlyFireException friendlyFireException) {
                 friendlyFireException.printStackTrace();
             }
@@ -95,36 +97,6 @@ public class GameGUI
 
     }
 
-    @Override
-    public void onAttack(Unit attacker, Unit target) throws FriendlyFireException {
-        attacker.attack(target);
-    }
-
-    @Override
-    public void onBattleUpdated(Army unitParentArmy, String result1, String result2) {
-        JTextArea log = view.getBattleView().getBattleLog();
-        String RESULT = result1 + (game.getPlayer().getControlledArmies().contains(unitParentArmy) ? "Target" : "Player") + result2;
-        log.setText((log.getText() + "\n\n" + RESULT));
-
-        updateUnitsPanels(a,b);
-        view.getBattleView().getStartAutoResolveBtn().setEnabled(false);
-        view.getBattleView().getBattleResultsDisplay().setBorder(BorderFactory.createEmptyBorder(0, 100, 0, 0));
-        view.getBattleView().getBattleResultsDisplay().setText(RESULT);
-        view.getBattleView().getBattleResultsDisplay().setFont(new Font(Font.MONOSPACED, Font.BOLD, 25));
-
-        view.getBattleView().getPlayerUnitsPanel().setSelectedCard(null);
-        view.getBattleView().getTargetUnitsPanel().setSelectedCard(null);
-
-        System.out.println(RESULT);
-    }
-
-    public void updateUnitsPanels(Army playerArmy, Army targetArmy){
-        view.getBattleView().setPlayerArmy(playerArmy);
-        view.getBattleView().setTargetArmy(targetArmy);
-
-        view.getBattleView().getPlayerUnitsPanel().updatePanel(playerArmy);
-        view.getBattleView().getTargetUnitsPanel().updatePanel(targetArmy);
-    }
 
     @Override
     public void onNewGameClicked() throws IOException {
@@ -250,20 +222,79 @@ public class GameGUI
 
 
     @Override
-    public void onManualAttackChosen() {
-//        view.setBattleView(new BattleView("MANUAL ATTACK"));
-//        view.getBattleView().setVisible(true);
-        // TODO: hide WorldMapView
+    public void onManualAttackChosen(String battleMode, Army playerArmy, City targetCity) {
+        this.playerArmy = playerArmy;
+        this.targetCity = targetCity;
+        this.targetArmy = targetCity.getDefendingArmy();
+
+        BattleView bv = new BattleView("MANUAL ATTACK", playerArmy, targetCity, this);
+        view.setBattleView(bv);
+        bv.getStartManualAttackBtn().addActionListener(this);
+
+        view.getWorldMapView().setVisible(false);
     }
 
     @Override
-    public void onAutoResolveChosen() {
-//        view.setBattleView(new BattleView("AUTO RESOLVE"));
-//        view.getBattleView().setVisible(true);
-        // TODO: hide WorldMapView
+    public void onAutoResolveChosen(String battleMode, Army playerArmy, City targetCity) {
+        this.playerArmy = playerArmy;
+        this.targetCity = targetCity;
+        this.targetArmy = targetCity.getDefendingArmy();
+
+        BattleView bv = new BattleView("MANUAL ATTACK", playerArmy, targetCity, this);
+        view.setBattleView(bv);
+        bv.getStartAutoResolveBtn().addActionListener(this);
+
+        view.getWorldMapView().setVisible(false);
     }
 
+    @Override
+    public void onAttack(Unit attacker, Unit target) throws FriendlyFireException {
+        attacker.attack(target);
+    }
 
+    @Override
+    public void onBattleUpdated(Army unitParentArmy, String result1, String result2) {
+        JTextArea log = view.getBattleView().getBattleLog();
+        String RESULT = result1 + (game.getPlayer().getControlledArmies().contains(unitParentArmy) ? "Target" : "Player") + result2;
+        log.setText((log.getText() + "\n\n" + RESULT));
+
+        updateUnitsPanels(playerArmy, targetArmy);
+        view.getBattleView().getStartAutoResolveBtn().setEnabled(false);
+        view.getBattleView().getBattleResultsDisplay().setBorder(BorderFactory.createEmptyBorder(0, 100, 0, 0));
+        view.getBattleView().getBattleResultsDisplay().setText(RESULT);
+        view.getBattleView().getBattleResultsDisplay().setFont(new Font(Font.MONOSPACED, Font.BOLD, 25));
+
+        view.getBattleView().getPlayerUnitsPanel().setSelectedCard(null);
+        view.getBattleView().getTargetUnitsPanel().setSelectedCard(null);
+
+        if(targetArmy.getUnits().size() == 0){
+            endBattle(true, targetCity);
+        }
+        else if(playerArmy.getUnits().size() == 0) {
+            endBattle(false, targetCity);
+        }
+
+        System.out.println(RESULT);
+    }
+
+    public void updateUnitsPanels(Army playerArmy, Army targetArmy){
+        view.getBattleView().setPlayerArmy(playerArmy);
+        view.getBattleView().setTargetArmy(targetArmy);
+
+        view.getBattleView().getPlayerUnitsPanel().updatePanel(playerArmy);
+        view.getBattleView().getTargetUnitsPanel().updatePanel(targetArmy);
+    }
+
+    public void endBattle(boolean playerWon, City targetCity){
+        if(playerWon){
+            showMessageDialog(null, "YOU WON THE BATTLE!\n\n" + "Enemy's " + targetCity.getName() + " City Has Been Occupied!");
+        }
+        else {
+            showMessageDialog(null, "YOU LOST THE BATTLE!\n\nRETREATING");
+        }
+
+        view.getBattleView().dispose();
+    }
 
     public void onUnitCardClicked(Unit unit) {
         JPanel p = view.getBattleView().getUnitInfoPanel();
