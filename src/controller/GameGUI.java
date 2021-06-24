@@ -29,6 +29,7 @@ public class GameGUI
     private Army playerArmy;
     private City targetCity;
     private Army targetArmy;
+    private City currentViewdCity;
 
     public GameGUI() throws IOException {
         view = new GameViews();
@@ -87,6 +88,11 @@ public class GameGUI
         } else if (e.getActionCommand().equals("EXIT")) {
             System.exit(0);
         }
+        else if(e.getActionCommand().equals("Initiate Army")){
+        }
+        else if(e.getActionCommand().equals("Initiate")){
+
+        }
 
     }
 
@@ -129,6 +135,7 @@ public class GameGUI
 
     @Override
     public void onCityCardClicked(City city) {
+        this.currentViewdCity = city;
         if (game.getPlayer().getControlledCities().contains(city)) {
             CityView cityView = new CityView(city);
             cityView.setListener(this);
@@ -164,10 +171,6 @@ public class GameGUI
         newUnitPopUp.setListener(this);
     }
 
-    @Override
-    public void onInitiateArmyClicked() {
-//TODO: initiate new Army
-    }
 
     @Override
     public void onUpgradeClicked(BuildingPopUp buildingPopUp) {
@@ -373,11 +376,24 @@ public class GameGUI
 
     @Override
     public void onRelocateViewClicked(Unit unit) {
-        new RelocateView(unit, game.getPlayer().getControlledArmies());
+        new RelocatePopUp(unit, game.getPlayer().getControlledArmies());
     }
 
     public void onRelocateClicked(Unit unit, Army army) throws MaxCapacityException {
         army.relocateUnit(unit);
+    }
+
+    @Override
+    public void onInitiateArmyClicked() {
+        InitiateArmyPopUp initiateArmyPopUp= new InitiateArmyPopUp(currentViewdCity);
+        initiateArmyPopUp.setListener(this);
+
+    }
+
+    @Override
+    public void onInitiateClicked(City city, Unit unit) {
+        game.getPlayer().initiateArmy(city,unit);
+        System.out.println("Clicked");
     }
 
     @Override
@@ -405,4 +421,6 @@ public class GameGUI
     public void onLaySiegeCityButton(City city) {
 
     }
+
+
 }

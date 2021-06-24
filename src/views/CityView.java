@@ -121,10 +121,10 @@ public class CityView extends Frame {
 
         ArrayList<Army> armies = new ArrayList<>();
         armies.add(cityToView.getDefendingArmy());
-        ArmiesPanel armysPanel = new ArmiesPanel(armies, new ArrayList<Army>(), listener);
-        armysPanel.setBackground(Color.ORANGE);
-        armysPanel.setBounds(getWidth() - 300, 100, 300, getHeight() - 100);
-        add(armysPanel);
+        ArmiesPanel armiesPanel = new ArmiesPanel(armies, new ArrayList<Army>(), listener);
+        armiesPanel.setBackground(Color.ORANGE);
+        armiesPanel.setBounds(getWidth() - 300, 100, 300, getHeight() - 100);
+        add(armiesPanel);
     }
 
     public void setListener(CityViewListener listener) {

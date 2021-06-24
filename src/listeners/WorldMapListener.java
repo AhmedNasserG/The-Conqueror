@@ -13,4 +13,5 @@ public interface WorldMapListener extends ActionListener, CardListener {
     void onAttackClicked();
     void onLaySiegeClicked();
     void onSetTargetClicked();
+    void onInitiateArmyClicked();
 }

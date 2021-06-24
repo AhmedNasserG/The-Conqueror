@@ -2,7 +2,9 @@ package views;
 
 import buildings.Barracks;
 import buildings.MilitaryBuilding;
+import engine.City;
 import listeners.CardListener;
+import listeners.WorldMapListener;
 import units.*;
 
 import javax.swing.*;
@@ -16,7 +18,7 @@ public class ArmyPopUp extends Frame implements ActionListener {
     private final int width;
     private final int height;
     private ArrayList<Card> unitCards;
-    private CardListener listener;
+    private WorldMapListener listener;
     private JButton setTargetButton;
     private JButton initiateArmyButton;
 
@@ -110,11 +112,15 @@ public class ArmyPopUp extends Frame implements ActionListener {
                 this.dispose();
                 break;
         }
+        if(e.getActionCommand().equals("Initiate Army")){
+            listener.onInitiateArmyClicked();
+        }
+
     }
 
-    public void setListener(CardListener listener) {
+    public void setListener(WorldMapListener listener) {
         this.listener = listener;
-        for(Card c: unitCards)
-            c.setListener(listener);
+        for(Card card: unitCards)
+            card.setListener(listener);
     }
 }
