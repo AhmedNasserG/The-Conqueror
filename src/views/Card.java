@@ -108,16 +108,6 @@ public class Card extends JButton implements ActionListener {
         layeredPane.add(bottomLabel, Integer.valueOf(1));
     }
 
-    public Card(Army army, String text) {
-        this();
-        this.army = army;
-        img.setIcon(getIcon(army));
-        topLabel.setText("Army: "+ army.getCurrentLocation());
-        bottomLabel.setText(army.getCurrentStatus().toString());
-        layeredPane.add(topLabel, Integer.valueOf(1));
-        layeredPane. add(bottomLabel, Integer.valueOf(1));
-
-    }
 
     public Card(City city) {
         this();
@@ -185,7 +175,7 @@ public class Card extends JButton implements ActionListener {
 
     public static void main(String[] args) {
         JFrame newFrame = new Frame();
-        Card Army = new Card(new Army("Cairo"), "salah");
+        Card Army = new Card(new Army("Cairo"));
         newFrame.add(Army);
         newFrame.setVisible(true);
     }

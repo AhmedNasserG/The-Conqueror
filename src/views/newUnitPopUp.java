@@ -16,10 +16,12 @@ public class newUnitPopUp extends Frame implements ActionListener {
 
     private UnitPopUpListener listener;
 
+    private Unit unit;
+
     public newUnitPopUp(Unit unit){
         //TODO: fix the button only appears on hover
         super(unit.getUnitName());
-
+        this.unit = unit;
         int width = (getWidth() - 420) / 2;
         int height = (getHeight() - 420) / 2;
         setBounds(width, height, 420, 420);
@@ -46,11 +48,16 @@ public class newUnitPopUp extends Frame implements ActionListener {
         status.add(unitCurrentSoliderCount);
         status.setBounds(0, 230, 420, 420 - 200);
 
+        JButton relocateButton = new JButton("Relocate Unit");
+        relocateButton.addActionListener(this);
+        relocateButton.setActionCommand("Relocate");
+        relocateButton.setBounds(120, 290, 150, 40);
+
         JButton closeButton = new JButton("Close");
         closeButton.addActionListener(this);
-        closeButton.setBounds(145, 290, 100, 40);
+        closeButton.setBounds(145, 335, 100, 40);
 
-
+        add(relocateButton);
         add(status);
         add(unitName);
         add(unitCard);
@@ -64,6 +71,10 @@ public class newUnitPopUp extends Frame implements ActionListener {
         switch (e.getActionCommand()){
             case "Close": {
                 this.dispose();
+                break;
+            }
+            case "Relocate": {
+                new RelocateView(unit.getParentArmy());
                 break;
             }
         }

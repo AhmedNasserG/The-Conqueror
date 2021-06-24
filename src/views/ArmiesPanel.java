@@ -16,7 +16,7 @@ public class ArmiesPanel extends JPanel {
         JPanel controlledArmiesPanel = new JPanel();
         controlledArmiesPanel.setLayout(new BoxLayout(controlledArmiesPanel,BoxLayout.Y_AXIS));
         for (Army army : defendingArmies) {
-            Card armyCard = new Card(army,"Defending");
+            Card armyCard = new Card(army);
             armyCard.setListener(listener);
             armyCard.setAlignmentX(Component.CENTER_ALIGNMENT);
             defendingArmyPanel.add(armyCard);
