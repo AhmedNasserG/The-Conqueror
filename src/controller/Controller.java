@@ -428,13 +428,7 @@ public class Controller
         for (Army army : game.getPlayer().getControlledArmies()) {
             if (army.getCurrentLocation().equals(city.getName())) {
                 for (Unit unit : army.getUnits()) {
-                    if (unit instanceof Archer) {
-                        ((Archer) unit).setListener(this);
-                    } else if (unit instanceof Cavalry) {
-                        ((Cavalry) unit).setListener(this);
-                    } else if (unit instanceof Infantry) {
-                        ((Infantry) unit).setListener(this);
-                    }
+                    unit.setListener(this);
                 }
                 availableArmiesAtThisCity.add(army);
             }
