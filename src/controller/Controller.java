@@ -22,7 +22,13 @@ import java.util.Random;
 // TODO: remove all ActionListeners
 // TODO: relocate
 // TODO: setTarget
-// TODO:
+// TODO: laySeige
+// TODO: after initiate army it is not clickable
+// TODO: enable status panel in battle view
+// TODO: close pop up (auto resolve/manual attack)
+// TODO: fix battle view
+// TODO: fix scrolling
+
 
 public class Controller
         implements ActionListener, NewGameListener, StartMenuListener, CityViewListener,
@@ -163,7 +169,9 @@ public class Controller
         game = new Game(playerName, cityName);
         //TEST ONLY
         Army testArmy = new Army("Sparta");
-        testArmy.getUnits().add(new Archer(2));
+        Archer a = new Archer(2);
+        a.setParentArmy(testArmy);
+        testArmy.getUnits().add(a);
         game.getPlayer().getControlledArmies().add(testArmy);
 
         statusPanel = new StatusPanel();
