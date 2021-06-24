@@ -103,8 +103,8 @@ public class BattleView extends Frame {
         playerUnitsPanel = new UnitsPanel("player", playerArmy, listener);
         targetUnitsPanel = new UnitsPanel("target", targetArmy, listener);
 
-        battlePanel.add(targetUnitsPanel, BorderLayout.NORTH);
-        battlePanel.add(playerUnitsPanel, BorderLayout.SOUTH);
+        battlePanel.add(new JScrollPane(targetUnitsPanel), BorderLayout.NORTH);
+        battlePanel.add(new JScrollPane(playerUnitsPanel), BorderLayout.SOUTH);
         battlePanel.add(battleResultsDisplay, BorderLayout.CENTER);
 
         battlePanel.revalidate();

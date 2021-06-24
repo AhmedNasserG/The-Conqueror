@@ -19,6 +19,7 @@ public class RelocateView extends Frame implements ActionListener {
     private UnitPopUpListener listener;
     private Army army;
     private Unit unit;
+    private JComboBox myArmies;
     public RelocateView(Unit unit, ArrayList<Army> armyArrayList){
         //TODO: fix the button only appears on hover
         super(unit.getUnitName());
@@ -35,10 +36,9 @@ public class RelocateView extends Frame implements ActionListener {
         unitName.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 
-        // TODO: Get player armies
-        JComboBox myArmies = new JComboBox(armyArrayList.toArray());
+        myArmies = new JComboBox(armyArrayList.toArray());
         myArmies.setBounds(135, 150, 150, 40);
-        army = (Army) myArmies.getSelectedItem();
+
 
         JButton relocateButton = new JButton("Relocate");
         relocateButton.addActionListener(this);
@@ -58,6 +58,7 @@ public class RelocateView extends Frame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        army = (Army) myArmies.getSelectedItem();
         switch (e.getActionCommand()){
             case "Close": {
                 this.dispose();

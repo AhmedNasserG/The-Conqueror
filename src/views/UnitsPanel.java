@@ -25,7 +25,7 @@ public class UnitsPanel extends JPanel {
         this.army = army;
         this.listener = listener;
 
-        this.setPreferredSize(new Dimension(SCREENSIZE.width, SCREENSIZE.height/4));
+        this.setPreferredSize(new Dimension(army.getUnits().size()*150, SCREENSIZE.height/4));
 
         this.setLayout(new GridLayout(0,10));
 
@@ -33,13 +33,13 @@ public class UnitsPanel extends JPanel {
         else this.setBorder(BorderFactory.createTitledBorder("ENEMY UNITS"));
 
         ArrayList<Unit> units = army.getUnits();
-        for(Unit u : units){
-            if(u.getCurrentSoldierCount() == 0) continue;
-            Card c;
-            if(armyOwner.equals("player")) c = new Card(u,false);
-            else c = new Card(u, true);
-            c.setListener(listener);
-            this.add(c);
+        for(Unit unit : units){
+            if(unit.getCurrentSoldierCount() == 0) continue;
+            Card card;
+            if(armyOwner.equals("player")) card = new Card(unit,false);
+            else card = new Card(unit, true);
+            card.setListener(listener);
+            this.add(card);
         }
     }
 

@@ -32,8 +32,60 @@ public class GameGUI
 
     public GameGUI() throws IOException {
         view = new GameViews();
-        view.setNewGameView(new NewGameView());
-        view.getNewGameView().setListener(this);
+        game = new Game("OMAR", "Cairo");
+        game.setListener(this);
+        playerArmy = new Army("Cairo");
+        targetArmy = new Army("Sparta");
+
+        Archer u1 = new Archer(1, 5, 2.0, 2.0, 2.0);
+        Cavalry u2 = new Cavalry(2);
+        Infantry u3 = new Infantry(3);
+        Archer u4 = new Archer(1, 5, 2.0, 2.0, 2.0);
+        Cavalry u5 = new Cavalry(2);
+        Infantry u6 = new Infantry(3);
+        u1.setListener(this);
+        u2.setListener(this);
+        u3.setListener(this);
+        u4.setListener(this);
+        u5.setListener(this);
+        u6.setListener(this);
+
+        Army p1 = new Army("asd"), p2 = new Army("Asd");
+
+
+        ArrayList<Unit> list = new ArrayList<>();
+        list.add(u1); list.add(u2); list.add(u3);
+//        for(int i = 0; i < list.size(); i++){
+//            list.get(i).setListener(this);
+//        }
+        playerArmy.setUnits(list);
+        game.getPlayer().getControlledArmies().add(playerArmy);
+
+        ArrayList<Unit> list2 = new ArrayList<>();
+        list2.add(u4); list2.add(u5); list2.add(u6);
+//        for(int i = 0; i < list.size(); i++){
+//            list.get(i).setListener(this);
+//        }
+        targetArmy.setUnits(list2);
+
+        u1.setParentArmy(playerArmy);
+        u2.setParentArmy(playerArmy);
+        u3.setParentArmy(playerArmy);
+        u4.setParentArmy(targetArmy);
+        u5.setParentArmy(targetArmy);
+        u6.setParentArmy(targetArmy);
+
+        this.targetCity = new City("Balabizo");
+        targetCity.setDefendingArmy(targetArmy);
+
+        BattleView bv = new BattleView("MANUAL ATTACK", playerArmy, targetCity, this);
+        view.setBattleView(bv);
+//        bv.getStartAutoResolveBtn().addActionListener(this);
+        bv.getStartManualAttackBtn().addActionListener(this);
+
+
+        view.getBattleView().repaint();
+
 
     }
 
