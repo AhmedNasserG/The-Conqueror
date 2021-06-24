@@ -20,29 +20,28 @@ public class UnitsPanel extends JPanel {
 
     static final Dimension SCREENSIZE = Toolkit.getDefaultToolkit().getScreenSize();
 
-    public UnitsPanel(String armyOwner, Army army, CardListener listener){
+    public UnitsPanel(String armyOwner, Army army, CardListener listener) {
         this.armyOwner = armyOwner;
         this.army = army;
         this.listener = listener;
 
-        this.setPreferredSize(new Dimension(army.getUnits().size()*150, SCREENSIZE.height/4));
+        this.setPreferredSize(new Dimension(army.getUnits().size() * 150, SCREENSIZE.height / 4));
 
-        this.setLayout(new GridLayout(1,0));
+        this.setLayout(new GridLayout(1, 0));
 
-        if(armyOwner.equals("player")) this.setBorder(BorderFactory.createTitledBorder("PLAYER UNITS"));
+        if (armyOwner.equals("player")) this.setBorder(BorderFactory.createTitledBorder("PLAYER UNITS"));
         else this.setBorder(BorderFactory.createTitledBorder("ENEMY UNITS"));
 
         ArrayList<Unit> units = army.getUnits();
-        for(Unit unit : units){
-            if(unit.getCurrentSoldierCount() == 0) continue;
+        for (Unit unit : units) {
+            if (unit.getCurrentSoldierCount() == 0) continue;
             Card card;
-            if(armyOwner.equals("player")) {
-                card = new Card(unit);
-                card.setActionCommand("ENEMY_CARD_CLICKED_BV");
-            }
-            else {
+            if (armyOwner.equals("player")) {
                 card = new Card(unit);
                 card.setActionCommand("FRIENDLY_CARD_CLICKED_BV");
+            } else {
+                card = new Card(unit);
+                card.setActionCommand("ENEMY_CARD_CLICKED_BV");
             }
 
             card.setListener(listener);
@@ -51,14 +50,14 @@ public class UnitsPanel extends JPanel {
     }
 
 
-    public void updatePanel(Army army){
+    public void updatePanel(Army army) {
         removeAll();
 
         ArrayList<Unit> units = army.getUnits();
-        for(Unit u : units){
-            if(u.getCurrentSoldierCount() == 0) continue;
+        for (Unit u : units) {
+            if (u.getCurrentSoldierCount() == 0) continue;
             Card c;
-            if(armyOwner.equals("player")) c = new Card(u);
+            if (armyOwner.equals("player")) c = new Card(u);
             else c = new Card(u);
             c.setListener(listener);
             this.add(c);

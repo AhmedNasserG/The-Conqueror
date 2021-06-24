@@ -7,8 +7,10 @@ import units.Army;
 import units.Unit;
 import views.Card;
 
-public interface CardListener {
-    void onBuildingCardClicked(Building building, String whereToBuild) throws NotEnoughGoldException;
+import java.awt.event.ActionListener;
+
+public interface CardListener extends ActionListener {
+    void buildBuilding(Building building, String whereToBuild) throws NotEnoughGoldException;
     void onFriendlyUnitCardClicked(Card c);
     void onEnemyUnitCardClicked(Card c);
     void onArmyCardClicked(Army army);

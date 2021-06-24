@@ -17,7 +17,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Random;
 
 public class GameGUI
@@ -100,6 +99,28 @@ public class GameGUI
             onEnemyUnitCardClicked((Card) e.getSource());
         } else if (e.getActionCommand().equals("FRIENDLY_CARD_CLICKED_BV")) {
             onFriendlyUnitCardClicked((Card) e.getSource());
+        } else if (e.getActionCommand().equals("CITY_CARD_CLICKED")) {
+            onCityCardClicked(((Card) e.getSource()).getCity());
+        } else if (e.getActionCommand().equals("BUILD_BUILDING")) {
+            Card buildingCard = (Card) e.getSource();
+            try {
+                buildBuilding(buildingCard.getBuilding(), buildingCard.getWhereToBuild());
+            } catch (NotEnoughGoldException notEnoughGoldException) {
+                notEnoughGoldException.printStackTrace();
+            }
+        } else if (e.getActionCommand().equals("PREVIEW_BUILDING")) {
+            Card buildingCard = (Card) e.getSource();
+            try {
+                previewBuilding(buildingCard.getBuilding());
+            } catch (NotEnoughGoldException notEnoughGoldException) {
+                notEnoughGoldException.printStackTrace();
+            }
+        } else if (e.getActionCommand().equals("Unit Card")) {
+            Card unitCard = (Card) e.getSource();
+            onNewUnitCardClicked(unitCard.getUnit());
+        } else if (e.getActionCommand().equals("ARMY_CARD_CLICKED")) {
+            Card armyCard = (Card) e.getSource();
+            onArmyCardClicked(armyCard.getArmy());
         }
     }
 
@@ -231,21 +252,22 @@ public class GameGUI
     }
 
     @Override
-    public void onBuildingCardClicked(Building building, String whereToBuild) throws NotEnoughGoldException {
-        if (whereToBuild != null) {
-            try {
-                game.getPlayer().build(building.getBuildingName(), whereToBuild);
-                view.getCityView().updateCityGrid();
-                statusPanel.updateStatusPanel();
-            } catch (BuildingInCityAlreadyException e) {
-                JOptionPane.showMessageDialog(null, "Sorry You Already Have " + building.getBuildingName() + " In Your City, Please Choose Another Building.");
-            } catch (NotEnoughGoldException e) {
-                JOptionPane.showMessageDialog(null, "Sorry You Have Not Enough Gold To Build " + building.getBuildingName() + ".");
-            }
-        } else {
-            BuildingPopUp buildingPopUp = new BuildingPopUp(building);
-            buildingPopUp.setListener(this);
+    public void buildBuilding(Building building, String whereToBuild) throws NotEnoughGoldException {
+        try {
+            game.getPlayer().build(building.getBuildingName(), whereToBuild);
+            view.getCityView().updateCityGrid();
+            statusPanel.updateStatusPanel();
+        } catch (BuildingInCityAlreadyException e) {
+            JOptionPane.showMessageDialog(null, "Sorry You Already Have " + building.getBuildingName() + " In Your City, Please Choose Another Building.");
+        } catch (NotEnoughGoldException e) {
+            JOptionPane.showMessageDialog(null, "Sorry You Have Not Enough Gold To Build " + building.getBuildingName() + ".");
         }
+
+    }
+
+    public void previewBuilding(Building building) throws NotEnoughGoldException {
+        BuildingPopUp buildingPopUp = new BuildingPopUp(building);
+        buildingPopUp.setListener(this);
     }
 
 

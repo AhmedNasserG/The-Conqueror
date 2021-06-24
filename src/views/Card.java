@@ -12,18 +12,18 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Card extends JButton implements ActionListener {
+public class Card extends JButton {
     private JLayeredPane layeredPane;
     private JLabel img;
     private JLabel topLabel;
     private JLabel bottomLabel;
+
     private String whereToBuild;
     private Building building;
-
-
     private Unit unit;
     private Army army;
     private City city;
+
     private CardListener listener;
 
 
@@ -31,9 +31,8 @@ public class Card extends JButton implements ActionListener {
         super();
         layeredPane = new JLayeredPane();
         this.setBorder(BorderFactory.createEmptyBorder());
-        this.setPreferredSize(new Dimension(150,10));
+        this.setPreferredSize(new Dimension(150, 10));
         this.setContentAreaFilled(false);
-        addActionListener(this);
         img = new JLabel();
         topLabel = new JLabel("", SwingConstants.CENTER);
         bottomLabel = new JLabel("", SwingConstants.CENTER);
@@ -93,17 +92,18 @@ public class Card extends JButton implements ActionListener {
     public Card(Army army) {
         this();
         this.army = army;
+        setActionCommand("ARMY_CARD_CLICKED");
         img.setIcon(getIcon(army));
-        topLabel.setText("Army: "+ army.getCurrentLocation());
+        topLabel.setText("Army: " + army.getCurrentLocation());
         bottomLabel.setText(army.getCurrentStatus().toString());
         layeredPane.add(topLabel, Integer.valueOf(1));
         layeredPane.add(bottomLabel, Integer.valueOf(1));
     }
 
-
     public Card(City city) {
         this();
         this.city = city;
+        setActionCommand("CITY_CARD_CLICKED");
         img.setIcon(getIcon(city));
         topLabel.setText(city.getName());
         bottomLabel.setText("");
@@ -132,52 +132,29 @@ public class Card extends JButton implements ActionListener {
         return new ImageIcon(icon.getImage().getScaledInstance((400 / 3), (400 / 3), Image.SCALE_DEFAULT));
     }
 
+
     public void setListener(CardListener listener) {
         this.listener = listener;
+        addActionListener(listener);
     }
 
+    public Building getBuilding() {
+        return building;
+    }
+
+    public String getWhereToBuild() {
+        return whereToBuild;
+    }
 
     public Unit getUnit() {
         return unit;
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-        if(e.getActionCommand().equals("Unit Card")){
-        listener.onNewUnitCardClicked(unit);
-        }
-
-        //TODO: Card needs refactor
-        if (building != null) {
-            try {
-                listener.onBuildingCardClicked(this.building, whereToBuild);
-            } catch (NotEnoughGoldException notEnoughGoldException) {
-                notEnoughGoldException.printStackTrace();
-            }
-        } else if (unit != null) {
-//            if(!isEnemyUnit) listener.onFriendlyUnitCardClicked(this);
-//            else listener.onEnemyUnitCardClicked(this);
-        } else if (army != null) {
-            listener.onArmyCardClicked(this.army);
-
-        }
-        else if (city != null)
-        {
-            listener.onCityCardClicked(this.city);
-        }
-
-
-    }
-
-
-    public static void main(String[] args) {
-        JFrame newFrame = new Frame();
-        Card Army = new Card(new Army("Cairo"));
-        newFrame.add(Army);
-        newFrame.setVisible(true);
-    }
     public City getCity() {
         return city;
+    }
+
+    public Army getArmy() {
+        return army;
     }
 }
