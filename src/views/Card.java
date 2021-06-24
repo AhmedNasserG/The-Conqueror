@@ -27,7 +27,6 @@ public class Card extends JButton implements ActionListener {
     private Army army;
     private City city;
     private CardListener listener;
-    private boolean isEnemyUnit;
 
 
     public Card() {
@@ -91,11 +90,6 @@ public class Card extends JButton implements ActionListener {
         bottomLabel.setText("Level: " + unit.getLevel());
         layeredPane.add(topLabel, Integer.valueOf(1));
         layeredPane.add(bottomLabel, Integer.valueOf(1));
-    }
-
-    public Card(Unit unit, boolean isEnemy) {
-        this(unit);
-        this.isEnemyUnit = isEnemy;
     }
 
     public Card(Army army) {
@@ -164,8 +158,8 @@ public class Card extends JButton implements ActionListener {
                 notEnoughGoldException.printStackTrace();
             }
         } else if (unit != null) {
-            if(!isEnemyUnit) listener.onFriendlyUnitCardClicked(this);
-            else listener.onEnemyUnitCardClicked(this);
+//            if(!isEnemyUnit) listener.onFriendlyUnitCardClicked(this);
+//            else listener.onEnemyUnitCardClicked(this);
         } else if (army != null) {
             listener.onArmyCardClicked(this.army);
 

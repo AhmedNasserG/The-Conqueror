@@ -36,8 +36,15 @@ public class UnitsPanel extends JPanel {
         for(Unit unit : units){
             if(unit.getCurrentSoldierCount() == 0) continue;
             Card card;
-            if(armyOwner.equals("player")) card = new Card(unit,false);
-            else card = new Card(unit, true);
+            if(armyOwner.equals("player")) {
+                card = new Card(unit);
+                card.setActionCommand("ENEMY_CARD_CLICKED_BV");
+            }
+            else {
+                card = new Card(unit);
+                card.setActionCommand("FRIENDLY_CARD_CLICKED_BV");
+            }
+
             card.setListener(listener);
             this.add(card);
         }
@@ -51,8 +58,8 @@ public class UnitsPanel extends JPanel {
         for(Unit u : units){
             if(u.getCurrentSoldierCount() == 0) continue;
             Card c;
-            if(armyOwner.equals("player")) c = new Card(u,false);
-            else c = new Card(u, true);
+            if(armyOwner.equals("player")) c = new Card(u);
+            else c = new Card(u);
             c.setListener(listener);
             this.add(c);
         }
