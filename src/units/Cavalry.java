@@ -10,7 +10,6 @@ public class Cavalry extends Unit {
 
     private int casualtiesCount;
 
-    private BattleListener listener;
 
 
     private static final double[][] CavalryValues = {{-1, -1, -1, -1}, {40, 0.6, 0.7, 0.75},
@@ -47,11 +46,8 @@ public class Cavalry extends Unit {
 
         String res1 = this.getUnitName() + " ATTACKED " + target.getUnitName() + ". ";
         String res2 = " has lost: " + casualtiesCount + " " + target.getUnitName() + "(s)";
-        listener.onBattleUpdated(this.getParentArmy(), res1, res2);
+        this.getListener().onBattleUpdated(this.getParentArmy(), res1, res2);
     }
 
-    public void setListener(BattleListener listener) {
-        this.listener = listener;
-    }
 
 }
