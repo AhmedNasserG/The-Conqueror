@@ -55,7 +55,7 @@ public class unitPopUp extends Frame implements ActionListener {
 
         closeButton = new JButton("Close");
         closeButton.addActionListener(this);
-        closeButton.setBounds(145, 335, 100, 40);
+        closeButton.setBounds(145, 340, 100, 40);
 
         add(relocateButton);
         add(status);
