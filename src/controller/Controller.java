@@ -424,10 +424,16 @@ public class Controller
     @Override
     public void onRelocateViewClicked(Unit unit) {
         ArrayList<Army> armiesToChooseFromToRelocateIn = new ArrayList<>();
-        int i = 1;
-        for (Army army : game.getPlayer().getControlledArmies()){
-            if (!army.equals(unit.getParentArmy())) {
-                armiesToChooseFromToRelocateIn.add(army);
+        Army fromArmy = unit.getParentArmy();
+        for (City city : game.getPlayer().getControlledCities()) {
+            Army toArmy = city.getDefendingArmy();
+            if (!fromArmy.equals(toArmy) && fromArmy.getCurrentLocation().equals(toArmy.getCurrentLocation())) {
+                armiesToChooseFromToRelocateIn.add(toArmy);
+            }
+        }
+        for (Army toArmy : game.getPlayer().getControlledArmies()){
+            if (!fromArmy.equals(toArmy) && fromArmy.getCurrentLocation().equals(toArmy.getCurrentLocation())) {
+                armiesToChooseFromToRelocateIn.add(toArmy);
             }
         }
         RelocatePopUp relocatePopUp = new RelocatePopUp(unit, armiesToChooseFromToRelocateIn);
@@ -435,7 +441,6 @@ public class Controller
     }
 
     public void onRelocateClicked(Unit unit, Army army) throws MaxCapacityException {
-        System.out.println("Hello World");
         army.relocateUnit(unit);
     }
 
