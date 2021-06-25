@@ -35,10 +35,12 @@ public class AttackCityPopup extends Frame implements ActionListener {
         armiesComboBox.addActionListener(this);
 
         JButton manualAttackButton = new JButton("Manual Attack");
+        manualAttackButton.setActionCommand("MANUAL_ATTACK_CHOSEN");
         manualAttackButton.setBounds(95, 200, 205, 40);
         manualAttackButton.addActionListener(this);
 
         JButton autoResolveButton = new JButton("Auto Resolve");
+        autoResolveButton.setActionCommand("AUTO_RESOLVE_CHOSEN");
         autoResolveButton.setBounds(95, 250, 205, 40);
         autoResolveButton.addActionListener(this);
 
@@ -65,16 +67,19 @@ public class AttackCityPopup extends Frame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        chosenArmy = (Army) armiesComboBox.getSelectedItem();
-        if (e.getActionCommand().equals("Manual Attack")) {
+        if (e.getActionCommand().equals("MANUAL_ATTACK_CHOSEN")) {
+            chosenArmy = (Army) armiesComboBox.getSelectedItem();
             if (chosenArmy != null) {
+                this.dispose();
                 listener.onManualAttackChosen(chosenArmy, cityToAttack);
             }
-        } else if (e.getActionCommand().equals("Auto Resolve")) {
+        } else if (e.getActionCommand().equals("AUTO_RESOLVE_CHOSEN")) {
+            chosenArmy = (Army) armiesComboBox.getSelectedItem();
             if (chosenArmy != null) {
+                this.dispose();
                 listener.onAutoResolveChosen(chosenArmy, cityToAttack);
             }
-        } else if (e.getActionCommand().equals("Close")) {
+        } else if (e.getActionCommand().equals("CLOSE")) {
             this.dispose();
         }
 

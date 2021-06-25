@@ -23,9 +23,7 @@ import java.util.Random;
 // TODO: relocate
 // TODO: setTarget
 // TODO: laySeige
-// TODO: after initiate army it is not clickable
 // TODO: enable status panel in battle view
-// TODO: close pop up (auto resolve/manual attack)
 // TODO: fix battle view
 // TODO: fix scrolling
 

@@ -135,6 +135,9 @@ public class CityView extends Frame {
         this.controlledArmiesAtThisCity = controlledArmiesAtThisCity;
         defendingArmiesAtThisCity = new ArrayList<>();
         defendingArmiesAtThisCity.add(cityToView.getDefendingArmy());
+        if (armiesPanel != null){
+            armiesPanel.removeAll();
+        }
         armiesPanel = new ArmiesPanel(defendingArmiesAtThisCity, controlledArmiesAtThisCity, listener);
         armiesPanel.setBackground(Color.ORANGE);
         armiesPanel.setBounds(getWidth() - 300, 100, 300, getHeight() - 100);
