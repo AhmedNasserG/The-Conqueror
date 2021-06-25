@@ -171,6 +171,7 @@ public class Controller
         a.setParentArmy(testArmy);
         testArmy.getUnits().add(a);
         game.getPlayer().getControlledArmies().add(testArmy);
+        game.setListener(this);
 
         statusPanel = new StatusPanel();
         statusPanel.setGame(game);
@@ -317,6 +318,13 @@ public class Controller
     }
 
     public void updateUnitsPanels(Army playerArmy, Army targetArmy) {
+        for(Unit u : playerArmy.getUnits()){
+            u.setListener(this);
+        }
+        for(Unit u : targetArmy.getUnits()){
+            u.setListener(this);
+        }
+
         view.getBattleView().setPlayerArmy(playerArmy);
         view.getBattleView().setTargetArmy(targetArmy);
 
@@ -332,12 +340,12 @@ public class Controller
         }
 
         view.getBattleView().dispose();
+        view.getWorldMapView().setVisible(true);
     }
 
     public void onUnitCardClicked(Unit unit) {
         JPanel p = view.getBattleView().getUnitInfoPanel();
         p.removeAll();
-        p.setBorder(BorderFactory.createTitledBorder("UNIT INFO"));
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
         Card c = new Card(unit);
         c.setAlignmentX(Component.CENTER_ALIGNMENT);
