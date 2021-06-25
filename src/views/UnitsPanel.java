@@ -18,9 +18,12 @@ public class UnitsPanel extends JPanel {
 
     private CardListener listener;
 
+    private ArrayList<Card> cards;
+
     static final Dimension SCREENSIZE = Toolkit.getDefaultToolkit().getScreenSize();
 
     public UnitsPanel(String armyOwner, Army army, CardListener listener) {
+        this.cards = new ArrayList<>();
         this.armyOwner = armyOwner;
         this.army = army;
         this.listener = listener;
@@ -43,7 +46,6 @@ public class UnitsPanel extends JPanel {
                 card = new Card(unit);
                 card.setActionCommand("ENEMY_CARD_CLICKED_BV");
             }
-
             card.setListener(listener);
             this.add(card);
         }
@@ -57,8 +59,13 @@ public class UnitsPanel extends JPanel {
         for (Unit u : units) {
             if (u.getCurrentSoldierCount() == 0) continue;
             Card c;
-            if (armyOwner.equals("player")) c = new Card(u);
-            else c = new Card(u);
+            if (armyOwner.equals("player")) {
+                c = new Card(u);
+                c.setActionCommand("FRIENDLY_CARD_CLICKED_BV");
+            } else {
+                c = new Card(u);
+                c.setActionCommand("ENEMY_CARD_CLICKED_BV");
+            }
             c.setListener(listener);
             this.add(c);
         }
@@ -75,4 +82,11 @@ public class UnitsPanel extends JPanel {
         this.selectedCard = selectedCard;
     }
 
+    public void setListener(CardListener listener) {
+        this.listener = listener;
+    }
+
+    public ArrayList<Card> getCards() {
+        return cards;
+    }
 }
