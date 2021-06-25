@@ -280,9 +280,9 @@ public class Controller
         this.targetCity = targetCity;
         this.targetArmy = targetCity.getDefendingArmy();
 
-        BattleView bv = new BattleView("AUTO RESOLVE", playerArmy, targetCity, this);
-        view.setBattleView(bv);
-        bv.getStartAutoResolveBtn().addActionListener(this);
+        BattleView battleView = new BattleView("AUTO RESOLVE", playerArmy, targetCity, this);
+        view.setBattleView(battleView);
+        battleView.getStartAutoResolveBtn().addActionListener(this);
 
         view.getWorldMapView().setVisible(false);
     }

@@ -73,6 +73,8 @@ public class SetTargetPopUp extends Frame implements ActionListener {
             }
             case "Set": {
                     listener.onSetClicked(city, army);
+                    this.dispose();
+                    break;
                 }
             }
         }
