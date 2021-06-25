@@ -37,12 +37,12 @@ public class ArmyPopUp extends Frame implements ActionListener {
         backgroundPanel.setBackground(Color.ORANGE);
         backgroundPanel.setOpaque(true);
 
-        JPanel container2 = new JPanel();
-        container2.setBounds(0, 170, 420, 420 - 170);
-        container2.setLayout(new BoxLayout(container2, BoxLayout.Y_AXIS));
+        JPanel container = new JPanel();
+        container.setBounds(0, 170, 420, 420 - 170);
+        container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
 
 
-        container2.add(Box.createRigidArea(new Dimension(0, 20)));
+        container.add(Box.createRigidArea(new Dimension(0, 20)));
         JPanel unitsPanel = new JPanel();
         unitsPanel.setLayout(new GridLayout());
         unitsPanel.setBorder(BorderFactory.createLineBorder(Color.ORANGE));
@@ -57,8 +57,8 @@ public class ArmyPopUp extends Frame implements ActionListener {
         JScrollPane unitsPane = new JScrollPane(unitsPanel);
         unitsPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 
-        container2.add(unitsPane);
-        container2.add(Box.createRigidArea(new Dimension(0, 60)));
+        container.add(unitsPane);
+        container.add(Box.createRigidArea(new Dimension(0, 60)));
 
 
         JButton closeButton = new JButton("Close");
@@ -70,29 +70,32 @@ public class ArmyPopUp extends Frame implements ActionListener {
             setTargetButton = new JButton("Set Target");
             setTargetButton.addActionListener(this);
             setTargetButton.setActionCommand("Set Target");
-            setTargetButton.setBounds(30, 80, 120, 35);
+            setTargetButton.setBounds(30, 60, 120, 35);
             add(setTargetButton);
         }
 
         JLabel targetLabel;
         JLabel distanceToTargetLabel;
+        JLabel currentLocationLabel= new JLabel("Current Location: "+ army.getCurrentLocation());
         if(army.getTarget().equals("")){
-            targetLabel = new JLabel("No Target");
+            targetLabel = new JLabel("");
             distanceToTargetLabel = new JLabel("");
         }
         else {
             targetLabel = new JLabel("Target:" + army.getTarget());
             distanceToTargetLabel = new JLabel("Distance to Target: " + army.getDistancetoTarget());
         }
-        targetLabel.setBounds(30, 90, 200, 60);
-        distanceToTargetLabel.setBounds(30, 110, 200, 60);
+        currentLocationLabel.setBounds(15, 80, 200, 60);
+        targetLabel.setBounds(15, 100, 200, 60);
+        distanceToTargetLabel.setBounds(15, 120, 200, 60);
 
+        add(currentLocationLabel);
         add(targetLabel);
         add(distanceToTargetLabel);
         add(closeButton);
         add(armyTile);
         add(backgroundPanel);
-        add(container2);
+        add(container);
 
         this.setVisible(true);
 
