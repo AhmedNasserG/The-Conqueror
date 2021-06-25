@@ -364,6 +364,8 @@ public class Controller
 
         view.getBattleView().dispose();
         view.getWorldMapView().setVisible(true);
+        statusPanel.getEndTurnButton().setVisible(true);
+        statusPanel.updateStatusPanel();
     }
 
     public void onUnitCardClicked(Unit unit) {
