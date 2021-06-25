@@ -117,6 +117,7 @@ public class WorldMapView extends Frame {
             Card cityCard = new Card(city);
             cityCards.add(cityCard);
             cities.add(cityCard);
+            cityCard.setListener(listener);
         }
         cityCards.revalidate();
         cityCards.repaint();
