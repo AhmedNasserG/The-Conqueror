@@ -260,6 +260,16 @@ public class Controller
         buildingPopUp.setListener(this);
     }
 
+    @Override
+    public void onLaySiegeClicked(City city) {
+        LaySiegePopUp laySiegePopUp = new LaySiegePopUp(game.getPlayer().getControlledArmies(), city);
+        laySiegePopUp.setListener(this);
+    }
+
+    @Override
+    public void onLayClicked(City city, Army army) throws TargetNotReachedException, FriendlyCityException {
+    game.getPlayer().laySiege(army,city);
+    }
 
     @Override
     public void onManualAttackChosen(Army playerArmy, City targetCity) {
@@ -452,10 +462,7 @@ public class Controller
         attackCityPopup.setListener(this);
     }
 
-    @Override
-    public void onLaySiegeCityButton(City city) {
 
-    }
 
     @Override
     public void onSetTargetClicked(Army army) {

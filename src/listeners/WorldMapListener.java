@@ -11,6 +11,6 @@ public interface WorldMapListener extends ActionListener, CardListener {
     void onAutoResolveChosen(Army playerArmy, City targetCity);
     void onCityCardClicked(City city);
     void onAttackCityClicked(City city);
-    void onLaySiegeCityButton(City city);
     void onSetTargetClicked(Army army);
+    void onLaySiegeClicked(City city);
 }

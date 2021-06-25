@@ -2,6 +2,7 @@ package views;
 
 import engine.City;
 import listeners.WorldMapListener;
+import units.Army;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,6 +15,7 @@ public class CityPopUp extends Frame implements ActionListener {
     private final int height;
     private JButton attackButton, laySiegeButton;
     private WorldMapListener listener;
+    private Army army;
 
     public CityPopUp(City city) {
         super(city.getName());
@@ -58,6 +60,7 @@ public class CityPopUp extends Frame implements ActionListener {
         attackButton.setBounds(30, 40, 120, 35);
 
         laySiegeButton = new JButton("Lay Siege");
+        attackButton.setActionCommand("Lay Siege");
         laySiegeButton.setBounds(30, 80, 120, 35);
 
         attackButton.addActionListener(this);
@@ -74,6 +77,8 @@ public class CityPopUp extends Frame implements ActionListener {
 
     }
 
+
+
     public static void main(String[] args) {
         new CityPopUp(new City("Rome"));
     }
@@ -88,9 +93,16 @@ public class CityPopUp extends Frame implements ActionListener {
             case "Close":
                 this.dispose();
                 break;
-            case "Start Attack On City":
+            case "Start Attack On City": {
                 this.dispose();
                 listener.onAttackCityClicked(city);
+                break;}
+            case "Lay Siege":{
+                this.dispose();
+                listener.onLaySiegeClicked(city);
+                break;}
+            default:
+                break;
 
         }
     }
