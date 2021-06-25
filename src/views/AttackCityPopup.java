@@ -46,6 +46,7 @@ public class AttackCityPopup extends Frame implements ActionListener {
 
 
         JButton closeButton = new JButton("Close");
+        closeButton.setActionCommand("CLOSE");
         closeButton.setBounds(145, 350, 100, 40);
         closeButton.addActionListener(this);
 

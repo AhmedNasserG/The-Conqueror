@@ -68,6 +68,8 @@ public class ArmyPopUp extends Frame implements ActionListener {
 
         if (!text.equals("Defending")) {
             setTargetButton = new JButton("Set Target");
+            setTargetButton.addActionListener(this);
+            setTargetButton.setActionCommand("Set Target");
             setTargetButton.setBounds(30, 80, 120, 35);
             add(setTargetButton);
         }
@@ -109,9 +111,6 @@ public class ArmyPopUp extends Frame implements ActionListener {
 
     public void setListener(WorldMapListener listener) {
         this.listener = listener;
-        if (setTargetButton != null) {
-            setTargetButton.addActionListener(listener);
-        }
         for (Card card : unitCards)
             card.setListener(listener);
     }

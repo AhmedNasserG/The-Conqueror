@@ -21,7 +21,7 @@ public class SetTargetPopUp extends Frame implements ActionListener {
     private JComboBox myCities;
 
     public SetTargetPopUp(ArrayList<City> availableCities, ArrayList<City> controlledCities, Army army){
-        //TODO: fix the button only appears on hover
+        //TODO: fix the button only appears on hover !!
         super("Set Target");
         this.army = army;
         int width = (getWidth() - 420) / 2;
@@ -65,6 +65,7 @@ public class SetTargetPopUp extends Frame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         this.city = (City) myCities.getSelectedItem();
+
         switch (e.getActionCommand()){
             case "Close": {
                 this.dispose();
