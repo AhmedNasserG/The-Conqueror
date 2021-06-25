@@ -20,9 +20,10 @@ public class LaySiegePopUp extends Frame implements ActionListener {
     private JComboBox myArmies;
     private Army army;
 
-    public LaySiegePopUp(ArrayList<Army> controlledArmies,City city){
+    public LaySiegePopUp(ArrayList<Army> availableArmiesAtThisCity,City city){
         //TODO: fix the button only appears on hover !!
         super("Lay Siege");
+        this.city = city;
         int width = (getWidth() - 420) / 2;
         int height = (getHeight() - 420) / 2;
         setBounds(width, height, 420, 420);
@@ -34,16 +35,9 @@ public class LaySiegePopUp extends Frame implements ActionListener {
         setTarget.setBounds(160, 1, getWidth(), 50);
         setTarget.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        ArrayList arrivedArmies = new ArrayList<Army>();
-
-        for (Army myArmy : controlledArmies) {
-            if (myArmy.getTarget().equals(city.getName())) {
-                arrivedArmies.add(myArmy);
-            }
-        }
-
-        myArmies = new JComboBox(arrivedArmies.toArray());
+        myArmies = new JComboBox(availableArmiesAtThisCity.toArray());
         myArmies.setBounds(135, 150, 150, 40);
+        myArmies.addActionListener(this);
 
 
         JButton layButton = new JButton("Lay Siege");

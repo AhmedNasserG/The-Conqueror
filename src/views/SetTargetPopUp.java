@@ -44,7 +44,7 @@ public class SetTargetPopUp extends Frame implements ActionListener {
 
         myCities = new JComboBox(newCities.toArray());
         myCities.setBounds(135, 150, 150, 40);
-
+        myCities.addActionListener(this);
 
         JButton setButton = new JButton("Set");
         setButton.addActionListener(this);
