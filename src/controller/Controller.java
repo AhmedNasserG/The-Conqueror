@@ -88,12 +88,11 @@ public class Controller
         } else if (e.getActionCommand().equals("End Turn")) {
             game.endTurn();
             statusPanel.updateStatusPanel();
-            if (view.getCityView() != null && currentViewedCity != null){
+            if (view.getCityView() != null && currentViewedCity != null) {
                 view.getCityView().getArmiesPanel().removeAll();
                 view.getCityView().setControlledArmiesAtThisCity(getControlledArmiesAtCity(currentViewedCity));
             }
-            if(view.getWorldMapView() != null)
-            {
+            if (view.getWorldMapView() != null) {
                 view.getWorldMapView().getArmiesPanel().removeAll();
                 view.getWorldMapView().setControlledArmiesAtThisCity(game.getPlayer().getControlledArmies());
             }
@@ -133,9 +132,6 @@ public class Controller
             } catch (NotEnoughGoldException notEnoughGoldException) {
                 notEnoughGoldException.printStackTrace();
             }
-        } else if (e.getActionCommand().equals("Unit Card")) {
-            Card unitCard = (Card) e.getSource();
-            onNewUnitCardClicked(unitCard.getUnit());
         } else if (e.getActionCommand().equals("ARMY_CARD_CLICKED")) {
             Card armyCard = (Card) e.getSource();
             onArmyCardClicked(armyCard.getArmy());
@@ -281,8 +277,8 @@ public class Controller
 
     @Override
     public void onLayClicked(City city, Army army) throws TargetNotReachedException, FriendlyCityException {
-        game.getPlayer().laySiege(army,city);
-        if(view.getWorldMapView() != null) view.getWorldMapView().updateCitiesCards();
+        game.getPlayer().laySiege(army, city);
+        if (view.getWorldMapView() != null) view.getWorldMapView().updateCitiesCards();
     }
 
     @Override
@@ -345,10 +341,10 @@ public class Controller
     }
 
     public void updateUnitsPanels(Army playerArmy, Army targetArmy) {
-        for(Unit u : playerArmy.getUnits()){
+        for (Unit u : playerArmy.getUnits()) {
             u.setListener(this);
         }
-        for(Unit u : targetArmy.getUnits()){
+        for (Unit u : targetArmy.getUnits()) {
             u.setListener(this);
         }
 
@@ -458,7 +454,7 @@ public class Controller
                 armiesToChooseFromToRelocateIn.add(toArmy);
             }
         }
-        for (Army toArmy : game.getPlayer().getControlledArmies()){
+        for (Army toArmy : game.getPlayer().getControlledArmies()) {
             if (!fromArmy.equals(toArmy) && fromArmy.getCurrentLocation().equals(toArmy.getCurrentLocation())) {
                 armiesToChooseFromToRelocateIn.add(toArmy);
             }
@@ -468,12 +464,15 @@ public class Controller
     }
 
     public void onRelocateClicked(Unit unit, Army army) throws MaxCapacityException {
+        Army parentArmy = unit.getParentArmy();
         army.relocateUnit(unit);
+        onArmyCardClicked(parentArmy);
+
     }
 
     @Override
     public void onInitiateClicked(City city, Unit unit) {
-        if (unit == null){
+        if (unit == null) {
             showMessageDialog(null, "You Don't Have Units in the Defending Army to Relocate, please Recruit some and TRY AGAIN!");
             return;
         }
@@ -497,16 +496,15 @@ public class Controller
     }
 
 
-
     @Override
     public void onSetTargetClicked(Army army) {
-    SetTargetPopUp setTargetPopUp = new SetTargetPopUp(game.getAvailableCities(),game.getPlayer().getControlledCities(),army);
-    setTargetPopUp.setListener(this);
+        SetTargetPopUp setTargetPopUp = new SetTargetPopUp(game.getAvailableCities(), game.getPlayer().getControlledCities(), army);
+        setTargetPopUp.setListener(this);
     }
 
     @Override
-    public void onSetClicked(City city,Army army) {
-        game.targetCity(army,city.getName());
+    public void onSetClicked(City city, Army army) {
+        game.targetCity(army, city.getName());
         onArmyCardClicked(army);
     }
 

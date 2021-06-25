@@ -57,6 +57,7 @@ public class ArmyPopUp extends Frame implements ActionListener {
             unitCards.add(unitCard);
             unitCard.setAlignmentX(Component.CENTER_ALIGNMENT);
             unitsPanel.add(unitCard);
+            unitCard.addActionListener(this);
         }
         JScrollPane unitsPane = new JScrollPane(unitsPanel);
         unitsPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -125,17 +126,23 @@ public class ArmyPopUp extends Frame implements ActionListener {
             case "Close":
                 this.dispose();
                 break;
-            case "Set Target":{
+            case "Set Target": {
                 this.dispose();
                 listener.onSetTargetClicked(army);
+                break;
+            }
+                case "Unit Card":{
+                    Card unitCard = (Card) e.getSource();
+                    listener.onNewUnitCardClicked(unitCard.getUnit());
+                    this.dispose();
+                }
         }
-        }
+
+
     }
 
     public void setListener(WorldMapListener listener) {
         this.listener = listener;
-        for (Card card : unitCards)
-            card.setListener(listener);
     }
 
     public JPanel getUnitsPanel() {
