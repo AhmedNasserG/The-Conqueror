@@ -101,7 +101,7 @@ public class Army {
         this.currentLocation = currentLocation;
     }
 
-//    public String toString (){
-//        return this.getCurrentLocation() + " Army";
-//    }
+    public String toString (){
+        return this.getCurrentLocation();
+    }
 }

@@ -74,6 +74,21 @@ public class ArmyPopUp extends Frame implements ActionListener {
             add(setTargetButton);
         }
 
+        JLabel targetLabel;
+        JLabel distanceToTargetLabel;
+        if(army.getTarget().equals("")){
+            targetLabel = new JLabel("No Target");
+            distanceToTargetLabel = new JLabel("");
+        }
+        else {
+            targetLabel = new JLabel("Target:" + army.getTarget());
+            distanceToTargetLabel = new JLabel("Distance to Target: " + army.getDistancetoTarget());
+        }
+        targetLabel.setBounds(30, 90, 200, 60);
+        distanceToTargetLabel.setBounds(30, 110, 200, 60);
+
+        add(targetLabel);
+        add(distanceToTargetLabel);
         add(closeButton);
         add(armyTile);
         add(backgroundPanel);

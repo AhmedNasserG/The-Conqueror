@@ -14,5 +14,4 @@ public interface UnitPopUpListener extends ActionListener {
     void onRelocateClicked(Unit unit, Army army) throws MaxCapacityException;
     void onInitiateClicked(City city, Unit unit);
     void onSetClicked(City city,Army army);
-
 }
