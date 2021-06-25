@@ -106,7 +106,8 @@ public class Card extends JButton {
         setActionCommand("CITY_CARD_CLICKED");
         img.setIcon(getIcon(city));
         topLabel.setText(city.getName());
-        bottomLabel.setText("");
+        String underSiege = city.isUnderSiege()?"The city is under Siege":"";
+        bottomLabel.setText(underSiege);
         layeredPane.add(topLabel, Integer.valueOf(1));
         layeredPane.add(bottomLabel, Integer.valueOf(1));
     }

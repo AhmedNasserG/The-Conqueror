@@ -80,7 +80,6 @@ public class CityPopUp extends Frame implements ActionListener {
         add(cityPicture);
         add(backgroundPanel);
         add(container);
-
         this.setVisible(true);
 
     }
