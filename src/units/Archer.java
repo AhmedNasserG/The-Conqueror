@@ -51,6 +51,8 @@ public class Archer extends Unit {
 
     }
 
-
-
+    @Override
+    public String toString() {
+        return "Archer " + getLevel();
+    }
 }
