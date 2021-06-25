@@ -51,6 +51,8 @@ public class Game {
         for (City city : availableCities) {
             if (city.getName().equals(cityName)) {
                 army = new Army(cityName);
+                army.setArmyName("Defending Army");
+                System.out.println("test");
                 city.setDefendingArmy(army);
             }
         }
@@ -198,6 +200,7 @@ public class Game {
         player.getControlledCities().add(city);
         player.getControlledArmies().remove(a);
         city.setDefendingArmy(a);
+        a.setArmyName("Defending Army");
         city.setUnderSiege(false);
         city.setTurnsUnderSiege(-1);
         a.setCurrentStatus(Status.IDLE);

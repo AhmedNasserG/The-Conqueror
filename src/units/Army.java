@@ -12,6 +12,7 @@ public class Army {
     private String target = "";
     private String currentLocation;
     private final int maxToHold = 10; // Cannot be changed
+    private String armyName;
 
     public Army(String currentLocation) {
         this.currentLocation = currentLocation;
@@ -101,7 +102,18 @@ public class Army {
         this.currentLocation = currentLocation;
     }
 
-    public String toString (){
-        return this.getCurrentLocation();
+    public String toString() {
+        return armyName;
     }
+
+
+    public void setArmyName(String armyName) {
+        this.armyName = armyName;
+    }
+
+    public String getArmyName() {
+        return armyName;
+    }
+
+
 }

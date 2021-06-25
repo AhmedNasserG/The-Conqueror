@@ -20,7 +20,9 @@ public class City {
         this.name = name;
         this.economicalBuildings = new ArrayList<>();
         this.militaryBuildings = new ArrayList<>();
-        this.defendingArmy = new Army(name);
+        Army cityDefendingArmy = new Army(name);
+        cityDefendingArmy.setArmyName("Defending Army");
+        this.defendingArmy = cityDefendingArmy;
         this.underSiege = false;
         this.turnsUnderSiege = -1;
     }
@@ -63,5 +65,10 @@ public class City {
 
     public void setUnderSiege(boolean underSiege) {
         this.underSiege = underSiege;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }
