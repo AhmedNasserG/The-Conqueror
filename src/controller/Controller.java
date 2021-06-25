@@ -263,7 +263,16 @@ public class Controller
 
     @Override
     public void onLaySiegeClicked(City city) {
-        LaySiegePopUp laySiegePopUp = new LaySiegePopUp(game.getPlayer().getControlledArmies(), city);
+        ArrayList<Army> availableArmiesAtThisCity = new ArrayList<>();
+        for (Army army : game.getPlayer().getControlledArmies()) {
+            if (army.getCurrentLocation().equals(city.getName())) {
+                for (Unit unit : army.getUnits()) {
+                    unit.setListener(this);
+                }
+                availableArmiesAtThisCity.add(army);
+            }
+        }
+        LaySiegePopUp laySiegePopUp = new LaySiegePopUp(availableArmiesAtThisCity, city);
         laySiegePopUp.setListener(this);
     }
 
