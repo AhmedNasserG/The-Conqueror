@@ -63,6 +63,10 @@ public class StatusPanel extends JPanel {
         }
     }
 
+    public JButton getEndTurnButton() {
+        return endTurnButton;
+    }
+
     public void setGame(Game game) {
         this.game = game;
     }

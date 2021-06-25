@@ -17,6 +17,8 @@ public class BattleView extends Frame {
     private JPanel buttonsPanel;
 
     private JPanel battlePanel;
+    private StatusPanel statusPanel;
+
 
     private UnitsPanel playerUnitsPanel;
     private UnitsPanel targetUnitsPanel;
@@ -36,7 +38,6 @@ public class BattleView extends Frame {
     private Army targetArmy;
 
 
-
     public BattleView(String battleMode, Army playerArmy, City targetCity, CardListener listener) {
         super();
         this.listener = listener;
@@ -52,7 +53,7 @@ public class BattleView extends Frame {
 
         add(battlePanel, BorderLayout.CENTER);
         add(leftSidePanel, BorderLayout.WEST);
-        add(new StatusPanel("BATTLE"), BorderLayout.NORTH);
+
 
 
         this.setVisible(true);
@@ -68,26 +69,25 @@ public class BattleView extends Frame {
         buttonsPanel = new JPanel();
         startAutoResolveBtn = new JButton("START AUTORESOLVE");
         startManualAttackBtn = new JButton("ATTACK");
-        buttonsPanel.setPreferredSize(new Dimension(leftSidePanel.getWidth(), leftSidePanel.getHeight()/4));
+        buttonsPanel.setPreferredSize(new Dimension(leftSidePanel.getWidth(), leftSidePanel.getHeight() / 4));
 
-        if(battleMode.equals("MANUAL ATTACK")) {
+        if (battleMode.equals("MANUAL ATTACK")) {
             buttonsPanel.add(startManualAttackBtn);
-        }
-        else {
+        } else {
             buttonsPanel.add(startAutoResolveBtn);
         }
 
 
-        battleLog = new JTextArea(25, 50);
+        battleLog = new JTextArea(18, 50);
         battleLog.setEditable(false);
         battleLog.setBorder(BorderFactory.createTitledBorder("BATTLE LOG"));
-        battleLog.setPreferredSize(new Dimension(leftSidePanel.getWidth(), leftSidePanel.getHeight()/2));
+        battleLog.setPreferredSize(new Dimension(leftSidePanel.getWidth(), leftSidePanel.getHeight() / 2));
         battleLog.setFont(new Font(Font.MONOSPACED, Font.BOLD, 15));
 
 
         unitInfoPanel = new JPanel();
         unitInfoPanel.setBorder(BorderFactory.createTitledBorder("UNIT INFO"));
-        unitInfoPanel.setPreferredSize(new Dimension(battleLog.getWidth(), SCREENSIZE.height*5 / 13));
+        unitInfoPanel.setPreferredSize(new Dimension(battleLog.getWidth(), SCREENSIZE.height * 5 / 13));
 
 
         leftSidePanel.add(unitInfoPanel, BorderLayout.NORTH);
@@ -151,6 +151,11 @@ public class BattleView extends Frame {
         return startManualAttackBtn;
     }
 
+    public void setStatusPanel(StatusPanel statusPanel) {
+        this.statusPanel = statusPanel;
+        statusPanel.getEndTurnButton().setVisible(false);
+        add(statusPanel, BorderLayout.NORTH);
+    }
 
 
     public static void main(String[] args) throws IOException {
@@ -185,8 +190,6 @@ public class BattleView extends Frame {
 //        frame.add(new Card(new Archer(1, 5, 2.0, 2.0, 2.0)));
 //        frame.setVisible(true);
     }
-
-
 
 
 }
