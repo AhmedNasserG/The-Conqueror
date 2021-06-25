@@ -20,6 +20,7 @@ public class SetTargetPopUp extends Frame implements ActionListener {
     private Army army;
     private JComboBox myCities;
 
+
     public SetTargetPopUp(ArrayList<City> availableCities, ArrayList<City> controlledCities, Army army){
         //TODO: fix the button only appears on hover !!
         super("Set Target");

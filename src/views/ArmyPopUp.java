@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 public class ArmyPopUp extends Frame implements ActionListener {
     private Army army;
+    private String text;
     private final int width;
     private final int height;
     private ArrayList<Card> unitCards;
@@ -26,6 +27,7 @@ public class ArmyPopUp extends Frame implements ActionListener {
     public ArmyPopUp(Army army, String text) {
         super(army.getCurrentLocation());
         this.army = army;
+        this.text = text;
         this.width = (getWidth() - 420) / 2;
         this.height = (getHeight() - 420) / 2;
         setBounds(width, height, 420, 420);
@@ -123,8 +125,10 @@ public class ArmyPopUp extends Frame implements ActionListener {
             case "Close":
                 this.dispose();
                 break;
-            case "Set Target":
+            case "Set Target":{
+                this.dispose();
                 listener.onSetTargetClicked(army);
+        }
         }
     }
 

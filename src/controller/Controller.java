@@ -506,9 +506,8 @@ public class Controller
 
     @Override
     public void onSetClicked(City city,Army army) {
-
         game.targetCity(army,city.getName());
-
+        onArmyCardClicked(army);
     }
 
 }
