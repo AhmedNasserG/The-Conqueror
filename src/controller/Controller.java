@@ -415,10 +415,12 @@ public class Controller
 
     @Override
     public void onRelocateViewClicked(Unit unit) {
-        new RelocatePopUp(unit, game.getPlayer().getControlledArmies());
+        RelocatePopUp relocatePopUp = new RelocatePopUp(unit, game.getPlayer().getControlledArmies());
+        relocatePopUp.setListener(this);
     }
 
     public void onRelocateClicked(Unit unit, Army army) throws MaxCapacityException {
+        System.out.println("Hello World");
         army.relocateUnit(unit);
     }
 
@@ -445,6 +447,19 @@ public class Controller
 
     @Override
     public void onLaySiegeCityButton(City city) {
+
+    }
+
+    @Override
+    public void onSetTargetClicked(Army army) {
+    SetTargetPopUp setTargetPopUp = new SetTargetPopUp(game.getAvailableCities(),game.getPlayer().getControlledCities(),army);
+    setTargetPopUp.setListener(this);
+    }
+
+    @Override
+    public void onSetClicked(City city,Army army) {
+
+        game.targetCity(army,city.getName());
 
     }
 

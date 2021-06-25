@@ -102,11 +102,16 @@ public class ArmyPopUp extends Frame implements ActionListener {
             case "Close":
                 this.dispose();
                 break;
+            case "Set Target":
+                listener.onSetTargetClicked(army);
         }
     }
 
     public void setListener(WorldMapListener listener) {
         this.listener = listener;
+        if (setTargetButton != null) {
+            setTargetButton.addActionListener(listener);
+        }
         for (Card card : unitCards)
             card.setListener(listener);
     }
