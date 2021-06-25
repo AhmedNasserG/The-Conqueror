@@ -13,18 +13,19 @@ import java.util.ArrayList;
 public class WorldMapView extends Frame {
     private StatusPanel statusPanel;
     private JPanel citiesAndText;
-    private JPanel cityButtons;
+    private JPanel cityCards;
     private ArrayList<Army> armiesArray;
     private ArrayList<Army> defendingArmies;
     private ArrayList<Army> controlledArmies;
     private ArrayList<Card> cities;
     private WorldMapListener listener;
     private ArmiesPanel armiesPanel;
+    private Game game;
 
     public WorldMapView(Game game){
         this.setVisible(true);
         this.setLayout(null);
-
+        this.game = game;
         //TODO: intiate army Button: to add a unit from the defending army(and controlled armies)
         // to your attacking. The army must not be idle. !!Should be in the cityView
         //Add this button to any defending army panel
@@ -42,19 +43,19 @@ public class WorldMapView extends Frame {
         citiesAndText.add(chooseLabel);
         citiesAndText.add(Box.createRigidArea(new Dimension(0, 50)));
 
-        cityButtons = new JPanel();
-        cityButtons.setLayout(new GridLayout());
+        cityCards = new JPanel();
+        cityCards.setLayout(new GridLayout());
 
         cities = new ArrayList<>();
 
         for(City city: game.getAvailableCities())
         {
             Card cityCard = new Card(city);
-            cityButtons.add(cityCard);
+            cityCards.add(cityCard);
             cities.add(cityCard);
         }
 
-        citiesAndText.add(cityButtons);
+        citiesAndText.add(cityCards);
         citiesAndText.setBounds((getWidth() - 710) / 2, 280, 410, 410);
 
 
@@ -105,5 +106,20 @@ public class WorldMapView extends Frame {
 
     public ArmiesPanel getArmiesPanel() {
         return armiesPanel;
+    }
+    public void updateCitiesCards(){
+        if(cityCards != null)
+        {
+            cityCards.removeAll();
+        }
+        for(City city: game.getAvailableCities())
+        {
+            Card cityCard = new Card(city);
+            cityCards.add(cityCard);
+            cities.add(cityCard);
+        }
+        cityCards.revalidate();
+        cityCards.repaint();
+
     }
 }

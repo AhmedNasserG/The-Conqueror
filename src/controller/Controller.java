@@ -281,7 +281,8 @@ public class Controller
 
     @Override
     public void onLayClicked(City city, Army army) throws TargetNotReachedException, FriendlyCityException {
-    game.getPlayer().laySiege(army,city);
+        game.getPlayer().laySiege(army,city);
+        if(view.getWorldMapView() != null) view.getWorldMapView().updateCitiesCards();
     }
 
     @Override
