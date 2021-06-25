@@ -60,7 +60,7 @@ public class CityPopUp extends Frame implements ActionListener {
         attackButton.setBounds(30, 40, 120, 35);
 
         laySiegeButton = new JButton("Lay Siege");
-        attackButton.setActionCommand("Lay Siege");
+        laySiegeButton.setActionCommand("Lay Siege");
         laySiegeButton.setBounds(30, 80, 120, 35);
 
         attackButton.addActionListener(this);
@@ -96,11 +96,13 @@ public class CityPopUp extends Frame implements ActionListener {
             case "Start Attack On City": {
                 this.dispose();
                 listener.onAttackCityClicked(city);
-                break;}
+                break;
+            }
             case "Lay Siege":{
                 this.dispose();
                 listener.onLaySiegeClicked(city);
-                break;}
+                break;
+            }
             default:
                 break;
 

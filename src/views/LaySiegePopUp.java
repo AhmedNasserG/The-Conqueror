@@ -49,7 +49,7 @@ public class LaySiegePopUp extends Frame implements ActionListener {
         JButton layButton = new JButton("Lay Siege");
         layButton.setActionCommand("Lay");
         layButton.addActionListener(this);
-        layButton.setBounds(145, 200, 100, 40);
+        layButton.setBounds(145, 200, 130, 40);
 
         JButton closeButton = new JButton("Close");
         closeButton.addActionListener(this);
