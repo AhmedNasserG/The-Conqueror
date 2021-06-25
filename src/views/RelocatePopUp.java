@@ -66,6 +66,7 @@ public class RelocatePopUp extends Frame implements ActionListener {
             case "Relocate": {
                 try {
                     listener.onRelocateClicked(unit,army);
+                    this.dispose();
                 } catch (MaxCapacityException maxCapacityException) {
                     maxCapacityException.printStackTrace();
                 }

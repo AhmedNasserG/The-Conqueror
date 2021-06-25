@@ -75,6 +75,7 @@ public class unitPopUp extends Frame implements ActionListener {
             }
             case "Relocate": {
                 listener.onRelocateViewClicked(unit);
+                this.dispose();
                 break;
             }
         }
