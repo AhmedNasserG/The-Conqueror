@@ -88,6 +88,10 @@ public class Controller
         } else if (e.getActionCommand().equals("End Turn")) {
             game.endTurn();
             statusPanel.updateStatusPanel();
+            if (view.getCityView() != null){
+                view.getCityView().getArmiesPanel().removeAll();
+                view.getCityView().setControlledArmiesAtThisCity(getControlledArmiesAtCity(currentViewedCity));
+            }
             if (game.isGameOver()) {
                 EndGameView endGameView = new EndGameView(game.getPlayer().getControlledCities().size() == game.getAvailableCities().size());
                 endGameView.setListener(this);
@@ -165,12 +169,6 @@ public class Controller
         String playerName = view.getNewGameView().getPlayerName();
         String cityName = view.getNewGameView().getCityName();
         game = new Game(playerName, cityName);
-        //TEST ONLY
-        Army testArmy = new Army("Sparta");
-        Archer a = new Archer(2);
-        a.setParentArmy(testArmy);
-        testArmy.getUnits().add(a);
-        game.getPlayer().getControlledArmies().add(testArmy);
         game.setListener(this);
 
         statusPanel = new StatusPanel();
@@ -469,6 +467,10 @@ public class Controller
 
     @Override
     public void onInitiateClicked(City city, Unit unit) {
+        if (unit == null){
+            showMessageDialog(null, "You Don't Have Units in the Defending Army to Relocate, please Recruit some and TRY AGAIN!");
+            return;
+        }
         game.getPlayer().initiateArmy(city, unit);
         view.getCityView().setControlledArmiesAtThisCity(getControlledArmiesAtCity(city));
     }

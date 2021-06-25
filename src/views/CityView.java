@@ -145,4 +145,9 @@ public class CityView extends Frame {
         armiesPanel.revalidate();
         armiesPanel.repaint();
     }
+
+    public ArmiesPanel getArmiesPanel() {
+        return armiesPanel;
+    }
+
 }

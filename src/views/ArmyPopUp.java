@@ -20,6 +20,8 @@ public class ArmyPopUp extends Frame implements ActionListener {
     private ArrayList<Card> unitCards;
     private WorldMapListener listener;
     private JButton setTargetButton;
+    private JPanel unitsPanel;
+
 
     public ArmyPopUp(Army army, String text) {
         super(army.getCurrentLocation());
@@ -43,7 +45,7 @@ public class ArmyPopUp extends Frame implements ActionListener {
 
 
         container.add(Box.createRigidArea(new Dimension(0, 20)));
-        JPanel unitsPanel = new JPanel();
+        unitsPanel = new JPanel();
         unitsPanel.setLayout(new GridLayout());
         unitsPanel.setBorder(BorderFactory.createLineBorder(Color.ORANGE));
         unitCards = new ArrayList<Card>();
@@ -76,12 +78,11 @@ public class ArmyPopUp extends Frame implements ActionListener {
 
         JLabel targetLabel;
         JLabel distanceToTargetLabel;
-        JLabel currentLocationLabel= new JLabel("Current Location: "+ army.getCurrentLocation());
-        if(army.getTarget().equals("")){
+        JLabel currentLocationLabel = new JLabel("Current Location: " + army.getCurrentLocation());
+        if (army.getTarget().equals("")) {
             targetLabel = new JLabel("");
             distanceToTargetLabel = new JLabel("");
-        }
-        else {
+        } else {
             targetLabel = new JLabel("Target:" + army.getTarget());
             distanceToTargetLabel = new JLabel("Distance to Target: " + army.getDistancetoTarget());
         }
@@ -132,4 +133,10 @@ public class ArmyPopUp extends Frame implements ActionListener {
         for (Card card : unitCards)
             card.setListener(listener);
     }
+
+    public JPanel getUnitsPanel() {
+        return unitsPanel;
+    }
+
+
 }
