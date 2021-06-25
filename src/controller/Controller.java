@@ -88,9 +88,14 @@ public class Controller
         } else if (e.getActionCommand().equals("End Turn")) {
             game.endTurn();
             statusPanel.updateStatusPanel();
-            if (view.getCityView() != null){
+            if (view.getCityView() != null && currentViewedCity != null){
                 view.getCityView().getArmiesPanel().removeAll();
                 view.getCityView().setControlledArmiesAtThisCity(getControlledArmiesAtCity(currentViewedCity));
+            }
+            if(view.getWorldMapView() != null)
+            {
+                view.getWorldMapView().getArmiesPanel().removeAll();
+                view.getWorldMapView().setControlledArmiesAtThisCity(game.getPlayer().getControlledArmies());
             }
             if (game.isGameOver()) {
                 EndGameView endGameView = new EndGameView(game.getPlayer().getControlledCities().size() == game.getAvailableCities().size());

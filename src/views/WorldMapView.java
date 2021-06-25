@@ -19,6 +19,7 @@ public class WorldMapView extends Frame {
     private ArrayList<Army> controlledArmies;
     private ArrayList<Card> cities;
     private WorldMapListener listener;
+    private ArmiesPanel armiesPanel;
 
     public WorldMapView(Game game){
         this.setVisible(true);
@@ -32,9 +33,6 @@ public class WorldMapView extends Frame {
         //comboboxes :)
 
         //TODO: city can't be under siege and attacked at the same time
-
-//        statusPanel= new StatusPanel();
-//        statusPanel.setBounds(0, 0, getWidth() , 100);
 
         citiesAndText = new JPanel();
         citiesAndText.setLayout(new BoxLayout(citiesAndText, BoxLayout.Y_AXIS));
@@ -66,7 +64,6 @@ public class WorldMapView extends Frame {
             defendingArmies.add(city.getDefendingArmy());
         }
 
-//        this.add(statusPanel);
         this.add(citiesAndText);
 
         this.revalidate();
@@ -83,7 +80,7 @@ public class WorldMapView extends Frame {
 
     public void setListener(WorldMapListener listener) {
         this.listener = listener;
-        ArmiesPanel armiesPanel = new ArmiesPanel(defendingArmies,controlledArmies, listener);
+        armiesPanel = new ArmiesPanel(defendingArmies,controlledArmies, listener);
         JScrollPane pane = new JScrollPane(armiesPanel);
         pane.setBounds(getWidth() - 300, 100, 300, getHeight() - 100);
         pane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -92,5 +89,21 @@ public class WorldMapView extends Frame {
         {
             card.setListener(listener);
         }
+    }
+
+    public void setControlledArmiesAtThisCity(ArrayList<Army> controlledArmiesAtThisCity) {
+        if (armiesPanel != null){
+            armiesPanel.removeAll();
+        }
+        armiesPanel = new ArmiesPanel(defendingArmies, controlledArmiesAtThisCity, listener);
+        armiesPanel.setBackground(Color.ORANGE);
+        armiesPanel.setBounds(getWidth() - 300, 100, 300, getHeight() - 100);
+        add(armiesPanel);
+        armiesPanel.revalidate();
+        armiesPanel.repaint();
+    }
+
+    public ArmiesPanel getArmiesPanel() {
+        return armiesPanel;
     }
 }
