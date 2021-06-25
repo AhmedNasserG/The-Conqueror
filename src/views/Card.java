@@ -94,7 +94,7 @@ public class Card extends JButton {
         this.army = army;
         setActionCommand("ARMY_CARD_CLICKED");
         img.setIcon(getIcon(army));
-        topLabel.setText("Army: " + army.getCurrentLocation());
+        topLabel.setText(army.getArmyName());
         bottomLabel.setText(army.getCurrentStatus().toString());
         layeredPane.add(topLabel, Integer.valueOf(1));
         layeredPane.add(bottomLabel, Integer.valueOf(1));

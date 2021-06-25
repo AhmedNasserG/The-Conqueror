@@ -423,7 +423,14 @@ public class Controller
 
     @Override
     public void onRelocateViewClicked(Unit unit) {
-        RelocatePopUp relocatePopUp = new RelocatePopUp(unit, game.getPlayer().getControlledArmies());
+        ArrayList<Army> armiesToChooseFromToRelocateIn = new ArrayList<>();
+        int i = 1;
+        for (Army army : game.getPlayer().getControlledArmies()){
+            if (!army.equals(unit.getParentArmy())) {
+                armiesToChooseFromToRelocateIn.add(army);
+            }
+        }
+        RelocatePopUp relocatePopUp = new RelocatePopUp(unit, armiesToChooseFromToRelocateIn);
         relocatePopUp.setListener(this);
     }
 
@@ -470,6 +477,5 @@ public class Controller
         game.targetCity(army,city.getName());
 
     }
-
 
 }
