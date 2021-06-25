@@ -168,7 +168,7 @@ public class Game {
             if (a.getDistancetoTarget() > 0 && !a.getTarget().equals("")) {
                 a.setDistancetoTarget(a.getDistancetoTarget() - 1);
             }
-            if (a.getDistancetoTarget() == 0) {
+            if (a.getDistancetoTarget() == 0 && !a.getTarget().equals("")) {
                 a.setCurrentLocation(a.getTarget());
                 a.setTarget("");
                 a.setCurrentStatus(Status.IDLE);
