@@ -39,8 +39,10 @@ public class BuildingPopUp extends Frame implements ActionListener {
         container2.setLayout(new BoxLayout(container2, BoxLayout.Y_AXIS));
 
 
-        container2.add(Box.createRigidArea(new Dimension(0, 20)));
-        container2.add(getUpgradePanel());
+        if (buildingToShow.getLevel() != 3){
+            container2.add(Box.createRigidArea(new Dimension(0, 20)));
+            container2.add(getUpgradePanel());
+        }
         container2.add(Box.createRigidArea(new Dimension(0, 40)));
         if (buildingToShow instanceof MilitaryBuilding) {
             container2.add(getRecruitPanel());

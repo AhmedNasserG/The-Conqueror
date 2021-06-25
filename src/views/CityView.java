@@ -79,8 +79,8 @@ public class CityView extends Frame {
         for (; i < 9; i++) {
             cityGrid.add(new Card());
         }
-        revalidate();
-        repaint();
+        cityGrid.revalidate();
+        cityGrid.repaint();
     }
 
     private JPanel getToBuildPanel() {
