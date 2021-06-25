@@ -48,4 +48,9 @@ public class Infantry extends Unit {
         this.getListener().onBattleUpdated(this.getParentArmy(), res1, res2);
     }
 
+    @Override
+    public String toString() {
+        return "Infantry " + getLevel();
+    }
+
 }
