@@ -35,20 +35,23 @@ public class Archer extends Unit {
         super.attack(target);
 
         int attackersCount = getCurrentSoldierCount();
-        int targetCount = target.getCurrentSoldierCount();
         double attackFactor = attackFactors.get(target.getClass())[getLevel()];
         this.casualtiesCount = (int)(attackFactor * attackersCount);
 
         target.setCurrentSoldierCount(target.getCurrentSoldierCount()-(int)(attackFactor*getCurrentSoldierCount()));
         target.getParentArmy().handleAttackedUnit(target);
 
-        String attacker = "player";
 
+        String res1 = this.getUnitName() + " ATTACKED ";
+        String res2 = target.getUnitName() + ". ";
+        String res3 = " has lost: " + casualtiesCount + " " + target.getUnitName() + "(s).";
 
-        String res1 = this.getUnitName() + " ATTACKED " + target.getUnitName() + ". ";
-        String res2 = " has lost: " + casualtiesCount + " " + target.getUnitName() + "(s)";
-        getListener().onBattleUpdated(this.getParentArmy(), res1, res2);
+        String[] results = new String[6];
+        results[1] = res1;
+        results[3] = res2;
+        results[5] = res3;
 
+        getListener().onBattleUpdated(this.getParentArmy(), results);
     }
 
     @Override

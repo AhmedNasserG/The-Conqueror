@@ -29,6 +29,8 @@ public class BattleView extends Frame {
     private JButton startAutoResolveBtn;
     private JButton startManualAttackBtn;
 
+    private JButton exitBattleViewBtn;
+
     private CardListener listener;
 
     static final Dimension SCREENSIZE = Toolkit.getDefaultToolkit().getScreenSize();
@@ -68,7 +70,12 @@ public class BattleView extends Frame {
 
         buttonsPanel = new JPanel();
         startAutoResolveBtn = new JButton("START AUTORESOLVE");
+        startAutoResolveBtn.setActionCommand("START_AUTORESOLVE");
         startManualAttackBtn = new JButton("ATTACK");
+        startManualAttackBtn.setActionCommand("START_MANUAL_ATTACK");
+        exitBattleViewBtn = new JButton("Go Back to City View");
+        exitBattleViewBtn.setActionCommand("EXIT_BATTLE_VIEW");
+
         buttonsPanel.setPreferredSize(new Dimension(leftSidePanel.getWidth(), leftSidePanel.getHeight() / 4));
 
         if (battleMode.equals("MANUAL ATTACK")) {
@@ -77,6 +84,7 @@ public class BattleView extends Frame {
             buttonsPanel.add(startAutoResolveBtn);
         }
 
+        buttonsPanel.add(exitBattleViewBtn);
 
         battleLog = new JTextArea(18, 50);
         battleLog.setEditable(false);
@@ -151,45 +159,18 @@ public class BattleView extends Frame {
         return startManualAttackBtn;
     }
 
+    public JButton getExitBattleViewBtn() {
+        return exitBattleViewBtn;
+    }
+
     public void setStatusPanel(StatusPanel statusPanel) {
         this.statusPanel = statusPanel;
         statusPanel.getEndTurnButton().setVisible(false);
         add(statusPanel, BorderLayout.NORTH);
     }
 
-
-    public static void main(String[] args) throws IOException {
-//        Game g = new Game("Omar", "Cairo");
-//        Player p = g.getPlayer();
-//
-//        Army a = new Army("Cairo");
-//        Army b = new Army("Sparta");
-//
-//        Archer u1 = new Archer(1, 5, 2.0, 2.0, 2.0);
-//        Cavalry u2 = new Cavalry(1, 5, 2.0, 2.0, 2.0);
-//        Infantry u3 = new Infantry(1, 5, 2.0, 2.0, 2.0);
-//
-//        u1.setParentArmy(a);
-//        u2.setParentArmy(a);
-//        u3.setParentArmy(a);
-//
-//        ArrayList<Unit> list = new ArrayList<>();
-//        list.add(u1); list.add(u2); list.add(u3);
-//
-//        a.setUnits(list);
-//
-//        for(Unit u : a.getUnits()){
-//            System.out.println(u.getUnitName());
-//        }
-//
-//
-
-//        new BattleView("AUTO RESOLVE");
-
-//        JFrame frame = new JFrame();
-//        frame.add(new Card(new Archer(1, 5, 2.0, 2.0, 2.0)));
-//        frame.setVisible(true);
+    public String getBattleMode() {
+        return battleMode;
     }
-
 
 }

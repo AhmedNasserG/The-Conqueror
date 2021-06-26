@@ -4,5 +4,6 @@ import units.Army;
 import units.Unit;
 
 public interface BattleListener {
-    void onBattleUpdated(Army unitParentArmy, String result1, String result2);
+    void onBattleUpdated(Army unitParentArmy, String[] results);
+    void onAutoResolveEnded(String result);
 }

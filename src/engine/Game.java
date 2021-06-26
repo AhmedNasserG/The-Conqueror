@@ -25,7 +25,9 @@ public class Game {
     private final int maxTurnCount;
     private int currentTurnCount;
 
-    UnitListener listener;
+    private String autoResolveResults;
+    UnitListener unitListener;
+    BattleListener battleListener;
 
     public Game(String playerName, String playerCity) throws IOException {
         this.player = new Player(playerName);
@@ -211,6 +213,33 @@ public class Game {
         ArrayList<Unit> defenderUnits = defender.getUnits();
         Random rand = new Random();
         int turn = 0;
+
+        int[] preAutoResolveAttackerUnitsCount = new int[3], preAutoResolveDefenderUnitsCount = new int[3],
+            afterAutoResolveAttackerUnitsCount = new int[3], afterAutoResolveDefenderUnitsCount = new int[3];
+        for(Unit u : attackerUnits){
+            if(u instanceof Archer){
+                preAutoResolveAttackerUnitsCount[0] += u.getCurrentSoldierCount();
+            }
+            else if(u instanceof Cavalry){
+                preAutoResolveAttackerUnitsCount[1] += u.getCurrentSoldierCount();
+            }
+            else{
+                preAutoResolveAttackerUnitsCount[2] += u.getCurrentSoldierCount();
+            }
+        }
+
+        for(Unit u : defenderUnits){
+            if(u instanceof Archer){
+                preAutoResolveDefenderUnitsCount[0] += u.getCurrentSoldierCount();
+            }
+            else if(u instanceof Cavalry){
+                preAutoResolveDefenderUnitsCount[1] += u.getCurrentSoldierCount();
+            }
+            else{
+                preAutoResolveDefenderUnitsCount[2] += u.getCurrentSoldierCount();
+            }
+        }
+
         while (attackerUnits.size() > 0 && defenderUnits.size() > 0) {
             int idx1 = rand.nextInt(attackerUnits.size());
             int idx2 = rand.nextInt(defenderUnits.size());
@@ -218,18 +247,55 @@ public class Game {
             Unit defendUnit = defenderUnits.get(idx2);
 
             if (turn == 0) { // Attacker Army turn
-//                attackUnit.attack(defendUnit);
-                listener.onAttack(attackUnit, defendUnit);
+                unitListener.onAttack(attackUnit, defendUnit);
             } else { // Defender Army turn
-//                defendUnit.attack(attackUnit);
-                listener.onAttack(defendUnit, attackUnit);
+                unitListener.onAttack(defendUnit, attackUnit);
             }
             turn ^= 1;
         }
 
-        if (defenderUnits.size() == 0) {
-            occupy(attacker, defender.getCurrentLocation());
+        for(Unit u : attackerUnits){
+            if(u instanceof Archer){
+                afterAutoResolveAttackerUnitsCount[0] += u.getCurrentSoldierCount();
+            }
+            else if(u instanceof Cavalry){
+                afterAutoResolveAttackerUnitsCount[1] += u.getCurrentSoldierCount();
+            }
+            else{
+                afterAutoResolveAttackerUnitsCount[2] += u.getCurrentSoldierCount();
+            }
         }
+
+        for(Unit u : defenderUnits){
+            if(u instanceof Archer){
+                afterAutoResolveDefenderUnitsCount[0] += u.getCurrentSoldierCount();
+            }
+            else if(u instanceof Cavalry){
+                afterAutoResolveDefenderUnitsCount[1] += u.getCurrentSoldierCount();
+            }
+            else{
+                afterAutoResolveDefenderUnitsCount[2] += u.getCurrentSoldierCount();
+            }
+        }
+
+        int playerArcherLostCount = preAutoResolveAttackerUnitsCount[0] - afterAutoResolveAttackerUnitsCount[0];
+        int playerCavalryLostCount = preAutoResolveAttackerUnitsCount[1] - afterAutoResolveAttackerUnitsCount[1];
+        int playerInfantryLostCount = preAutoResolveAttackerUnitsCount[2] - afterAutoResolveAttackerUnitsCount[2];
+
+        int enemyArcherLostCount = preAutoResolveDefenderUnitsCount[0] - afterAutoResolveDefenderUnitsCount[0];
+        int enemyCavalryLostCount = preAutoResolveDefenderUnitsCount[1] - afterAutoResolveDefenderUnitsCount[1];
+        int enemyInfantryLostCount = preAutoResolveDefenderUnitsCount[2] - afterAutoResolveDefenderUnitsCount[2];
+
+        StringBuilder result = new StringBuilder();
+        result.append("Player has lost: ").append(playerArcherLostCount).append(" Archer(s). <br/>");
+        result.append("Player has lost: ").append(playerCavalryLostCount).append(" Cavalry(s). <br/>");
+        result.append("Player has lost: ").append(playerInfantryLostCount).append(" Infantry(s). <br/>");
+
+        result.append("Enemy has lost: ").append(enemyArcherLostCount).append(" Archer(s). <br/>");
+        result.append("Enemy has lost: ").append(enemyCavalryLostCount).append(" Cavalry(s). <br/>");
+        result.append("Enemy has lost: ").append(enemyInfantryLostCount).append(" Infantry(s). <br/>");
+
+        battleListener.onAutoResolveEnded(result.toString());
     }
 
     public boolean isGameOver() {
@@ -265,7 +331,11 @@ public class Game {
         this.player = player;
     }
 
-    public void setListener(UnitListener listener) {
-        this.listener = listener;
+    public void setUnitListener(UnitListener unitListener) {
+        this.unitListener = unitListener;
+    }
+
+    public void setBattleListener(BattleListener battleListener){
+        this.battleListener = battleListener;
     }
 }
