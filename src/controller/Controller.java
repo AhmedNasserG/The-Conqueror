@@ -407,11 +407,11 @@ public class Controller
         if (playerWon) {
             showMessageDialog(null, "YOU WON THE BATTLE!\n\n" + "Enemy's " + targetCity.getName() + " City Has Been Occupied!");
             game.occupy(playerArmy, targetCity.getName());
-            statusPanel.getEndTurnButton().setVisible(true);
             statusPanel.updateStatusPanel();
         } else {
             showMessageDialog(null, "YOU LOST THE BATTLE!\n\nRETREATING");
         }
+        statusPanel.getEndTurnButton().setVisible(true);
         view.getBattleView().getExitBattleViewBtn().setEnabled(true);
     }
 
