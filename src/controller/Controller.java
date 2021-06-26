@@ -20,10 +20,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 // TODO: remove all ActionListeners
-// TODO: relocate
-// TODO: setTarget
-// TODO: laySeige
-// TODO: enable status panel in battle view
 // TODO: fix battle view
 // TODO: fix scrolling
 
@@ -79,7 +75,11 @@ public class Controller
             }
         } else if (e.getActionCommand().equals("EXIT_BATTLE_VIEW")) {
             view.getBattleView().dispose();
-            view.getWorldMapView().setVisible(true);
+            view.setWorldMapView(new WorldMapView(game));
+            view.getWorldMapView().setListener(this);
+            view.getWorldMapView().setStatusPanel(statusPanel);
+            view.getWorldMapView().setControlledArmiesAtThisCity(game.getPlayer().getControlledArmies());
+            statusPanel.updateStatusPanel();
         } else if (e.getActionCommand().equals("worldMapButton")) {
             this.currentViewedCity = null;
             view.getCityView().dispose();
@@ -413,7 +413,9 @@ public class Controller
         }
         statusPanel.getEndTurnButton().setVisible(true);
         view.getBattleView().getExitBattleViewBtn().setEnabled(true);
-    }
+
+
+        }
 
     public void onUnitCardClicked(Unit unit) {
         JPanel p = view.getBattleView().getUnitInfoPanel();

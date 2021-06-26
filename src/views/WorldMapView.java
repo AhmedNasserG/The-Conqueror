@@ -94,6 +94,7 @@ public class WorldMapView extends Frame {
         add(armiesPanel);
         armiesPanel.revalidate();
         armiesPanel.repaint();
+
     }
 
     public ArmiesPanel getArmiesPanel() {

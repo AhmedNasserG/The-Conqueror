@@ -45,22 +45,5 @@ public class ArmiesPanel extends JPanel {
 
     }
 
-    public static void main(String[] args) {
-        JFrame armyFrame = new JFrame();
-        ArrayList<Army> defendingArmies = new ArrayList<>();
-        for (int i = 0; i < 50; i++)
-            defendingArmies.add(new Army("Def " + i));
-
-        ArrayList<Army> controlledArmies = new ArrayList<>();
-        for (int i = 0; i < 50; i++)
-            controlledArmies.add(new Army("Def " + i));
-
-        JPanel scroll = new ArmiesPanel(defendingArmies,controlledArmies,null);
-        armyFrame.add(scroll);
-        armyFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        armyFrame.setSize((400 / 3), (400 / 3));
-        armyFrame.setVisible(true);
-    }
-
 
 }

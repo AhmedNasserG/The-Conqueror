@@ -73,7 +73,7 @@ public class BattleView extends Frame {
         startAutoResolveBtn.setActionCommand("START_AUTORESOLVE");
         startManualAttackBtn = new JButton("ATTACK");
         startManualAttackBtn.setActionCommand("START_MANUAL_ATTACK");
-        exitBattleViewBtn = new JButton("Go Back to City View");
+        exitBattleViewBtn = new JButton("Go Back");
         exitBattleViewBtn.setActionCommand("EXIT_BATTLE_VIEW");
 
         buttonsPanel.setPreferredSize(new Dimension(leftSidePanel.getWidth(), leftSidePanel.getHeight() / 4));
