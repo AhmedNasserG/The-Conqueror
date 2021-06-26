@@ -340,7 +340,7 @@ public class Controller
 
         JTextArea log = view.getBattleView().getBattleLog();
 
-        updateUnitsPanels(playerArmy, targetArmy);
+        updateUnits(playerArmy, targetArmy);
         view.getBattleView().getBattleResultsDisplay().removeAll();
         view.getBattleView().getBattleResultsDisplay().setBorder(BorderFactory.createEmptyBorder(0, 100, 0, 0));
         if (view.getBattleView().getBattleMode().equals("MANUAL ATTACK")) {
@@ -349,6 +349,7 @@ public class Controller
             StringBuilder sb = new StringBuilder();
             sb.append(log.getText()).append("\n\n").append(RESULT);
             log.setText(sb.toString());
+            updateUnitsPanels(playerArmy, targetArmy);
         }
         view.getBattleView().getBattleResultsDisplay().setFont(new Font(Font.MONOSPACED, Font.BOLD, 25));
 
@@ -361,13 +362,12 @@ public class Controller
             endBattle(false, targetCity);
         }
 
-//        System.out.println(RESULT);
     }
 
     @Override
     public void onAutoResolveEnded(String result) {
         view.getBattleView().getStartAutoResolveBtn().setEnabled(false);
-        updateUnitsPanels(playerArmy, targetArmy);
+        updateUnits(playerArmy, targetArmy);
         view.getBattleView().getBattleResultsDisplay().setBorder(BorderFactory.createEmptyBorder(0, 100, 0, 0));
 
         String labelText = "<html>" + result + "<html>";
@@ -382,9 +382,11 @@ public class Controller
         view.getBattleView().getPlayerUnitsPanel().setSelectedCard(null);
         view.getBattleView().getTargetUnitsPanel().setSelectedCard(null);
 
+        updateUnitsPanels(playerArmy, targetArmy);
+
     }
 
-    public void updateUnitsPanels(Army playerArmy, Army targetArmy) {
+    public void updateUnits(Army playerArmy, Army targetArmy) {
         for (Unit u : playerArmy.getUnits()) {
             u.setListener(this);
         }
@@ -394,7 +396,9 @@ public class Controller
 
         view.getBattleView().setPlayerArmy(playerArmy);
         view.getBattleView().setTargetArmy(targetArmy);
+    }
 
+    public void updateUnitsPanels(Army playerArmy, Army targetArmy){
         view.getBattleView().getPlayerUnitsPanel().updatePanel(playerArmy);
         view.getBattleView().getTargetUnitsPanel().updatePanel(targetArmy);
     }
