@@ -164,6 +164,29 @@ public class Controller
         String playerName = view.getNewGameView().getPlayerName();
         String cityName = view.getNewGameView().getCityName();
         game = new Game(playerName, cityName);
+
+        //Cheating Haha
+        if(playerName.equals("SalahEl-Din Ebeed")){
+            Army army;
+            for(int i=0;i<2;i++) {
+                ArrayList<Unit> unitArrayList = new ArrayList<>();
+                for(int j=0;j<50;j++){
+                    unitArrayList.add(new Cavalry(3));
+                    unitArrayList.add(new Archer(3));
+                    unitArrayList.add(new Infantry(3));
+                }
+                String nameText = i%2==0?"Abo Salah":"King Saloha";
+                army = new Army("Cairo");
+                army.setArmyName(nameText);
+                army.setUnits(unitArrayList);
+                for(Unit unit: army.getUnits())
+                {
+                    unit.setParentArmy(army);
+                }
+                game.getPlayer().getControlledArmies().add(army);
+            }
+        }
+
         game.setUnitListener(this);
         game.setBattleListener(this);
 
