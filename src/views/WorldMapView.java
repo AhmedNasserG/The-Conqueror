@@ -22,7 +22,7 @@ public class WorldMapView extends Frame {
     private ArmiesPanel armiesPanel;
     private Game game;
 
-    public WorldMapView(Game game){
+    public WorldMapView(Game game) {
         this.setVisible(true);
         this.setLayout(null);
         this.game = game;
@@ -39,7 +39,7 @@ public class WorldMapView extends Frame {
         citiesAndText.setLayout(new BoxLayout(citiesAndText, BoxLayout.Y_AXIS));
         JLabel chooseLabel = new JLabel("View City");
         chooseLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        chooseLabel.setFont(chooseLabel.getFont().deriveFont(Font.BOLD,23));
+        chooseLabel.setFont(chooseLabel.getFont().deriveFont(Font.BOLD, 23));
         citiesAndText.add(chooseLabel);
         citiesAndText.add(Box.createRigidArea(new Dimension(0, 50)));
 
@@ -48,8 +48,7 @@ public class WorldMapView extends Frame {
 
         cities = new ArrayList<>();
 
-        for(City city: game.getAvailableCities())
-        {
+        for (City city : game.getAvailableCities()) {
             Card cityCard = new Card(city);
             cityCards.add(cityCard);
             cities.add(cityCard);
@@ -61,7 +60,7 @@ public class WorldMapView extends Frame {
 
         controlledArmies = game.getPlayer().getControlledArmies();
         defendingArmies = new ArrayList<>();
-        for(City city: game.getPlayer().getControlledCities()){
+        for (City city : game.getPlayer().getControlledCities()) {
             defendingArmies.add(city.getDefendingArmy());
         }
 
@@ -78,22 +77,15 @@ public class WorldMapView extends Frame {
     }
 
 
-
     public void setListener(WorldMapListener listener) {
         this.listener = listener;
-        armiesPanel = new ArmiesPanel(defendingArmies,controlledArmies, listener);
-        JScrollPane pane = new JScrollPane(armiesPanel);
-        pane.setBounds(getWidth() - 300, 100, 300, getHeight() - 100);
-        pane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        add(pane);
-        for(Card card: cities)
-        {
+        for (Card card : cities) {
             card.setListener(listener);
         }
     }
 
     public void setControlledArmiesAtThisCity(ArrayList<Army> controlledArmiesAtThisCity) {
-        if (armiesPanel != null){
+        if (armiesPanel != null) {
             armiesPanel.removeAll();
         }
         armiesPanel = new ArmiesPanel(defendingArmies, controlledArmiesAtThisCity, listener);
@@ -107,13 +99,12 @@ public class WorldMapView extends Frame {
     public ArmiesPanel getArmiesPanel() {
         return armiesPanel;
     }
-    public void updateCitiesCards(){
-        if(cityCards != null)
-        {
+
+    public void updateCitiesCards() {
+        if (cityCards != null) {
             cityCards.removeAll();
         }
-        for(City city: game.getAvailableCities())
-        {
+        for (City city : game.getAvailableCities()) {
             Card cityCard = new Card(city);
             cityCards.add(cityCard);
             cities.add(cityCard);

@@ -62,8 +62,7 @@ public class Controller
             } catch (FriendlyFireException friendlyFireException) {
                 friendlyFireException.printStackTrace();
             }
-        }
-        else if (e.getActionCommand().equals("START_MANUAL_ATTACK")) {
+        } else if (e.getActionCommand().equals("START_MANUAL_ATTACK")) {
             Card playerUnitCard = view.getBattleView().getPlayerUnitsPanel().getSelectedCard();
             Card targetUnitCard = view.getBattleView().getTargetUnitsPanel().getSelectedCard();
 
@@ -78,21 +77,19 @@ public class Controller
                     friendlyFireException.printStackTrace();
                 }
             }
-        }
-        else if(e.getActionCommand().equals("EXIT_BATTLE_VIEW")){
+        } else if (e.getActionCommand().equals("EXIT_BATTLE_VIEW")) {
             view.getBattleView().dispose();
             view.getWorldMapView().setVisible(true);
-        }
-        else if (e.getActionCommand().equals("worldMapButton")) {
+        } else if (e.getActionCommand().equals("worldMapButton")) {
             this.currentViewedCity = null;
             view.getCityView().dispose();
             view.setWorldMapView(new WorldMapView(game));
             view.getWorldMapView().setListener(this);
             view.getWorldMapView().setStatusPanel(statusPanel);
+            view.getWorldMapView().setControlledArmiesAtThisCity(game.getPlayer().getControlledArmies());
             statusPanel.updateStatusPanel();
 
-        }
-        else if (e.getActionCommand().equals("End Turn")) {
+        } else if (e.getActionCommand().equals("End Turn")) {
             game.endTurn();
             statusPanel.updateStatusPanel();
             if (view.getCityView() != null && currentViewedCity != null) {
@@ -108,47 +105,38 @@ public class Controller
                 endGameView.setListener(this);
                 view.setEndGameView(endGameView);
             }
-        }
-        else if (e.getActionCommand().equals("PLAY AGAIN!")) {
+        } else if (e.getActionCommand().equals("PLAY AGAIN!")) {
             view.setNewGameView(new NewGameView());
             view.getNewGameView().setListener(this);
             view.getEndGameView().dispose();
-        }
-        else if (e.getActionCommand().equals("EXIT")) {
+        } else if (e.getActionCommand().equals("EXIT")) {
             System.exit(0);
-        }
-        else if (e.getActionCommand().equals("Initiate Army")) {
+        } else if (e.getActionCommand().equals("Initiate Army")) {
             if (currentViewedCity != null) {
                 InitiateArmyPopUp initiateArmyPopUp = new InitiateArmyPopUp(currentViewedCity);
                 initiateArmyPopUp.setListener(this);
             }
-        }
-        else if (e.getActionCommand().equals("ENEMY_CARD_CLICKED_BV")) {
+        } else if (e.getActionCommand().equals("ENEMY_CARD_CLICKED_BV")) {
             onEnemyUnitCardClicked((Card) e.getSource());
-        }
-        else if (e.getActionCommand().equals("FRIENDLY_CARD_CLICKED_BV")) {
+        } else if (e.getActionCommand().equals("FRIENDLY_CARD_CLICKED_BV")) {
             onFriendlyUnitCardClicked((Card) e.getSource());
-        }
-        else if (e.getActionCommand().equals("CITY_CARD_CLICKED")) {
+        } else if (e.getActionCommand().equals("CITY_CARD_CLICKED")) {
             onCityCardClicked(((Card) e.getSource()).getCity());
-        }
-        else if (e.getActionCommand().equals("BUILD_BUILDING")) {
+        } else if (e.getActionCommand().equals("BUILD_BUILDING")) {
             Card buildingCard = (Card) e.getSource();
             try {
                 buildBuilding(buildingCard.getBuilding(), buildingCard.getWhereToBuild());
             } catch (NotEnoughGoldException notEnoughGoldException) {
                 notEnoughGoldException.printStackTrace();
             }
-        }
-        else if (e.getActionCommand().equals("PREVIEW_BUILDING")) {
+        } else if (e.getActionCommand().equals("PREVIEW_BUILDING")) {
             Card buildingCard = (Card) e.getSource();
             try {
                 previewBuilding(buildingCard.getBuilding());
             } catch (NotEnoughGoldException notEnoughGoldException) {
                 notEnoughGoldException.printStackTrace();
             }
-        }
-        else if (e.getActionCommand().equals("ARMY_CARD_CLICKED")) {
+        } else if (e.getActionCommand().equals("ARMY_CARD_CLICKED")) {
             Card armyCard = (Card) e.getSource();
             onArmyCardClicked(armyCard.getArmy());
         }
@@ -163,7 +151,6 @@ public class Controller
         }
         return armies;
     }
-
 
 
     @Override
@@ -188,6 +175,7 @@ public class Controller
         view.setWorldMapView(new WorldMapView(game));
         view.getWorldMapView().setListener(this);
         view.getWorldMapView().setStatusPanel(statusPanel);
+        view.getWorldMapView().setControlledArmiesAtThisCity(game.getPlayer().getControlledArmies());
         statusPanel.updateStatusPanel();
 
         view.getNewGameView().dispose();
@@ -345,8 +333,10 @@ public class Controller
         String attacker = (!game.getPlayer().getControlledArmies().contains(unitParentArmy) ? "Enemy" : "Player");
         String target = (attacker.equals("Player") ? "Enemy" : "Player");
 
-        results[0] = attacker; results[2] = target; results[4] = target;
-        String RESULT = (results[0]+"'s ") + results[1] + (results[2]+"'s ") + results[3] + "\n" +
+        results[0] = attacker;
+        results[2] = target;
+        results[4] = target;
+        String RESULT = (results[0] + "'s ") + results[1] + (results[2] + "'s ") + results[3] + "\n" +
                 results[4] + results[5];
 
         JTextArea log = view.getBattleView().getBattleLog();
@@ -354,8 +344,8 @@ public class Controller
         updateUnitsPanels(playerArmy, targetArmy);
         view.getBattleView().getBattleResultsDisplay().removeAll();
         view.getBattleView().getBattleResultsDisplay().setBorder(BorderFactory.createEmptyBorder(0, 100, 0, 0));
-        if(view.getBattleView().getBattleMode().equals("MANUAL ATTACK")) {
-            String labelText = "<html>" + view.getBattleView().getBattleResultsDisplay().getText()+"<br/>"+ RESULT +"<html>";
+        if (view.getBattleView().getBattleMode().equals("MANUAL ATTACK")) {
+            String labelText = "<html>" + view.getBattleView().getBattleResultsDisplay().getText() + "<br/>" + RESULT + "<html>";
             view.getBattleView().getBattleResultsDisplay().setText(labelText);
             StringBuilder sb = new StringBuilder();
             sb.append(log.getText()).append("\n\n").append(RESULT);
