@@ -16,7 +16,7 @@ public class ArmiesPanel extends JPanel {
 
         //TODO: For the scroll bar to show we need to have a method to update the panel because the size of the armies changed
         JPanel defendingArmyPanel = new JPanel();
-        defendingArmyPanel.setPreferredSize(new Dimension(this.getWidth(),defendingArmies.size()*100));
+        defendingArmyPanel.setPreferredSize(new Dimension(this.getWidth(),350));
         defendingArmyPanel.setLayout(new GridLayout(0,1));
         JPanel controlledArmiesPanel = new JPanel();
         controlledArmiesPanel.setPreferredSize(new Dimension(this.getWidth(),controlledArmies.size()*150));
@@ -39,7 +39,7 @@ public class ArmiesPanel extends JPanel {
         controlledArmiesPanel.setBorder(BorderFactory.createTitledBorder("Controlled Armies"));
 
         this.setAlignmentX(Component.CENTER_ALIGNMENT);
-
+        this.setPreferredSize(new Dimension(this.getWidth(),defendingArmyPanel.getHeight()+controlledArmiesPanel.getHeight()));
         this.add(new JScrollPane(defendingArmyPanel));
         this.add(new JScrollPane(controlledArmiesPanel));
 
