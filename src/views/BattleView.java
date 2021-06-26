@@ -84,6 +84,7 @@ public class BattleView extends Frame {
             buttonsPanel.add(startAutoResolveBtn);
         }
 
+        exitBattleViewBtn.setEnabled(false);
         buttonsPanel.add(exitBattleViewBtn);
 
         battleLog = new JTextArea(18, 50);

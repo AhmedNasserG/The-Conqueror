@@ -412,6 +412,7 @@ public class Controller
         } else {
             showMessageDialog(null, "YOU LOST THE BATTLE!\n\nRETREATING");
         }
+        view.getBattleView().getExitBattleViewBtn().setEnabled(true);
     }
 
     public void onUnitCardClicked(Unit unit) {
