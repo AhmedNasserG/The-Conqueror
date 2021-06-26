@@ -96,11 +96,11 @@ public class Controller
             game.endTurn();
             statusPanel.updateStatusPanel();
             if (view.getCityView() != null && currentViewedCity != null) {
-                view.getCityView().getArmiesPanel().removeAll();
+                view.getCityView().getArmiesPanel().revalidate();
                 view.getCityView().setControlledArmiesAtThisCity(getControlledArmiesAtCity(currentViewedCity));
             }
             if (view.getWorldMapView() != null) {
-                view.getWorldMapView().getArmiesPanel().removeAll();
+                view.getWorldMapView().getArmiesPanel().revalidate();
                 view.getWorldMapView().setControlledArmiesAtThisCity(game.getPlayer().getControlledArmies());
             }
             if (game.isGameOver()) {
