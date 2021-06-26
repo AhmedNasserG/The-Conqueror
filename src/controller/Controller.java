@@ -95,8 +95,7 @@ public class Controller
             if (view.getCityView() != null && currentViewedCity != null) {
                 view.getCityView().getArmiesPanel().revalidate();
                 view.getCityView().setControlledArmiesAtThisCity(getControlledArmiesAtCity(currentViewedCity));
-            }
-            if (view.getWorldMapView() != null) {
+            } else if (view.getWorldMapView() != null) {
                 view.getWorldMapView().getArmiesPanel().revalidate();
                 view.getWorldMapView().setControlledArmiesAtThisCity(game.getPlayer().getControlledArmies());
             }
