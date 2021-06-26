@@ -273,7 +273,11 @@ public class Controller
 
     @Override
     public void onLayClicked(City city, Army army) throws TargetNotReachedException, FriendlyCityException {
-        game.getPlayer().laySiege(army, city);
+        if(army.getUnits().size()==0) {
+            JOptionPane.showMessageDialog(null, "The army is unfortunately empty");
+        }else{
+            game.getPlayer().laySiege(army, city);
+        }
         if (view.getWorldMapView() != null) view.getWorldMapView().updateCitiesCards();
     }
 
@@ -535,7 +539,7 @@ public class Controller
     public void onAttackCityClicked(City city) {
         ArrayList<Army> availableArmiesAtThisCity = new ArrayList<>();
         for (Army army : game.getPlayer().getControlledArmies()) {
-            if (army.getCurrentLocation().equals(city.getName())) {
+            if (army.getCurrentLocation().equals(city.getName()) && army.getUnits().size()>0) {
                 for (Unit unit : army.getUnits()) {
                     unit.setListener(this);
                 }
