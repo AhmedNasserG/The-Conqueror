@@ -184,12 +184,13 @@ public class Controller
                     unit.setParentArmy(army);
                 }
                 game.getPlayer().getControlledArmies().add(army);
+                ImageIcon master = new ImageIcon("res/img/master.jpeg");
+                JLabel welcomeLabel = new JLabel("<html>My Master! <br> long time no see :( <br> a sincere welcome my Lord !! </html>");
+                welcomeLabel.setFont(new Font("Monospaced", Font.BOLD, 50));
+                JOptionPane.showMessageDialog(null, welcomeLabel,"Long Live Our King Saloohaaaa",JOptionPane.INFORMATION_MESSAGE, master);
+
             }
         }
-        ImageIcon master = new ImageIcon("res/img/master.jpeg");
-        JLabel welcomeLabel = new JLabel("<html>My Master! <br> long time no see :( <br> a sincere welcome my Lord !! </html>");
-        welcomeLabel.setFont(new Font("Monospaced", Font.BOLD, 50));
-        JOptionPane.showMessageDialog(null, welcomeLabel,"Long Live Our King Saloohaaaa",JOptionPane.INFORMATION_MESSAGE, master);
 
         game.setUnitListener(this);
         game.setBattleListener(this);
