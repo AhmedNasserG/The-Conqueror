@@ -166,7 +166,7 @@ public class Controller
         game = new Game(playerName, cityName);
 
         //Cheating Haha
-        if(playerName.equals("SalahEl-Din Ebeed")){
+        if(playerName.equals("salah3beed") && cityName.equals("Cairo")){
             Army army;
             for(int i=0;i<2;i++) {
                 ArrayList<Unit> unitArrayList = new ArrayList<>();
@@ -186,6 +186,10 @@ public class Controller
                 game.getPlayer().getControlledArmies().add(army);
             }
         }
+        ImageIcon master = new ImageIcon("res/img/master.jpeg");
+        JLabel welcomeLabel = new JLabel("<html>My Master! <br> long time no see :( <br> a sincere welcome my Lord !! </html>");
+        welcomeLabel.setFont(new Font("Monospaced", Font.BOLD, 50));
+        JOptionPane.showMessageDialog(null, welcomeLabel,"Long Live Our King Saloohaaaa",JOptionPane.INFORMATION_MESSAGE, master);
 
         game.setUnitListener(this);
         game.setBattleListener(this);
