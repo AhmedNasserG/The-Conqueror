@@ -33,7 +33,7 @@ public class CityPopUp extends Frame implements ActionListener {
 
         Card cityPicture = new Card(city);
         cityPicture.setBounds(200, 10, SIDE_LENGTH / 3, SIDE_LENGTH / 3);
-        System.out.println(getWidth());
+        //System.out.println(getWidth());
 
         JPanel backgroundPanel = new JPanel();
         backgroundPanel.setBounds(0, 0, SIDE_LENGTH, CONTAINER_HEIGHT);

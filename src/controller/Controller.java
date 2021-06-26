@@ -53,7 +53,7 @@ public class Controller
 
         if (e.getActionCommand().equals("START_AUTORESOLVE")) {
             try {
-                System.out.println("actionPerformed");
+                //System.out.println("actionPerformed");
                 game.autoResolve(playerArmy, targetArmy);
             } catch (FriendlyFireException friendlyFireException) {
                 friendlyFireException.printStackTrace();
@@ -63,7 +63,7 @@ public class Controller
             Card targetUnitCard = view.getBattleView().getTargetUnitsPanel().getSelectedCard();
 
             if (playerUnitCard == null || targetUnitCard == null) {
-                System.out.println("units not selected correctly");
+                //System.out.println("units not selected correctly");
                 showMessageDialog(null, "Select a Friendly and a Target unit!");
             } else {
                 try {
@@ -470,7 +470,7 @@ public class Controller
 
         view.getBattleView().revalidate();
         view.getBattleView().repaint();
-        System.out.println("displayed units info");
+        //System.out.println("displayed units info");
     }
 
     @Override
@@ -488,7 +488,7 @@ public class Controller
         view.getBattleView().getPlayerUnitsPanel().setSelectedCard(c);
         // Selected To Attack
 
-        System.out.println("friendly unit");
+        //System.out.println("friendly unit");
     }
 
     @Override
@@ -506,7 +506,7 @@ public class Controller
         c.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
         view.getBattleView().getTargetUnitsPanel().setSelectedCard(c);
 
-        System.out.println("enemy unit");
+        //System.out.println("enemy unit");
     }
 
     @Override
