@@ -93,9 +93,7 @@ public class WorldMapView extends Frame {
     }
 
     public void setControlledArmiesAtThisCity(ArrayList<Army> controlledArmiesAtThisCity) {
-        if (armiesPanel != null){
-            armiesPanel.removeAll();
-        }
+
         armiesPanel = new ArmiesPanel(defendingArmies, controlledArmiesAtThisCity, listener);
         armiesPanel.setBackground(Color.ORANGE);
         armiesPanel.setBounds(getWidth() - 300, 100, 300, getHeight() - 100);
