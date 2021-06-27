@@ -42,11 +42,15 @@ public class unitPopUp extends Frame implements ActionListener {
 
         JLabel unitLevel = new JLabel("Unit Level: "+unit.getLevel());
         JLabel unitCurrentSoliderCount = new JLabel("Current Solider Count: "+ unit.getCurrentSoldierCount());
+        JLabel unitMaxSoliderCount = new JLabel("Max Solider Count: "+ unit.getMaxSoldierCount());
         unitLevel.setAlignmentX(Component.CENTER_ALIGNMENT);
         unitCurrentSoliderCount.setAlignmentX(Component.CENTER_ALIGNMENT);
+        unitMaxSoliderCount.setAlignmentX(Component.CENTER_ALIGNMENT);
+
 
         status.add(unitLevel);
         status.add(unitCurrentSoliderCount);
+        status.add(unitMaxSoliderCount);
         status.setBounds(0, 230, 420, 420 - 200);
 
         relocateButton = new JButton("Relocate Unit");
