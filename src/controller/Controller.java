@@ -52,6 +52,7 @@ public class Controller
     private Army targetArmy;
     private City currentViewedCity;
 
+
     public Controller() throws IOException {
         view = new GameViews();
         view.setStartMenuView(new StartMenuView());
@@ -428,7 +429,9 @@ public class Controller
         results[2] = target;
         results[4] = target;
         String RESULT = (results[0] + "'s ") + results[1] + (results[2] + "'s ") + results[3] + "\n" +
-                results[4] + results[5];
+                results[4] + results[5]+"\n";
+
+        view.getBattleView().setBattleResults(view.getBattleView().getBattleResults() + "\n" + RESULT);
 
         JTextArea log = view.getBattleView().getBattleLog();
 
@@ -437,11 +440,15 @@ public class Controller
         view.getBattleView().getBattleResultsDisplay().setBorder(BorderFactory.createEmptyBorder(0, 100, 0, 0));
         if (view.getBattleView().getBattleMode().equals("MANUAL ATTACK")) {
             String labelText = "<html>" + view.getBattleView().getBattleResultsDisplay().getText() + "<br/>" + RESULT + "<html>";
+            view.getBattleView().removeAll();
             view.getBattleView().getBattleResultsDisplay().setText(labelText);
             StringBuilder sb = new StringBuilder();
             sb.append(log.getText()).append("\n\n").append(RESULT);
             log.setText(sb.toString());
             updateUnitsPanels(playerArmy, targetArmy);
+        }
+        else{
+
         }
         view.getBattleView().getBattleResultsDisplay().setFont(new Font(Font.MONOSPACED, Font.BOLD, 25));
 
@@ -469,6 +476,7 @@ public class Controller
         JTextArea log = view.getBattleView().getBattleLog();
         StringBuilder sb = new StringBuilder();
         sb.append(log.getText()).append("[AUTO RESOLVED]: \n").append(result.replaceAll("<br/>", "\n\n"));
+        sb.append(view.getBattleView().getBattleResults());
         log.setText(sb.toString());
 
         view.getBattleView().getPlayerUnitsPanel().setSelectedCard(null);

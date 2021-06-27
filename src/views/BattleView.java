@@ -35,6 +35,7 @@ public class BattleView extends Frame {
 
     static final Dimension SCREENSIZE = Toolkit.getDefaultToolkit().getScreenSize();
 
+    String battleResults;
 
     private Army playerArmy;
     private Army targetArmy;
@@ -46,6 +47,7 @@ public class BattleView extends Frame {
         this.playerArmy = playerArmy;
         this.targetArmy = targetCity.getDefendingArmy();
         this.battleMode = battleMode;
+        battleResults = "";
         this.setLayout(new BorderLayout());
 
         this.battlePanel = new JPanel();
@@ -173,4 +175,11 @@ public class BattleView extends Frame {
         return battleMode;
     }
 
+    public void setBattleResults(String battleResults) {
+        this.battleResults = battleResults;
+    }
+
+    public String getBattleResults() {
+        return battleResults;
+    }
 }
