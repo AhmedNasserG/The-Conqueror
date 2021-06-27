@@ -23,6 +23,21 @@ import java.util.Random;
 // TODO: fix battle view
 // TODO: fix scrolling
 
+//For the Bonus
+//TODO: sounds for{
+// Background music, victory or losing, recriut,end turn, build, upgrade, cool down, besiege, attacking, auto resolving either win or lose}
+// TODO: when the building is colling down the card should be unclickable and grey colored and writeen cooling down
+// TODO: voices for units in (arabic cairo, english sparta, greek rome)
+//TODO: cheating or easter eggs additions
+//TODO: help pop up
+//TODO: about pop up
+// TODO: change all the fonts to one unified good old font
+// TODO: backgrounds for all the views and all the cities (same style)
+//TODO: change the archer image
+// TODO: add cards above the radiobuttons in the start menu view
+// TODO: change the start about help exit buttons with other good iconed buttons
+// TODO: create a leaderboard in github for anyone finishes the game in under 25 turns (to make people download the game and play it)
+
 
 public class Controller
         implements ActionListener, NewGameListener, StartMenuListener, CityViewListener,
@@ -313,21 +328,25 @@ public class Controller
 
     @Override
     public void onLaySiegeClicked(City city) {
-        ArrayList<Army> availableArmiesAtThisCity = new ArrayList<>();
-        for (Army army : game.getPlayer().getControlledArmies()) {
-            if (army.getCurrentLocation().equals(city.getName())) {
-                for (Unit unit : army.getUnits()) {
-                    unit.setListener(this);
+        if (city.isUnderSiege()) {
+            JOptionPane.showMessageDialog(null, "The city is already under siege");
+        } else {
+            ArrayList<Army> availableArmiesAtThisCity = new ArrayList<>();
+            for (Army army : game.getPlayer().getControlledArmies()) {
+                if (army.getCurrentLocation().equals(city.getName())) {
+                    for (Unit unit : army.getUnits()) {
+                        unit.setListener(this);
+                    }
+                    availableArmiesAtThisCity.add(army);
                 }
-                availableArmiesAtThisCity.add(army);
             }
+            if (availableArmiesAtThisCity.size() == 0) {
+                showMessageDialog(null, "You Don't Have Armies At this city to Lay Seige, Please Wait until your Armies reach or send some of them");
+                return;
+            }
+            LaySiegePopUp laySiegePopUp = new LaySiegePopUp(availableArmiesAtThisCity, city);
+            laySiegePopUp.setListener(this);
         }
-        if (availableArmiesAtThisCity.size() == 0) {
-            showMessageDialog(null, "You Don't Have Armies At this city to Lay Seige, Please Wait until your Armies reach or send some of them");
-            return;
-        }
-        LaySiegePopUp laySiegePopUp = new LaySiegePopUp(availableArmiesAtThisCity, city);
-        laySiegePopUp.setListener(this);
     }
 
     @Override
