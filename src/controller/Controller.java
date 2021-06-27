@@ -103,6 +103,7 @@ public class Controller
                 } else if (view.getWorldMapView() != null) {
                     view.getWorldMapView().getArmiesPanel().revalidate();
                     view.getWorldMapView().setControlledArmiesAtThisCity(game.getPlayer().getControlledArmies());
+                    view.getWorldMapView().updateCitiesCards();
                 }
                 if (game.isGameOver()) {
                     EndGameView endGameView = new EndGameView(game.getPlayer().getControlledCities().size() == game.getAvailableCities().size());

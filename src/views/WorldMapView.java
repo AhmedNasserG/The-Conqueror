@@ -101,6 +101,12 @@ public class WorldMapView extends Frame {
         return armiesPanel;
     }
 
+
+    public JPanel getCityCards() {
+        return cityCards;
+    }
+
+
     public void updateCitiesCards() {
         if (cityCards != null) {
             cityCards.removeAll();
