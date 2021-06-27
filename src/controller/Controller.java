@@ -51,93 +51,109 @@ public class Controller
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        if (e.getActionCommand().equals("START_AUTORESOLVE")) {
-            try {
-                //System.out.println("actionPerformed");
-                game.autoResolve(playerArmy, targetArmy);
-            } catch (FriendlyFireException friendlyFireException) {
-                friendlyFireException.printStackTrace();
-            }
-        } else if (e.getActionCommand().equals("START_MANUAL_ATTACK")) {
-            Card playerUnitCard = view.getBattleView().getPlayerUnitsPanel().getSelectedCard();
-            Card targetUnitCard = view.getBattleView().getTargetUnitsPanel().getSelectedCard();
-
-            if (playerUnitCard == null || targetUnitCard == null) {
-                //System.out.println("units not selected correctly");
-                showMessageDialog(null, "Select a Friendly and a Target unit!");
-            } else {
+        switch (e.getActionCommand()) {
+            case "START_AUTORESOLVE":
                 try {
-                    this.onAttack(playerUnitCard.getUnit(), targetUnitCard.getUnit());
-                    enemyAttackBack();
+                    //System.out.println("actionPerformed");
+                    game.autoResolve(playerArmy, targetArmy);
                 } catch (FriendlyFireException friendlyFireException) {
                     friendlyFireException.printStackTrace();
                 }
-            }
-        } else if (e.getActionCommand().equals("EXIT_BATTLE_VIEW")) {
-            view.getBattleView().dispose();
-            view.setWorldMapView(new WorldMapView(game));
-            view.getWorldMapView().setListener(this);
-            view.getWorldMapView().setStatusPanel(statusPanel);
-            view.getWorldMapView().setControlledArmiesAtThisCity(game.getPlayer().getControlledArmies());
-            statusPanel.updateStatusPanel();
-        } else if (e.getActionCommand().equals("worldMapButton")) {
-            this.currentViewedCity = null;
-            view.getCityView().dispose();
-            view.setWorldMapView(new WorldMapView(game));
-            view.getWorldMapView().setListener(this);
-            view.getWorldMapView().setStatusPanel(statusPanel);
-            view.getWorldMapView().setControlledArmiesAtThisCity(game.getPlayer().getControlledArmies());
-            statusPanel.updateStatusPanel();
+                break;
+            case "START_MANUAL_ATTACK":
+                Card playerUnitCard = view.getBattleView().getPlayerUnitsPanel().getSelectedCard();
+                Card targetUnitCard = view.getBattleView().getTargetUnitsPanel().getSelectedCard();
 
-        } else if (e.getActionCommand().equals("End Turn")) {
-            game.endTurn();
-            statusPanel.updateStatusPanel();
-            if (view.getCityView() != null && currentViewedCity != null) {
-                view.getCityView().getArmiesPanel().revalidate();
-                view.getCityView().setControlledArmiesAtThisCity(getControlledArmiesAtCity(currentViewedCity));
-            } else if (view.getWorldMapView() != null) {
-                view.getWorldMapView().getArmiesPanel().revalidate();
+                if (playerUnitCard == null || targetUnitCard == null) {
+                    //System.out.println("units not selected correctly");
+                    showMessageDialog(null, "Select a Friendly and a Target unit!");
+                } else {
+                    try {
+                        this.onAttack(playerUnitCard.getUnit(), targetUnitCard.getUnit());
+                        enemyAttackBack();
+                    } catch (FriendlyFireException friendlyFireException) {
+                        friendlyFireException.printStackTrace();
+                    }
+                }
+                break;
+            case "EXIT_BATTLE_VIEW":
+                view.getBattleView().dispose();
+                view.setWorldMapView(new WorldMapView(game));
+                view.getWorldMapView().setListener(this);
+                view.getWorldMapView().setStatusPanel(statusPanel);
                 view.getWorldMapView().setControlledArmiesAtThisCity(game.getPlayer().getControlledArmies());
+                statusPanel.updateStatusPanel();
+                break;
+            case "worldMapButton":
+                this.currentViewedCity = null;
+                view.getCityView().dispose();
+                view.setWorldMapView(new WorldMapView(game));
+                view.getWorldMapView().setListener(this);
+                view.getWorldMapView().setStatusPanel(statusPanel);
+                view.getWorldMapView().setControlledArmiesAtThisCity(game.getPlayer().getControlledArmies());
+                statusPanel.updateStatusPanel();
+
+                break;
+            case "End Turn":
+                game.endTurn();
+                statusPanel.updateStatusPanel();
+                if (view.getCityView() != null && currentViewedCity != null) {
+                    view.getCityView().getArmiesPanel().revalidate();
+                    view.getCityView().setControlledArmiesAtThisCity(getControlledArmiesAtCity(currentViewedCity));
+                } else if (view.getWorldMapView() != null) {
+                    view.getWorldMapView().getArmiesPanel().revalidate();
+                    view.getWorldMapView().setControlledArmiesAtThisCity(game.getPlayer().getControlledArmies());
+                }
+                if (game.isGameOver()) {
+                    EndGameView endGameView = new EndGameView(game.getPlayer().getControlledCities().size() == game.getAvailableCities().size());
+                    endGameView.setListener(this);
+                    view.setEndGameView(endGameView);
+                }
+                break;
+            case "PLAY AGAIN!":
+                view.setNewGameView(new NewGameView());
+                view.getNewGameView().setListener(this);
+                view.getEndGameView().dispose();
+                break;
+            case "EXIT":
+                System.exit(0);
+            case "Initiate Army":
+                if (currentViewedCity != null) {
+                    InitiateArmyPopUp initiateArmyPopUp = new InitiateArmyPopUp(currentViewedCity);
+                    initiateArmyPopUp.setListener(this);
+                }
+                break;
+            case "ENEMY_CARD_CLICKED_BV":
+                onEnemyUnitCardClicked((Card) e.getSource());
+                break;
+            case "FRIENDLY_CARD_CLICKED_BV":
+                onFriendlyUnitCardClicked((Card) e.getSource());
+                break;
+            case "CITY_CARD_CLICKED":
+                onCityCardClicked(((Card) e.getSource()).getCity());
+                break;
+            case "BUILD_BUILDING": {
+                Card buildingCard = (Card) e.getSource();
+                try {
+                    buildBuilding(buildingCard.getBuilding(), buildingCard.getWhereToBuild());
+                } catch (NotEnoughGoldException notEnoughGoldException) {
+                    notEnoughGoldException.printStackTrace();
+                }
+                break;
             }
-            if (game.isGameOver()) {
-                EndGameView endGameView = new EndGameView(game.getPlayer().getControlledCities().size() == game.getAvailableCities().size());
-                endGameView.setListener(this);
-                view.setEndGameView(endGameView);
+            case "PREVIEW_BUILDING": {
+                Card buildingCard = (Card) e.getSource();
+                try {
+                    previewBuilding(buildingCard.getBuilding());
+                } catch (NotEnoughGoldException notEnoughGoldException) {
+                    notEnoughGoldException.printStackTrace();
+                }
+                break;
             }
-        } else if (e.getActionCommand().equals("PLAY AGAIN!")) {
-            view.setNewGameView(new NewGameView());
-            view.getNewGameView().setListener(this);
-            view.getEndGameView().dispose();
-        } else if (e.getActionCommand().equals("EXIT")) {
-            System.exit(0);
-        } else if (e.getActionCommand().equals("Initiate Army")) {
-            if (currentViewedCity != null) {
-                InitiateArmyPopUp initiateArmyPopUp = new InitiateArmyPopUp(currentViewedCity);
-                initiateArmyPopUp.setListener(this);
-            }
-        } else if (e.getActionCommand().equals("ENEMY_CARD_CLICKED_BV")) {
-            onEnemyUnitCardClicked((Card) e.getSource());
-        } else if (e.getActionCommand().equals("FRIENDLY_CARD_CLICKED_BV")) {
-            onFriendlyUnitCardClicked((Card) e.getSource());
-        } else if (e.getActionCommand().equals("CITY_CARD_CLICKED")) {
-            onCityCardClicked(((Card) e.getSource()).getCity());
-        } else if (e.getActionCommand().equals("BUILD_BUILDING")) {
-            Card buildingCard = (Card) e.getSource();
-            try {
-                buildBuilding(buildingCard.getBuilding(), buildingCard.getWhereToBuild());
-            } catch (NotEnoughGoldException notEnoughGoldException) {
-                notEnoughGoldException.printStackTrace();
-            }
-        } else if (e.getActionCommand().equals("PREVIEW_BUILDING")) {
-            Card buildingCard = (Card) e.getSource();
-            try {
-                previewBuilding(buildingCard.getBuilding());
-            } catch (NotEnoughGoldException notEnoughGoldException) {
-                notEnoughGoldException.printStackTrace();
-            }
-        } else if (e.getActionCommand().equals("ARMY_CARD_CLICKED")) {
-            Card armyCard = (Card) e.getSource();
-            onArmyCardClicked(armyCard.getArmy());
+            case "ARMY_CARD_CLICKED":
+                Card armyCard = (Card) e.getSource();
+                onArmyCardClicked(armyCard.getArmy());
+                break;
         }
     }
 
@@ -166,21 +182,20 @@ public class Controller
         game = new Game(playerName, cityName);
 
         //Cheating Haha
-        if(playerName.equals("salah3beed") && cityName.equals("Cairo")){
+        if (playerName.equals("salah3beed") && cityName.equals("Cairo")) {
             Army army;
-            for(int i=0;i<2;i++) {
+            for (int i = 0; i < 2; i++) {
                 ArrayList<Unit> unitArrayList = new ArrayList<>();
-                for(int j=0;j<50;j++){
+                for (int j = 0; j < 50; j++) {
                     unitArrayList.add(new Cavalry(3));
                     unitArrayList.add(new Archer(3));
                     unitArrayList.add(new Infantry(3));
                 }
-                String nameText = i%2==0?"Abo Salah":"King Saloha";
+                String nameText = i % 2 == 0 ? "Abo Salah" : "King Saloha";
                 army = new Army("Cairo");
                 army.setArmyName(nameText);
                 army.setUnits(unitArrayList);
-                for(Unit unit: army.getUnits())
-                {
+                for (Unit unit : army.getUnits()) {
                     unit.setParentArmy(army);
                 }
                 game.getPlayer().getControlledArmies().add(army);
@@ -189,7 +204,7 @@ public class Controller
             ImageIcon master = new ImageIcon("res/img/master.jpeg");
             JLabel welcomeLabel = new JLabel("<html>My Master! <br> long time no see :( <br> a sincere welcome my Lord !! </html>");
             welcomeLabel.setFont(new Font("Monospaced", Font.BOLD, 50));
-            JOptionPane.showMessageDialog(null, welcomeLabel,"Long Live Our King Saloohaaaa",JOptionPane.INFORMATION_MESSAGE, master);
+            JOptionPane.showMessageDialog(null, welcomeLabel, "Long Live Our King Saloohaaaa", JOptionPane.INFORMATION_MESSAGE, master);
         }
 
         game.setUnitListener(this);
@@ -301,9 +316,12 @@ public class Controller
 
     @Override
     public void onLayClicked(City city, Army army) throws TargetNotReachedException, FriendlyCityException {
-        if(army.getUnits().size()==0) {
+        if (army == null) {
+            return;
+        }
+        if (army.getUnits().size() == 0) {
             JOptionPane.showMessageDialog(null, "The army is unfortunately empty");
-        }else{
+        } else {
             game.getPlayer().laySiege(army, city);
         }
         if (view.getWorldMapView() != null) view.getWorldMapView().updateCitiesCards();
@@ -430,7 +448,7 @@ public class Controller
         view.getBattleView().setTargetArmy(targetArmy);
     }
 
-    public void updateUnitsPanels(Army playerArmy, Army targetArmy){
+    public void updateUnitsPanels(Army playerArmy, Army targetArmy) {
         view.getBattleView().getPlayerUnitsPanel().updatePanel(playerArmy);
         view.getBattleView().getTargetUnitsPanel().updatePanel(targetArmy);
     }
@@ -447,7 +465,7 @@ public class Controller
         view.getBattleView().getExitBattleViewBtn().setEnabled(true);
 
 
-        }
+    }
 
     public void onUnitCardClicked(Unit unit) {
         JPanel p = view.getBattleView().getUnitInfoPanel();
@@ -567,7 +585,7 @@ public class Controller
     public void onAttackCityClicked(City city) {
         ArrayList<Army> availableArmiesAtThisCity = new ArrayList<>();
         for (Army army : game.getPlayer().getControlledArmies()) {
-            if (army.getCurrentLocation().equals(city.getName()) && army.getUnits().size()>0) {
+            if (army.getCurrentLocation().equals(city.getName()) && army.getUnits().size() > 0) {
                 for (Unit unit : army.getUnits()) {
                     unit.setListener(this);
                 }
