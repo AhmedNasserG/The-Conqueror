@@ -439,9 +439,8 @@ public class Controller
         view.getBattleView().getBattleResultsDisplay().removeAll();
         view.getBattleView().getBattleResultsDisplay().setBorder(BorderFactory.createEmptyBorder(0, 100, 0, 0));
         if (view.getBattleView().getBattleMode().equals("MANUAL ATTACK")) {
-            String labelText = "<html>" + view.getBattleView().getBattleResultsDisplay().getText() + "<br/>" + RESULT + "<html>";
-            view.getBattleView().removeAll();
-            view.getBattleView().getBattleResultsDisplay().setText(labelText);
+            String text = "<html>" + RESULT +"<html>";
+            view.getBattleView().getBattleResultsDisplay().setText(text);
             StringBuilder sb = new StringBuilder();
             sb.append(log.getText()).append("\n\n").append(RESULT);
             log.setText(sb.toString());
