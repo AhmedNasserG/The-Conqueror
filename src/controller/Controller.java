@@ -214,7 +214,7 @@ public class Controller
             Army army;
             for (int i = 0; i < 2; i++) {
                 ArrayList<Unit> unitArrayList = new ArrayList<>();
-                for (int j = 0; j < 50; j++) {
+                for (int j = 0; j < 20; j++) {
                     unitArrayList.add(new Cavalry(3));
                     unitArrayList.add(new Archer(3));
                     unitArrayList.add(new Infantry(3));
