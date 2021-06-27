@@ -95,6 +95,17 @@ public class Controller
 
                 break;
             case "End Turn":
+                String cityUnderSeigeForThreeTurns = "";
+                for (City city: game.getAvailableCities()) {
+                    if (city.getTurnsUnderSiege() == 3) {
+                        cityUnderSeigeForThreeTurns = city.getName();
+                    }
+                }
+                if (!cityUnderSeigeForThreeTurns.equals("")) {
+                    JOptionPane.showMessageDialog(null,
+                            cityUnderSeigeForThreeTurns + " has been under Seige for 3 Turns, you have to attack to end the turn");
+                    break;
+                }
                 game.endTurn();
                 statusPanel.updateStatusPanel();
                 if (view.getCityView() != null && currentViewedCity != null) {
@@ -330,6 +341,11 @@ public class Controller
 
     @Override
     public void onManualAttackChosen(Army playerArmy, City targetCity) {
+        if (targetCity.isUnderSiege()){
+            targetCity.setUnderSiege(false);
+            targetCity.setTurnsUnderSiege(-1);
+            playerArmy.setCurrentStatus(Status.IDLE);
+        }
         this.playerArmy = playerArmy;
         this.targetCity = targetCity;
         this.targetArmy = targetCity.getDefendingArmy();
@@ -346,6 +362,11 @@ public class Controller
 
     @Override
     public void onAutoResolveChosen(Army playerArmy, City targetCity) {
+        if (targetCity.isUnderSiege()){
+            targetCity.setUnderSiege(false);
+            targetCity.setTurnsUnderSiege(-1);
+            playerArmy.setCurrentStatus(Status.IDLE);
+        }
         this.playerArmy = playerArmy;
         this.targetCity = targetCity;
         this.targetArmy = targetCity.getDefendingArmy();
