@@ -87,10 +87,9 @@ public class BattleView extends Frame {
         exitBattleViewBtn.setEnabled(false);
         buttonsPanel.add(exitBattleViewBtn);
 
-        battleLog = new JTextArea(18, 50);
+        battleLog = new JTextArea("",18, 50);
         battleLog.setEditable(false);
         battleLog.setBorder(BorderFactory.createTitledBorder("BATTLE LOG"));
-        battleLog.setPreferredSize(new Dimension(leftSidePanel.getWidth(), leftSidePanel.getHeight() / 2));
         battleLog.setFont(new Font(Font.MONOSPACED, Font.BOLD, 15));
 
 
@@ -101,7 +100,7 @@ public class BattleView extends Frame {
 
         leftSidePanel.add(unitInfoPanel, BorderLayout.NORTH);
         leftSidePanel.add(buttonsPanel, BorderLayout.CENTER);
-        leftSidePanel.add(new JScrollPane(battleLog), BorderLayout.SOUTH);
+        leftSidePanel.add(new JScrollPane(battleLog, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS), BorderLayout.SOUTH);
     }
 
     public void initBattlePanel() {
