@@ -24,6 +24,7 @@ public class SetTargetPopUp extends Frame implements ActionListener {
     public SetTargetPopUp(ArrayList<City> availableCities, ArrayList<City> controlledCities, Army army){
         //TODO: fix the button only appears on hover !!
         super("Set Target");
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.army = army;
         int width = (getWidth() - 420) / 2;
         int height = (getHeight() - 420) / 2;

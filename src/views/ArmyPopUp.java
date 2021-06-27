@@ -30,6 +30,8 @@ public class ArmyPopUp extends Frame implements ActionListener {
         this.text = text;
         this.width = (getWidth() - 420) / 2;
         this.height = (getHeight() - 420) / 2;
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
         setBounds(width, height, 420, 420);
         setLayout(null);
         Card armyTile = new Card(army);

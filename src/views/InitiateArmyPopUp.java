@@ -25,6 +25,7 @@ public class InitiateArmyPopUp extends Frame implements ActionListener {
     public InitiateArmyPopUp(City city){
         super(city.getDefendingArmy().getCurrentLocation());
         this.city = city;
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         int width = (getWidth() - 420) / 2;
         int height = (getHeight() - 420) / 2;

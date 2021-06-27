@@ -22,6 +22,7 @@ public class RelocatePopUp extends Frame implements ActionListener {
     public RelocatePopUp(Unit unit, ArrayList<Army> armyArrayList){
         //TODO: fix the button only appears on hover
         super(unit.getUnitName());
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.unit = unit;
         int width = (getWidth() - 420) / 2;
         int height = (getHeight() - 420) / 2;

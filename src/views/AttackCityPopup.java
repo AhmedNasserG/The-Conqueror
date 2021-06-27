@@ -21,6 +21,7 @@ public class AttackCityPopup extends Frame implements ActionListener {
         this.cityToAttack = cityToAttack;
         int width = (getWidth() - 420) / 2;
         int height = (getHeight() - 420) / 2;
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(width, height, 420, 420);
         setLayout(null);
 

@@ -23,6 +23,8 @@ public class LaySiegePopUp extends Frame implements ActionListener {
     public LaySiegePopUp(ArrayList<Army> availableArmiesAtThisCity,City city){
         //TODO: fix the button only appears on hover !!
         super("Lay Siege");
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
         this.city = city;
         int width = (getWidth() - 420) / 2;
         int height = (getHeight() - 420) / 2;

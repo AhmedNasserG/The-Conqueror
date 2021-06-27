@@ -19,6 +19,7 @@ public class CityPopUp extends Frame implements ActionListener {
     private final int SIDE_LENGTH,CONTAINER_HEIGHT,BUTTON_WIDTH,BUTTON_HEIGHT;
     public CityPopUp(City city) {
         super(city.getName());
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         SIDE_LENGTH = 420;
         CONTAINER_HEIGHT = SIDE_LENGTH/3+30;

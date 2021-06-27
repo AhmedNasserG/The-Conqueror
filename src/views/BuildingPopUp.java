@@ -16,6 +16,7 @@ public class BuildingPopUp extends Frame implements ActionListener {
 
     public BuildingPopUp(Building buildingToShow) {
         super(buildingToShow.getBuildingName());
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.buildingToShow = buildingToShow;
         this.width = (getWidth() - 420) / 2;
         this.height = (getHeight() - 420) / 2;

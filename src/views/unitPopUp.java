@@ -21,6 +21,7 @@ public class unitPopUp extends Frame implements ActionListener {
     public unitPopUp(Unit unit){
         //TODO: fix the button only appears on hover
         super(unit.getUnitName());
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.unit = unit;
         int width = (getWidth() - 420) / 2;
         int height = (getHeight() - 420) / 2;
