@@ -54,7 +54,6 @@ public class Game {
             if (city.getName().equals(cityName)) {
                 army = new Army(cityName);
                 army.setArmyName("Defending Army");
-                System.out.println("test");
                 city.setDefendingArmy(army);
             }
         }

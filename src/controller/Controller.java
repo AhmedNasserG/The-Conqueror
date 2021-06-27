@@ -96,7 +96,7 @@ public class Controller
                 break;
             case "End Turn":
                 String cityUnderSeigeForThreeTurns = "";
-                for (City city: game.getAvailableCities()) {
+                for (City city : game.getAvailableCities()) {
                     if (city.getTurnsUnderSiege() == 3) {
                         cityUnderSeigeForThreeTurns = city.getName();
                     }
@@ -322,15 +322,16 @@ public class Controller
                 availableArmiesAtThisCity.add(army);
             }
         }
+        if (availableArmiesAtThisCity.size() == 0) {
+            showMessageDialog(null, "You Don't Have Armies At this city to Lay Seige, Please Wait until your Armies reach or send some of them");
+            return;
+        }
         LaySiegePopUp laySiegePopUp = new LaySiegePopUp(availableArmiesAtThisCity, city);
         laySiegePopUp.setListener(this);
     }
 
     @Override
     public void onLayClicked(City city, Army army) throws TargetNotReachedException, FriendlyCityException {
-        if (army == null) {
-            return;
-        }
         if (army.getUnits().size() == 0) {
             JOptionPane.showMessageDialog(null, "The army is unfortunately empty");
         } else {
@@ -341,7 +342,7 @@ public class Controller
 
     @Override
     public void onManualAttackChosen(Army playerArmy, City targetCity) {
-        if (targetCity.isUnderSiege()){
+        if (targetCity.isUnderSiege()) {
             targetCity.setUnderSiege(false);
             targetCity.setTurnsUnderSiege(-1);
             playerArmy.setCurrentStatus(Status.IDLE);
@@ -362,7 +363,7 @@ public class Controller
 
     @Override
     public void onAutoResolveChosen(Army playerArmy, City targetCity) {
-        if (targetCity.isUnderSiege()){
+        if (targetCity.isUnderSiege()) {
             targetCity.setUnderSiege(false);
             targetCity.setTurnsUnderSiege(-1);
             playerArmy.setCurrentStatus(Status.IDLE);
@@ -613,6 +614,10 @@ public class Controller
                 }
                 availableArmiesAtThisCity.add(army);
             }
+        }
+        if (availableArmiesAtThisCity.size() == 0) {
+            showMessageDialog(null, "You Don't Have Armies At this city to Attack, Please Wait until your Armies reach or send some of them");
+            return;
         }
         AttackCityPopup attackCityPopup = new AttackCityPopup(city, availableArmiesAtThisCity);
         attackCityPopup.setListener(this);

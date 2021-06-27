@@ -102,13 +102,13 @@ public class CityPopUp extends Frame implements ActionListener {
                 this.dispose();
                 break;
             case "Start Attack On City": {
-                this.dispose();
                 listener.onAttackCityClicked(city);
+                this.dispose();
                 break;
             }
             case "Lay Siege":{
-                this.dispose();
                 listener.onLaySiegeClicked(city);
+                this.dispose();
                 break;
             }
             default:
