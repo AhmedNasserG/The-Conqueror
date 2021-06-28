@@ -21,7 +21,7 @@ public class StartMenuView extends Frame implements ActionListener {
         super("The Conqueror");
         this.setVisible(true);
         this.setLayout(new FlowLayout());
-        String[] buttonNames = new String[]{"New Game", "About", "Help", "Exit"};
+        String[] buttonNames = new String[]{"New Game", "Leadboard", "About", "Help", "Exit"};
         JPanel menuPanel = menuPanel(buttonNames);
 
 
@@ -64,6 +64,13 @@ public class StartMenuView extends Frame implements ActionListener {
                     ioException.printStackTrace();
                 }
                 break;
+            }
+            case "Leadboard":{
+                try {
+                    listener.onLeadboardClicked();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
             }
             case "About": {
                 //System.out.println("ABOUT");

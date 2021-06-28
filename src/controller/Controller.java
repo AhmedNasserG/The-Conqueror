@@ -15,9 +15,10 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.TreeMap;
 
 // TODO: remove all ActionListeners
 // TODO: fix battle view
@@ -133,7 +134,15 @@ public class Controller
                     view.getWorldMapView().updateCitiesCards();
                 }
                 if (game.isGameOver()) {
-                    EndGameView endGameView = new EndGameView(game.getPlayer().getControlledCities().size() == game.getAvailableCities().size());
+                    boolean isPlayerWon = game.getPlayer().getControlledCities().size() == game.getAvailableCities().size();
+                    if (isPlayerWon) {
+                        try {
+                            updateLeadboard(game.getPlayer().getName(), game.getCurrentTurnCount());
+                        } catch (IOException ioException) {
+                            ioException.printStackTrace();
+                        }
+                    }
+                    EndGameView endGameView = new EndGameView(isPlayerWon);
                     endGameView.setListener(this);
                     view.setEndGameView(endGameView);
                 }
@@ -204,6 +213,11 @@ public class Controller
     }
 
     @Override
+    public void onLeadboardClicked() throws IOException {
+        LeadboardView leadboardView = new LeadboardView(loadLeadboard());
+    }
+
+    @Override
     public void onPlayClicked() throws IOException {
         String playerName = view.getNewGameView().getPlayerName();
         String cityName = view.getNewGameView().getCityName();
@@ -250,6 +264,25 @@ public class Controller
 
         view.getNewGameView().dispose();
 
+    }
+
+    public TreeMap<Integer, String> loadLeadboard() throws IOException {
+        String currentLine;
+        FileReader fileReader = new FileReader("leadboard.csv");
+        BufferedReader br = new BufferedReader(fileReader);
+        TreeMap<Integer, String> map = new TreeMap<>();
+        while ((currentLine = br.readLine()) != null) {
+            String[] line = currentLine.split(",");
+            map.put(Integer.parseInt(line[1]), line[0]);
+        }
+        return map;
+    }
+
+    public void updateLeadboard(String playerName, int numOfTurnsToEndGame) throws IOException {
+        File file = new File("leadboard.csv");
+        FileWriter fr = new FileWriter(file, true);
+        fr.write(playerName+","+numOfTurnsToEndGame+"\n");
+        fr.close();
     }
 
     @Override
@@ -429,7 +462,7 @@ public class Controller
         results[2] = target;
         results[4] = target;
         String RESULT = (results[0] + "'s ") + results[1] + (results[2] + "'s ") + results[3] + "\n" +
-                results[4] + results[5]+"\n";
+                results[4] + results[5] + "\n";
 
         view.getBattleView().setBattleResults(view.getBattleView().getBattleResults() + "\n" + RESULT);
 
@@ -439,14 +472,13 @@ public class Controller
         view.getBattleView().getBattleResultsDisplay().removeAll();
         view.getBattleView().getBattleResultsDisplay().setBorder(BorderFactory.createEmptyBorder(0, 100, 0, 0));
         if (view.getBattleView().getBattleMode().equals("MANUAL ATTACK")) {
-            String text = "<html>" + RESULT +"<html>";
+            String text = "<html>" + RESULT + "<html>";
             view.getBattleView().getBattleResultsDisplay().setText(text);
             StringBuilder sb = new StringBuilder();
             sb.append(log.getText()).append("\n\n").append(RESULT);
             log.setText(sb.toString());
             updateUnitsPanels(playerArmy, targetArmy);
-        }
-        else{
+        } else {
 
         }
         view.getBattleView().getBattleResultsDisplay().setFont(new Font(Font.MONOSPACED, Font.BOLD, 25));

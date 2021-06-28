@@ -89,7 +89,7 @@ public class BattleView extends Frame {
         exitBattleViewBtn.setEnabled(false);
         buttonsPanel.add(exitBattleViewBtn);
 
-        battleLog = new JTextArea("",18, 50);
+        battleLog = new JTextArea("",17, 50);
         battleLog.setEditable(false);
         battleLog.setBorder(BorderFactory.createTitledBorder("BATTLE LOG"));
         battleLog.setFont(new Font(Font.MONOSPACED, Font.BOLD, 15));
