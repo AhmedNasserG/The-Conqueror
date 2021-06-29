@@ -8,6 +8,7 @@ import units.Army;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Locale;
 
 
 public class CityView extends Frame {
@@ -27,7 +28,6 @@ public class CityView extends Frame {
         super();
         this.cityToView = cityToView;
         this.setLayout(null);
-
 
         worldMapButton = new JButton();
         cityGrid = new JPanel();
@@ -53,10 +53,15 @@ public class CityView extends Frame {
         initiateArmyButton.setBounds(getWidth() - 500, 100, 200, 80);
         add(initiateArmyButton);
 
+        String backgroundPath = "res/img/" + cityToView.getName().toLowerCase()+"City.png";
+        this.setBackground(backgroundPath);
+
         add(worldMapButton);
         add(cityGrid);
         add(label);
         setVisible(true);
+        revalidate();
+        repaint();
     }
 
     public void updateCityGrid() {
