@@ -31,24 +31,29 @@ public class StartMenuView extends Frame implements ActionListener {
         this.repaint();
     }
 
+    public JPanel menuPanel(String[] buttonsArray) {
+        setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        JPanel newPanel = new JPanel();
+        newPanel.setLayout(new BoxLayout(newPanel, BoxLayout.Y_AXIS));
+        for (String buttonName : buttonsArray) {
+            newPanel.add(createButton(buttonName), gbc);
+            newPanel.add(Box.createVerticalStrut(15));
+        }
+        return newPanel;
+    }
+
     public JButton createButton(String name) {
         JButton newButton = new JButton(name);
+        newButton.setPreferredSize(new Dimension(150,30));
+        newButton.setMinimumSize(new Dimension(150,30));
+        newButton.setMaximumSize(new Dimension(150,30));
         newButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         newButton.addActionListener(this);
         newButton.setActionCommand(name);
         return newButton;
-    }
-
-    public JPanel menuPanel(String[] buttonsArray) {
-        JPanel newPanel = new JPanel();
-        newPanel.setLayout(new BoxLayout(newPanel, BoxLayout.Y_AXIS));
-        newPanel.add(Box.createRigidArea(new Dimension(0, this.getHeight() - 4 * 170)));
-        for (String buttonName : buttonsArray) {
-            newPanel.add(createButton(buttonName));
-            newPanel.add(Box.createVerticalStrut(15));
-
-        }
-        return newPanel;
     }
 
     public static void main(String[] args) {
