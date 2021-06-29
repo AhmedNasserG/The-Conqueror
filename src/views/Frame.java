@@ -1,7 +1,10 @@
 package views;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 public class Frame extends JFrame {
     private final int width;
@@ -21,6 +24,21 @@ public class Frame extends JFrame {
     public Frame(String title) {
         this();
         this.setTitle(title);
+    }
+
+    public void setBackground(String pathName) {
+        final Image backgroundImage;
+        try {
+            backgroundImage = ImageIO.read(new File(pathName));
+            setContentPane(new JPanel() {
+                @Override
+                public void paintComponent(Graphics g) {
+                    g.drawImage(backgroundImage, 0, 0,getWidth(), getHeight(), null);
+                }
+            });
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "An ERROR Occured while loading the background please restart the game");
+        }
     }
 
     @Override
