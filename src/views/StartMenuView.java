@@ -17,13 +17,14 @@ public class StartMenuView extends Frame implements ActionListener {
     private NewGameView newGameView;
     private StartMenuListener listener;
 
-    public StartMenuView() {
+    public StartMenuView(){
         super("The Conqueror");
         this.setVisible(true);
         this.setLayout(new FlowLayout());
+        this.setBackground("temp_res/imgs/backgrounds/start_menu.jpg");
         String[] buttonNames = new String[]{"New Game", "Leadboard", "About", "Help", "Exit"};
         JPanel menuPanel = menuPanel(buttonNames);
-
+        menuPanel.setOpaque(false);
 
         this.add(menuPanel);
         this.revalidate();
