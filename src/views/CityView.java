@@ -59,6 +59,7 @@ public class CityView extends Frame {
 
 
         initiateArmyButton = new JButton("Initiate \n A New \n Army");
+        initiateArmyButton.setActionCommand("Initiate Army");
         centerPanel.add(initiateArmyButton,BorderLayout.EAST);
         centerPanel.setOpaque(false);
 
