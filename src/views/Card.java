@@ -33,6 +33,7 @@ public class Card extends JButton {
         this.setBorder(BorderFactory.createEmptyBorder());
         this.setPreferredSize(new Dimension(150, 10));
         this.setContentAreaFilled(false);
+        this.setOpaque(false);
         img = new JLabel();
         topLabel = new JLabel("", SwingConstants.CENTER);
         bottomLabel = new JLabel("", SwingConstants.CENTER);

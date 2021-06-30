@@ -38,6 +38,8 @@ public class CityView extends Frame {
         ImageIcon worldMapIcon = new ImageIcon("res/img/map.png");
         worldMapButton.setActionCommand("worldMapButton");
         worldMapButton.setIcon(new ImageIcon(worldMapIcon.getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
+        worldMapButton.setContentAreaFilled(false);
+        worldMapButton.setBorder(BorderFactory.createEmptyBorder());
 
         //cityGrid.setBackground(Color.lightGray);
 
