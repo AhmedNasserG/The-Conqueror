@@ -15,6 +15,7 @@ public class StatusPanel extends JPanel {
     private JLabel foodCountLabel;
     private JButton endTurnButton;
     private ActionListener listener;
+    private Color TRANSPARENT_WHITE = new Color(255,255,255,150);
 
     public StatusPanel() {
         FlowLayout layout = new FlowLayout(FlowLayout.LEADING);
@@ -39,6 +40,8 @@ public class StatusPanel extends JPanel {
         add(goldCountLabel);
         add(foodCountLabel);
         add(endTurnButton);
+        this.setOpaque(false);
+        this.setBackground(TRANSPARENT_WHITE);
     }
 
     public StatusPanel(String battleMode) {
