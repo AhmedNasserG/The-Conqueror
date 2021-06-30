@@ -24,8 +24,8 @@ public class WorldMapView extends Frame {
 
     public WorldMapView(Game game) {
         this.setVisible(true);
-        //TODO: add the worldMap background
-        String backgroundPath = "res/img/cairoCityBackground.png";
+
+        String backgroundPath = "res/img/start_menu.jpg";
         this.setBackground(backgroundPath);
 
 
@@ -35,7 +35,7 @@ public class WorldMapView extends Frame {
 
         citiesAndText = new JPanel();
         citiesAndText.setLayout(new BoxLayout(citiesAndText, BoxLayout.Y_AXIS));
-        JLabel chooseLabel = new JLabel("View City");
+        JLabel chooseLabel = new JLabel("Open A City");
         chooseLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         chooseLabel.setFont(chooseLabel.getFont().deriveFont(Font.BOLD, 23));
         citiesAndText.add(chooseLabel);
@@ -50,7 +50,7 @@ public class WorldMapView extends Frame {
             Card cityCard = new Card(city);
             cityCard.removeAll();
             cityCard.setSize(500,800);
-            ImageIcon icon = new ImageIcon("res/img/" + city.getName().toLowerCase() + "City.jpg");
+            ImageIcon icon = new ImageIcon("res/img/" + city.getName().toLowerCase() + "City.jpeg");
             icon = new ImageIcon(icon.getImage().getScaledInstance(cityCard.getWidth()+100, cityCard.getHeight()+100, Image.SCALE_DEFAULT));
             cityCard.setIcon(icon);
             cityCard.revalidate();
@@ -59,7 +59,9 @@ public class WorldMapView extends Frame {
             cities.add(cityCard);
         }
 
+        cityCards.setOpaque(false);
         citiesAndText.add(cityCards);
+        citiesAndText.setOpaque(false);
 
 
         controlledArmies = game.getPlayer().getControlledArmies();
@@ -76,7 +78,7 @@ public class WorldMapView extends Frame {
 
     public void setStatusPanel(StatusPanel statusPanel) {
         this.statusPanel = statusPanel;
-        statusPanel.setBounds(0, 0, getWidth(), 100);
+        statusPanel.setBounds(200, 0, getWidth(), 100);
         add(statusPanel,BorderLayout.NORTH);
     }
 
