@@ -13,11 +13,11 @@ public class ArmiesPanel extends JPanel {
     public ArmiesPanel(ArrayList<Army> defendingArmies,ArrayList<Army> controlledArmies, CardListener listener) {
         super();
         this.setLayout(new BorderLayout());
+        this.setPreferredSize(new Dimension(this.getWidth(),160));
         JPanel defendingArmyPanel = new JPanel();
-        defendingArmyPanel.setPreferredSize(new Dimension(defendingArmies.size()*150,160));
         defendingArmyPanel.setLayout(new GridLayout(1,0));
         JPanel controlledArmiesPanel = new JPanel();
-        controlledArmiesPanel.setLayout(new GridLayout());
+        controlledArmiesPanel.setLayout(new GridLayout(1,0));
 
 
         for (Army army : defendingArmies) {
@@ -37,11 +37,12 @@ public class ArmiesPanel extends JPanel {
 
 
         JScrollPane defendingArmyPane = new JScrollPane(defendingArmyPanel);
-        this.add(defendingArmyPane,BorderLayout.CENTER);
+        this.add(defendingArmyPane,BorderLayout.WEST);
         JScrollPane controlledArmiesPane = new JScrollPane(controlledArmiesPanel);
         controlledArmiesPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-        this.add(controlledArmiesPane,BorderLayout.EAST);
+        this.add(controlledArmiesPane,BorderLayout.CENTER);
         this.revalidate();
+        this.repaint();
     }
 
 

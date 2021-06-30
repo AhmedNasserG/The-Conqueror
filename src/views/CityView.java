@@ -46,7 +46,7 @@ public class CityView extends Frame {
         JPanel centerPanel = new JPanel(new BorderLayout());
 
         worldMapButton.setBounds(getWidth() - 100, 0, 100, 100);
-        cityGrid.setLayout(new GridLayout(2, 3));
+        cityGrid.setLayout(new GridLayout(3, 2));
         cityGrid.setAlignmentX(Component.CENTER_ALIGNMENT);
         cityGrid.setBorder(BorderFactory.createTitledBorder("Your Buildings"));
         cityGrid.setOpaque(false);
@@ -58,15 +58,13 @@ public class CityView extends Frame {
         label.setOpaque(false);
 
 
-        initiateArmyButton = new JButton("Initiate Army");
+        initiateArmyButton = new JButton("Initiate \n A New \n Army");
         centerPanel.add(initiateArmyButton,BorderLayout.EAST);
         centerPanel.setOpaque(false);
 
         upperPanel = new JPanel(new FlowLayout());
         upperPanel.add(worldMapButton);
         upperPanel.setOpaque(false);
-
-
 
         add(upperPanel,BorderLayout.NORTH);
         add(centerPanel,BorderLayout.CENTER);
@@ -83,6 +81,8 @@ public class CityView extends Frame {
             Card t = new Card(b);
             t.setActionCommand("PREVIEW_BUILDING");
             t.setListener(listener);
+            t.setOpaque(false);
+
             cityGrid.add(t);
             i++;
         }
@@ -90,6 +90,7 @@ public class CityView extends Frame {
             Card t = new Card(b);
             t.setActionCommand("PREVIEW_BUILDING");
             t.setListener(listener);
+            t.setOpaque(false);
             cityGrid.add(t);
             i++;
         }
@@ -119,7 +120,8 @@ public class CityView extends Frame {
 
         buildPanel.add(label);
         buildPanel.add(cardsPanel);
-        buildPanel.setPreferredSize(new Dimension(120*5,180));
+        buildPanel.setPreferredSize(new Dimension(140*5,180));
+        buildPanel.setOpaque(false);
         return buildPanel;
     }
 

@@ -54,7 +54,7 @@ public class Card extends JButton {
         setSize((500 / 3), (500 / 3));
         ImageIcon icon = new ImageIcon("res/img/grass.png");
         ImageIcon resizedIcon = new ImageIcon(icon.getImage().getScaledInstance((400 / 3), (400 / 3), Image.SCALE_DEFAULT));
-        img.setIcon(resizedIcon);
+        //img.setIcon(resizedIcon);
         layeredPane.add(img, Integer.valueOf(0));
         add(layeredPane);
     }
