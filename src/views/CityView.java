@@ -47,7 +47,6 @@ public class CityView extends Frame {
         cityGrid.setLayout(new GridLayout(3, 3));
         cityGrid.setAlignmentX(Component.CENTER_ALIGNMENT);
         cityGrid.setBorder(new EmptyBorder(50,200,50,0));
-        cityGrid.setBackground(TRANSPARENT_WHITE);
         cityGrid.setOpaque(false);
 
         JLabel label = new JLabel(cityToView.getName(), SwingConstants.CENTER);

@@ -24,8 +24,14 @@ public class WorldMapView extends Frame {
 
     public WorldMapView(Game game) {
         this.setVisible(true);
+        //TODO: add the worldMap background
+        String backgroundPath = "res/img/cairoCityBackground.png";
+        this.setBackground(backgroundPath);
+
+
         this.setLayout(new BorderLayout());
         this.game = game;
+
 
         citiesAndText = new JPanel();
         citiesAndText.setLayout(new BoxLayout(citiesAndText, BoxLayout.Y_AXIS));
@@ -45,7 +51,7 @@ public class WorldMapView extends Frame {
             cityCard.removeAll();
             cityCard.setSize(500,800);
             ImageIcon icon = new ImageIcon("res/img/" + city.getName().toLowerCase() + "City.jpg");
-            icon = new ImageIcon(icon.getImage().getScaledInstance(cityCard.getWidth(), cityCard.getHeight(), Image.SCALE_DEFAULT));
+            icon = new ImageIcon(icon.getImage().getScaledInstance(cityCard.getWidth()+100, cityCard.getHeight()+100, Image.SCALE_DEFAULT));
             cityCard.setIcon(icon);
             cityCard.revalidate();
             cityCard.repaint();
