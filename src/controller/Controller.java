@@ -7,6 +7,7 @@ import exceptions.*;
 import listeners.*;
 import units.*;
 import views.*;
+import views.SplashScreen;
 
 import static javax.swing.JOptionPane.showMessageDialog;
 
@@ -207,9 +208,10 @@ public class Controller
 
     @Override
     public void onNewGameClicked() throws IOException {
+        view.getStartMenuView().dispose();
+        new SplashScreen("temp_res/imgs/backgrounds/sparta.jpg");
         view.setNewGameView(new NewGameView());
         view.getNewGameView().setListener(this);
-        view.getStartMenuView().dispose();
     }
 
     @Override

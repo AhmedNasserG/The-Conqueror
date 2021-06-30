@@ -15,7 +15,7 @@ public class Frame extends JFrame {
         width = screenSize.width;
         height = screenSize.height;
         setSize(width, height);
-
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         setResizable(false);
 
