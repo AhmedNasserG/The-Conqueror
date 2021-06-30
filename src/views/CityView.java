@@ -102,7 +102,7 @@ public class CityView extends Frame {
         label.setOpaque(true);
 
         JPanel cardsPanel = new JPanel();
-        cardsPanel.setLayout(new GridLayout(1, 5));
+        cardsPanel.setLayout(new GridLayout(1, 0));
 
         addBuildingCardToBuildingPanel(cardsPanel, new Farm());
         addBuildingCardToBuildingPanel(cardsPanel, new Market());
@@ -112,7 +112,7 @@ public class CityView extends Frame {
 
         buildPanel.add(label);
         buildPanel.add(cardsPanel);
-        buildPanel.setPreferredSize(new Dimension(200*5,180));
+        //buildPanel.setPreferredSize(new Dimension(200*5,180));
         return buildPanel;
     }
 
