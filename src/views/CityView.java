@@ -28,10 +28,8 @@ public class CityView extends Frame {
 
     public CityView(City cityToView) {
         super();
-        String backgroundPath = "res/img/" + cityToView.getName().toLowerCase()+"CityBackground.png";
-        this.setBackground(backgroundPath);
-
         this.cityToView = cityToView;
+        setBackground();
         this.setLayout(new BorderLayout());
 
         worldMapButton = new JButton();
@@ -44,9 +42,9 @@ public class CityView extends Frame {
         //cityGrid.setBackground(Color.lightGray);
 
         worldMapButton.setBounds(getWidth() - 100, 0, 100, 100);
-        cityGrid.setLayout(new GridLayout(3, 3));
+        cityGrid.setLayout(new GridLayout(2, 3));
         cityGrid.setAlignmentX(Component.CENTER_ALIGNMENT);
-        cityGrid.setBorder(new EmptyBorder(50,200,50,0));
+        cityGrid.setBorder(BorderFactory.createTitledBorder("Your Buildings"));
         cityGrid.setOpaque(false);
 
         JLabel label = new JLabel(cityToView.getName(), SwingConstants.CENTER);
@@ -60,6 +58,8 @@ public class CityView extends Frame {
         upperPanel.add(worldMapButton);
         upperPanel.add(initiateArmyButton);
         upperPanel.setOpaque(false);
+
+
 
         add(upperPanel,BorderLayout.NORTH);
         add(cityGrid,BorderLayout.CENTER);
@@ -86,7 +86,7 @@ public class CityView extends Frame {
             cityGrid.add(t);
             i++;
         }
-        for (; i < 9; i++) {
+        for (; i < 6; i++) {
             cityGrid.add(new Card());
         }
         cityGrid.revalidate();
@@ -112,7 +112,7 @@ public class CityView extends Frame {
 
         buildPanel.add(label);
         buildPanel.add(cardsPanel);
-        //buildPanel.setPreferredSize(new Dimension(200*5,180));
+        buildPanel.setPreferredSize(new Dimension(120*5,180));
         return buildPanel;
     }
 
@@ -149,6 +149,13 @@ public class CityView extends Frame {
         add(armiesPanel,BorderLayout.SOUTH);
         armiesPanel.revalidate();
         armiesPanel.repaint();
+    }
+
+    public void setBackground(){
+
+        String backgroundPath = "res/img/" + cityToView.getName().toLowerCase()+"CityBackground.png";
+        this.setBackground(backgroundPath);
+
     }
 
     public ArmiesPanel getArmiesPanel() {
