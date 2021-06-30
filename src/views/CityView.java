@@ -41,28 +41,32 @@ public class CityView extends Frame {
 
         //cityGrid.setBackground(Color.lightGray);
 
+        JPanel centerPanel = new JPanel(new BorderLayout());
+
         worldMapButton.setBounds(getWidth() - 100, 0, 100, 100);
         cityGrid.setLayout(new GridLayout(2, 3));
         cityGrid.setAlignmentX(Component.CENTER_ALIGNMENT);
         cityGrid.setBorder(BorderFactory.createTitledBorder("Your Buildings"));
         cityGrid.setOpaque(false);
 
+        centerPanel.add(cityGrid,BorderLayout.CENTER);
+
         JLabel label = new JLabel(cityToView.getName(), SwingConstants.CENTER);
         label.setAlignmentX(Component.CENTER_ALIGNMENT);
-        label.setOpaque(true);
+        label.setOpaque(false);
 
 
         initiateArmyButton = new JButton("Initiate Army");
+        centerPanel.add(initiateArmyButton,BorderLayout.EAST);
 
         upperPanel = new JPanel(new FlowLayout());
         upperPanel.add(worldMapButton);
-        upperPanel.add(initiateArmyButton);
         upperPanel.setOpaque(false);
 
 
 
         add(upperPanel,BorderLayout.NORTH);
-        add(cityGrid,BorderLayout.CENTER);
+        add(centerPanel,BorderLayout.CENTER);
 
         setVisible(true);
         revalidate();
