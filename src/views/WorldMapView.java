@@ -24,7 +24,7 @@ public class WorldMapView extends Frame {
 
     public WorldMapView(Game game) {
         this.setVisible(true);
-        this.setLayout(null);
+        this.setLayout(new BorderLayout());
         this.game = game;
 
         citiesAndText = new JPanel();
@@ -42,12 +42,18 @@ public class WorldMapView extends Frame {
 
         for (City city : game.getAvailableCities()) {
             Card cityCard = new Card(city);
+            cityCard.removeAll();
+            cityCard.setSize(500,800);
+            ImageIcon icon = new ImageIcon("res/img/" + city.getName().toLowerCase() + "City.jpg");
+            icon = new ImageIcon(icon.getImage().getScaledInstance(cityCard.getWidth(), cityCard.getHeight(), Image.SCALE_DEFAULT));
+            cityCard.setIcon(icon);
+            cityCard.revalidate();
+            cityCard.repaint();
             cityCards.add(cityCard);
             cities.add(cityCard);
         }
 
         citiesAndText.add(cityCards);
-        citiesAndText.setBounds((getWidth() - 710) / 2, 280, 410, 410);
 
 
         controlledArmies = game.getPlayer().getControlledArmies();
@@ -56,7 +62,7 @@ public class WorldMapView extends Frame {
             defendingArmies.add(city.getDefendingArmy());
         }
 
-        this.add(citiesAndText);
+        this.add(citiesAndText,BorderLayout.CENTER);
 
         this.revalidate();
         this.repaint();
@@ -65,7 +71,7 @@ public class WorldMapView extends Frame {
     public void setStatusPanel(StatusPanel statusPanel) {
         this.statusPanel = statusPanel;
         statusPanel.setBounds(0, 0, getWidth(), 100);
-        add(statusPanel);
+        add(statusPanel,BorderLayout.NORTH);
     }
 
 
@@ -82,8 +88,7 @@ public class WorldMapView extends Frame {
         }
         armiesPanel = new ArmiesPanel(defendingArmies, controlledArmiesAtThisCity, listener);
         armiesPanel.setBackground(Color.ORANGE);
-        armiesPanel.setBounds(getWidth() - 300, 100, 300, getHeight() - 100);
-        add(armiesPanel);
+        add(armiesPanel,BorderLayout.SOUTH);
         armiesPanel.revalidate();
         armiesPanel.repaint();
 
