@@ -86,8 +86,6 @@ public class CityView extends Frame {
             Card t = new Card(b);
             t.setActionCommand("PREVIEW_BUILDING");
             t.setListener(listener);
-            t.setOpaque(false);
-
             cityGrid.add(t);
             i++;
         }
@@ -95,7 +93,6 @@ public class CityView extends Frame {
             Card t = new Card(b);
             t.setActionCommand("PREVIEW_BUILDING");
             t.setListener(listener);
-            t.setOpaque(false);
             cityGrid.add(t);
             i++;
         }
@@ -123,14 +120,13 @@ public class CityView extends Frame {
         addBuildingCardToBuildingPanel(cardsPanel, new Stable());
         addBuildingCardToBuildingPanel(cardsPanel, new Barracks());
         cardsPanel.setBackground(TRANSPARENT_WHITE);
-
-
+        cardsPanel.revalidate();
+        cardsPanel.repaint();
 
         buildPanel.add(label);
         buildPanel.add(cardsPanel);
         buildPanel.setPreferredSize(new Dimension(140*5,180));
         buildPanel.setOpaque(false);
-        buildPanel.setBackground(TRANSPARENT_WHITE);
         return buildPanel;
     }
 
@@ -139,7 +135,6 @@ public class CityView extends Frame {
         Card card = new Card(building, cityToView.getName());
         card.setListener(listener);
         card.setActionCommand("BUILD_BUILDING");
-
         cardsPanel.add(card);
 
     }
@@ -154,9 +149,7 @@ public class CityView extends Frame {
         worldMapButton.addActionListener(listener);
         initiateArmyButton.addActionListener(listener);
         updateCityGrid();
-        JPanel buildingsPanel = getToBuildPanel();
-        buildingsPanel.setBackground(TRANSPARENT_WHITE);
-        upperPanel.add(buildingsPanel);
+        upperPanel.add(getToBuildPanel());
         upperPanel.repaint();
         upperPanel.revalidate();
     }
