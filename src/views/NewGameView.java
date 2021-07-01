@@ -16,7 +16,7 @@ public class NewGameView extends Frame implements ActionListener {
     private String cityName;
     private NewGameListener listener;
     private JRadioButton selectedRadio;
-    private final Font BOLD_LABEL = new Font(Font.MONOSPACED, Font.BOLD, 30);
+    private final Font BOLD_LABEL = new Font(Font.MONOSPACED, Font.BOLD, 25);
 
 
     public NewGameView() {
