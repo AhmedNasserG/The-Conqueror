@@ -22,18 +22,20 @@ public class NewGameView extends Frame implements ActionListener {
     public NewGameView() {
         super("New Game");
         this.setVisible(true);
-        this.setLayout(new BorderLayout());
+        this.setLayout(new BoxLayout(this.getContentPane(),BoxLayout.Y_AXIS));
         this.setBackground("res/backgrounds/start_menu.jpg");
 
         JPanel allPanel = new JPanel();
         allPanel.setLayout(new BoxLayout(allPanel,BoxLayout.Y_AXIS));
         JLabel infoLabel = new JLabel("Enter Your Information");
+        infoLabel.setFont(BOLD_LABEL);
+        infoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JPanel panelName = new JPanel();
         panelName.setLayout(new FlowLayout());
         JLabel nameLabel = new JLabel("Enter your name: ");
         nameLabel.setFont(BOLD_LABEL);
-        nameLabel.setForeground(Color.lightGray);
+        nameLabel.setForeground(Color.white);
         nameTextField = new JTextField(30);
         panelName.add(nameLabel);
         panelName.add(nameTextField);
@@ -50,12 +52,13 @@ public class NewGameView extends Frame implements ActionListener {
         panelCity.setOpaque(false);
         allPanel.setOpaque(false);
 
+        allPanel.add(Box.createVerticalStrut(500));
         allPanel.add(panelName);
         allPanel.add(panelCity);
         allPanel.add(newGame);
 
-        //this.add(infoLabel,BorderLayout.NORTH);
-        this.add(allPanel,BorderLayout.CENTER);
+        this.add(Box.createVerticalStrut(150));
+        this.add(allPanel);
         this.validate();
         this.repaint();
     }
@@ -66,7 +69,7 @@ public class NewGameView extends Frame implements ActionListener {
         ButtonGroup cityGroup = new ButtonGroup();
         JLabel cityLabel = new JLabel("Choose your city:");
         cityLabel.setFont(BOLD_LABEL);
-        cityLabel.setForeground(Color.lightGray);
+        cityLabel.setForeground(Color.white);
         newPanel.add(cityLabel);
         newRadios = new JRadioButton[names.length];
         for (int i = 0; i < newRadios.length; i++) {
