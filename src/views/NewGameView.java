@@ -16,30 +16,46 @@ public class NewGameView extends Frame implements ActionListener {
     private String cityName;
     private NewGameListener listener;
     private JRadioButton selectedRadio;
+    private final Font BOLD_LABEL = new Font(Font.MONOSPACED, Font.BOLD, 30);
 
 
     public NewGameView() {
         super("New Game");
-
         this.setVisible(true);
-        this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
+        this.setLayout(new BorderLayout());
+        this.setBackground("temp_res/imgs/backgrounds/start_menu.jpg");
+
+        JPanel allPanel = new JPanel();
+        allPanel.setLayout(new FlowLayout());
+        JLabel infoLabel = new JLabel("Enter Your Information");
 
         JPanel panelName = new JPanel();
         panelName.setLayout(new FlowLayout());
         JLabel nameLabel = new JLabel("Enter your name: ");
-        nameTextField = new JTextField(15);
+        nameLabel.setFont(BOLD_LABEL);
+        nameLabel.setForeground(Color.lightGray);
+        nameTextField = new JTextField(30);
         panelName.add(nameLabel);
         panelName.add(nameTextField);
 
         JPanel panelCity = newRadioGroup(new String[]{"Cairo", "Rome", "Sparta"});
-        JButton newGame = new JButton("Play");
-        newGame.setSize(15, 20);
+        JButton newGame = new newButton("Play");
+        newGame.setFont(BOLD_LABEL);
+        newGame.setForeground(Color.white);
+        newGame.setSize(25, 20);
         newGame.setActionCommand("Play");
         newGame.addActionListener(this);
 
-        add(panelName);
-        add(panelCity);
-        add(newGame);
+        panelName.setOpaque(false);
+        panelCity.setOpaque(false);
+        allPanel.setOpaque(false);
+
+        allPanel.add(panelName);
+        allPanel.add(panelCity);
+        allPanel.add(newGame);
+
+        //this.add(infoLabel,BorderLayout.NORTH);
+        this.add(allPanel,BorderLayout.CENTER);
         this.validate();
         this.repaint();
     }
@@ -49,11 +65,16 @@ public class NewGameView extends Frame implements ActionListener {
         newPanel.setLayout(new FlowLayout());
         ButtonGroup cityGroup = new ButtonGroup();
         JLabel cityLabel = new JLabel("Choose your city:");
+        cityLabel.setFont(BOLD_LABEL);
+        cityLabel.setForeground(Color.lightGray);
         newPanel.add(cityLabel);
         newRadios = new JRadioButton[names.length];
         for (int i = 0; i < newRadios.length; i++) {
             newRadios[i] = new JRadioButton(names[i]);
+            newRadios[i].setFont(BOLD_LABEL);
+            newRadios[i].setOpaque(false);
             newRadios[i].addActionListener(this);
+            newRadios[i].setForeground(Color.white);
             cityGroup.add(newRadios[i]);
             newPanel.add(newRadios[i]);
         }
