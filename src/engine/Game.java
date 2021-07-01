@@ -24,18 +24,18 @@ public class Game {
     private ArrayList<Distance> distances;
     private final int maxTurnCount;
     private int currentTurnCount;
-
+    private String gameLevel;
     private String autoResolveResults;
     UnitListener unitListener;
     BattleListener battleListener;
 
-    public Game(String playerName, String playerCity) throws IOException {
+    public Game(String playerName, String playerCity, String gameLevel) throws IOException {
         this.player = new Player(playerName);
         this.availableCities = new ArrayList<>();
         this.distances = new ArrayList<>();
         this.maxTurnCount = 50;
         this.currentTurnCount = 1;
-
+        this.gameLevel = gameLevel;
         player.setTreasury(5000);
         loadCitiesAndDistances();
 
@@ -43,7 +43,7 @@ public class Game {
             if (city.getName().equals(playerCity)) {
                 player.getControlledCities().add(city);
             } else {
-                loadArmy(city.getName(), city.getName().toLowerCase() + "_army.csv");
+                loadArmy(city.getName(), "CSVs/" + gameLevel + "/" + city.getName().toLowerCase() + "_army.csv");
             }
         }
     }
@@ -89,7 +89,7 @@ public class Game {
         HashSet<String> cities = new HashSet<>();
 
         String currentLine;
-        FileReader fileReader = new FileReader("distances.csv");
+        FileReader fileReader = new FileReader("CSVs/" + gameLevel + "/distances.csv");
         BufferedReader br = new BufferedReader(fileReader);
 
         while ((currentLine = br.readLine()) != null) {

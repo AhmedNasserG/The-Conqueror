@@ -137,11 +137,7 @@ public class Controller
                 if (game.isGameOver()) {
                     boolean isPlayerWon = game.getPlayer().getControlledCities().size() == game.getAvailableCities().size();
                     if (isPlayerWon) {
-                        try {
-                            updateLeadboard(game.getPlayer().getName(), game.getCurrentTurnCount());
-                        } catch (IOException ioException) {
-                            ioException.printStackTrace();
-                        }
+                        updateLeadboard(game.getPlayer().getName(), game.getCurrentTurnCount());
                     }
                     EndGameView endGameView = new EndGameView(isPlayerWon);
                     endGameView.setListener(this);
@@ -223,7 +219,7 @@ public class Controller
     public void onPlayClicked() throws IOException {
         String playerName = view.getNewGameView().getPlayerName();
         String cityName = view.getNewGameView().getCityName();
-        game = new Game(playerName, cityName);
+        game = new Game(playerName, cityName, "easy");
 
         //Cheating Haha
         if (playerName.equals("salah3beed") && cityName.equals("Cairo")) {
@@ -280,11 +276,17 @@ public class Controller
         return map;
     }
 
-    public void updateLeadboard(String playerName, int numOfTurnsToEndGame) throws IOException {
+    public void updateLeadboard(String playerName, int numOfTurnsToEndGame) {
         File file = new File("leadboard.csv");
-        FileWriter fr = new FileWriter(file, true);
-        fr.write(playerName+","+numOfTurnsToEndGame+"\n");
-        fr.close();
+        FileWriter fr = null;
+        try {
+            fr = new FileWriter(file, true);
+            fr.write(playerName + "," + numOfTurnsToEndGame + "\n");
+            fr.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
