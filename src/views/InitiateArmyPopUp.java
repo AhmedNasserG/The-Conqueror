@@ -39,6 +39,9 @@ public class InitiateArmyPopUp extends Frame implements ActionListener {
         unitName.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 
+        JLabel chooseAUnit = new JLabel("Choose a unit");
+        chooseAUnit.setBounds(135, 110, 150, 40);
+
         myArmies = new JComboBox(city.getDefendingArmy().getUnits().toArray());
         myArmies.setBounds(135, 150, 150, 40);
 
@@ -51,7 +54,7 @@ public class InitiateArmyPopUp extends Frame implements ActionListener {
         closeButton.addActionListener(this);
         closeButton.setBounds(145, 350, 100, 40);
 
-
+        add(chooseAUnit);
         add(myArmies);
         add(relocateButton);
         add(unitName);
