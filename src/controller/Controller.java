@@ -221,7 +221,7 @@ public class Controller
         String playerName = view.getNewGameView().getPlayerName();
         String cityName = view.getNewGameView().getCityName();
         game = new Game(playerName, cityName,selectedLevel);
-        playMusic("res/sounds/background-selectcity.wav");
+        playMusicLoop("res/sounds/background-selectcity.wav");
         //Cheating Haha
         if (playerName.equals("salah3beed") && cityName.equals("Cairo")) {
             Army army;
@@ -334,6 +334,7 @@ public class Controller
     @Override
     public void onRecruitClicked(BuildingPopUp buildingPopUp) {
         try {
+            playMusic("res/sfx/recruitUnit.wav");
             game.getPlayer().recruitUnit(((MilitaryBuilding) (buildingPopUp.getBuildingToShow())));
             buildingPopUp.dispose();
             statusPanel.updateStatusPanel();
@@ -699,6 +700,20 @@ public class Controller
         onArmyCardClicked(army);
     }
 
+    private void playMusicLoop(String path) {
+
+        try {
+            AudioInputStream audio = AudioSystem.getAudioInputStream(new File(path).getAbsoluteFile());
+            Clip clip = AudioSystem.getClip();
+            clip.open(audio);
+            clip.start();
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
+        } catch (UnsupportedAudioFileException | LineUnavailableException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     private void playMusic(String path) {
 
         try {
