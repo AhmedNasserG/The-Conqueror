@@ -20,7 +20,7 @@ public class InitiateArmyPopUp extends Frame implements ActionListener {
     private Unit unit;
     private City city;
     private JComboBox myArmies;
-
+    private final Font BOLD_LABEL = new Font(Font.MONOSPACED, Font.BOLD, 22);
 
     public InitiateArmyPopUp(City city){
         super(city.getDefendingArmy().getCurrentLocation());
@@ -32,11 +32,11 @@ public class InitiateArmyPopUp extends Frame implements ActionListener {
         setBounds(width, height, 420, 420);
         setLayout(null);
 
-        JLabel unitName = new JLabel(city.getName().toUpperCase());
-        unitName.setFont(new Font(Font.MONOSPACED, Font.BOLD, 22));
+        JLabel cityName = new JLabel(city.getName().toUpperCase());
+        cityName.setFont(BOLD_LABEL);
 
-        unitName.setBounds(160, 1, getWidth(), 50);
-        unitName.setAlignmentX(Component.CENTER_ALIGNMENT);
+        cityName.setBounds(160, 1, getWidth(), 50);
+        cityName.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 
         JLabel chooseAUnit = new JLabel("Choose a unit");
@@ -57,7 +57,7 @@ public class InitiateArmyPopUp extends Frame implements ActionListener {
         add(chooseAUnit);
         add(myArmies);
         add(relocateButton);
-        add(unitName);
+        add(cityName);
         add(closeButton);
         setVisible(true);
     }

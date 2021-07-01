@@ -25,6 +25,7 @@ public class CityView extends Frame {
     private ArmiesPanel armiesPanel;
     private JPanel upperPanel;
     private Color TRANSPARENT_WHITE = new Color(255,255,255,150);
+    private final Font BOLD_LABEL = new Font(Font.MONOSPACED, Font.BOLD, 22);
 
     public CityView(City cityToView) {
         super();
@@ -53,14 +54,15 @@ public class CityView extends Frame {
 
         centerPanel.add(cityGrid,BorderLayout.CENTER);
 
-        JLabel label = new JLabel(cityToView.getName(), SwingConstants.CENTER);
-        label.setAlignmentX(Component.CENTER_ALIGNMENT);
-        label.setOpaque(false);
+        JLabel cityLabel = new JLabel(cityToView.getName(), SwingConstants.CENTER);
+        cityLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        cityLabel.setOpaque(false);
 
 
-        initiateArmyButton = new JButton("Initiate \n A New \n Army");
+        initiateArmyButton = new newButton("Initiate New Army");
         initiateArmyButton.setActionCommand("Initiate Army");
         initiateArmyButton.setContentAreaFilled(false);
+        initiateArmyButton.setFont(BOLD_LABEL);
         initiateArmyButton.setOpaque(false);
 
         centerPanel.add(initiateArmyButton,BorderLayout.EAST);
