@@ -123,6 +123,7 @@ public class Controller
                 if (!cityUnderSeigeForThreeTurns.equals("")) {
                     JOptionPane.showMessageDialog(null,
                             cityUnderSeigeForThreeTurns + " has been under Seige for 3 Turns, you have to attack to end the turn");
+                    playMusic("res/sfx/siege.wav");
                     break;
                 }
                 game.endTurn();
@@ -318,6 +319,7 @@ public class Controller
     @Override
     public void onUpgradeClicked(BuildingPopUp buildingPopUp) {
         try {
+            playMusic("res/sfx/upgrade.wav");
             game.getPlayer().upgradeBuilding(buildingPopUp.getBuildingToShow());
             buildingPopUp.dispose();
             view.getCityView().updateCityGrid();
@@ -350,6 +352,14 @@ public class Controller
     @Override
     public void buildBuilding(Building building, String whereToBuild) throws NotEnoughGoldException {
         try {
+            if(building instanceof Barracks )
+                playMusic("res/sfx/recruitUnit.wav");
+            else if(building instanceof Stable)
+                playMusic("res/sfx/stable.wav");
+            else if(building instanceof ArcheryRange)
+                playMusic("res/sfx/archeryRange.wav");
+            else if(building instanceof Barracks)
+                playMusic("res/sfx/barracks.wav");
             game.getPlayer().build(building.getBuildingName(), whereToBuild);
             view.getCityView().updateCityGrid();
             statusPanel.updateStatusPanel();
@@ -721,7 +731,6 @@ public class Controller
             Clip clip = AudioSystem.getClip();
             clip.open(audio);
             clip.start();
-            clip.loop(Clip.LOOP_CONTINUOUSLY);
         } catch (UnsupportedAudioFileException | LineUnavailableException e) {
             e.printStackTrace();
         } catch (IOException e) {
