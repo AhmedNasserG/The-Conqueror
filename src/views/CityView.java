@@ -169,7 +169,7 @@ public class CityView extends Frame {
 
     public void setBackground(){
 
-        String backgroundPath = "res/img/" + cityToView.getName().toLowerCase()+"CityBackground.png";
+        String backgroundPath = "res/img/" + cityToView.getName().toLowerCase()+"CityBackground.jpg";
         this.setBackground(backgroundPath);
 
     }

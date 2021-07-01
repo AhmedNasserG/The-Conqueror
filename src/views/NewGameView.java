@@ -22,8 +22,8 @@ public class NewGameView extends Frame implements ActionListener {
     public NewGameView() {
         super("New Game");
         this.setVisible(true);
-        this.setLayout(new BorderLayout());
-        this.setBackground("temp_res/imgs/backgrounds/start_menu.jpg");
+        this.setLayout(new BoxLayout(this.getContentPane(),BoxLayout.Y_AXIS));
+        this.setBackground("res/backgrounds/start_menu.jpg");
 
         JPanel allPanel = new JPanel();
         allPanel.setLayout(new FlowLayout());

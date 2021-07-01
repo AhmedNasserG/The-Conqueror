@@ -22,7 +22,7 @@ public class StartMenuView extends Frame implements ActionListener {
         super("The Conqueror");
         this.setVisible(true);
         this.setLayout(new FlowLayout());
-        this.setBackground("temp_res/imgs/backgrounds/start_menu.jpg");
+        this.setBackground("res/backgrounds/start_menu.jpg");
         String[] buttonNames = new String[]{"New Game", "Leaderboard", "About", "Help", "Exit"};
         JPanel menuPanel = menuPanel(buttonNames);
         menuPanel.setOpaque(false);
