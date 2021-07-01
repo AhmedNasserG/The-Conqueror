@@ -25,7 +25,7 @@ public class WorldMapView extends Frame {
     public WorldMapView(Game game) {
         this.setVisible(true);
 
-        String backgroundPath = "res/img/start_menu.jpg";
+        String backgroundPath = "res/backgrounds/start_menuOpacity.jpg";
         this.setBackground(backgroundPath);
 
 
