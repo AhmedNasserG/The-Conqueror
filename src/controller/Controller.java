@@ -11,6 +11,7 @@ import views.SplashScreen;
 
 import static javax.swing.JOptionPane.showMessageDialog;
 
+import javax.sound.sampled.*;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
@@ -220,7 +221,7 @@ public class Controller
         String playerName = view.getNewGameView().getPlayerName();
         String cityName = view.getNewGameView().getCityName();
         game = new Game(playerName, cityName, "easy");
-
+        playMusic("res/sounds/background-selectcity.wav");
         //Cheating Haha
         if (playerName.equals("salah3beed") && cityName.equals("Cairo")) {
             Army army;
@@ -696,6 +697,35 @@ public class Controller
     public void onSetClicked(City city, Army army) {
         game.targetCity(army, city.getName());
         onArmyCardClicked(army);
+    }
+
+    private void playMusic(String path) {
+
+        try {
+            AudioInputStream audio = AudioSystem.getAudioInputStream(new File(path).getAbsoluteFile());
+            Clip clip = AudioSystem.getClip();
+            clip.open(audio);
+            clip.start();
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
+        } catch (UnsupportedAudioFileException | LineUnavailableException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void playSound(String path) {
+
+        try {
+            AudioInputStream audio = AudioSystem.getAudioInputStream(new File(path).getAbsoluteFile());
+            Clip clip = AudioSystem.getClip();
+            clip.open(audio);
+            clip.start();
+        } catch (UnsupportedAudioFileException | LineUnavailableException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
