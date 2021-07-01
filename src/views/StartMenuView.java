@@ -83,19 +83,14 @@ public class StartMenuView extends Frame implements ActionListener {
                 }
             }
             case "About": {
-                //System.out.println("ABOUT");
-//                this.setVisible(false);
-                //new NewGameView();
+                new HelpView();
                 break;
             }
             case "Help": {
-                //System.out.println("HELP");
-//                this.setVisible(false);
-                // new NewGameView();
+                new HelpView();
                 break;
             }
             case "Exit": {
-                //System.out.println("Exit");
                 System.exit(0);
                 break;
             }
