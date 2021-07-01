@@ -15,18 +15,27 @@ public class EndGameView extends Frame {
         JPanel textPanel = new JPanel();
         JPanel btnPanel = new JPanel();
 
-        replayBtn = new JButton("PLAY AGAIN!");
-        exitBtn = new JButton("EXIT");
+        replayBtn = new newButton("PLAY AGAIN!");
+        exitBtn = new newButton("EXIT");
         JLabel gameVerdictText = new JLabel();
 
-        if (gameWon) gameVerdictText.setText("VICTORY!!!");
-        else gameVerdictText.setText("DEFEAT");
+        if (gameWon) {
+            gameVerdictText.setText("VICTORY!!!");
+            setBackground("res/backgrounds/win.jpg");
+        }
+        else {
+            gameVerdictText.setText("DEFEAT");
+            setBackground("res/backgrounds/lose.gif");
+
+        }
         gameVerdictText.setFont(new Font(Font.MONOSPACED, Font.BOLD, 150));
+        gameVerdictText.setForeground(Color.white);
+        gameVerdictText.setOpaque(false);
 
         replayBtn.addActionListener(listener);
         exitBtn.addActionListener(listener);
 
-        textPanel.add(gameVerdictText);
+        //textPanel.add(gameVerdictText);
         btnPanel.add(replayBtn);
         btnPanel.add(exitBtn);
 
