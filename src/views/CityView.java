@@ -24,7 +24,7 @@ public class CityView extends Frame {
     private JButton initiateArmyButton;
     private ArmiesPanel armiesPanel;
     private JPanel upperPanel;
-    private Color TRANSPARENT_WHITE = new Color(255,255,255,150);
+    private Color TRANSPARENT_WHITE = new Color(0,0,0,70);
     private final Font BOLD_LABEL = new Font(Font.MONOSPACED, Font.BOLD, 22);
 
     public CityView(City cityToView) {
@@ -122,6 +122,7 @@ public class CityView extends Frame {
         addBuildingCardToBuildingPanel(cardsPanel, new ArcheryRange());
         addBuildingCardToBuildingPanel(cardsPanel, new Stable());
         addBuildingCardToBuildingPanel(cardsPanel, new Barracks());
+        cardsPanel.setBackground(TRANSPARENT_WHITE);
 
 
 
@@ -129,6 +130,7 @@ public class CityView extends Frame {
         buildPanel.add(cardsPanel);
         buildPanel.setPreferredSize(new Dimension(140*5,180));
         buildPanel.setOpaque(false);
+        buildPanel.setBackground(TRANSPARENT_WHITE);
         return buildPanel;
     }
 
@@ -137,7 +139,7 @@ public class CityView extends Frame {
         Card card = new Card(building, cityToView.getName());
         card.setListener(listener);
         card.setActionCommand("BUILD_BUILDING");
-        card.setOpaque(false);
+
         cardsPanel.add(card);
 
     }
@@ -153,8 +155,10 @@ public class CityView extends Frame {
         initiateArmyButton.addActionListener(listener);
         updateCityGrid();
         JPanel buildingsPanel = getToBuildPanel();
-        buildingsPanel.setOpaque(false);
+        buildingsPanel.setBackground(TRANSPARENT_WHITE);
         upperPanel.add(buildingsPanel);
+        upperPanel.repaint();
+        upperPanel.revalidate();
     }
 
     public void setControlledArmiesAtThisCity(ArrayList<Army> controlledArmiesAtThisCity) {
