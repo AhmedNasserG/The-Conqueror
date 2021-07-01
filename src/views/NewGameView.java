@@ -7,6 +7,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Locale;
 
 
 public class NewGameView extends Frame implements ActionListener {
@@ -16,6 +18,8 @@ public class NewGameView extends Frame implements ActionListener {
     private String cityName;
     private NewGameListener listener;
     private JRadioButton selectedRadio;
+    private String selectedLevel = "easy";
+    private ArrayList<String> levels;
     private final Font BOLD_LABEL = new Font(Font.MONOSPACED, Font.BOLD, 25);
 
 
@@ -41,6 +45,12 @@ public class NewGameView extends Frame implements ActionListener {
         panelName.add(nameTextField);
 
         JPanel panelCity = newRadioGroup(new String[]{"Cairo", "Rome", "Sparta"});
+        JPanel level = newRadioGroup(new String[]{"Easy", "Medium", "Hard"});
+        levels = new ArrayList<>();
+        levels.add("Easy");
+        levels.add("Medium");
+        levels.add("Hard");
+
         JButton newGame = new newButton("Play");
         newGame.setFont(BOLD_LABEL);
         newGame.setForeground(Color.white);
@@ -50,11 +60,13 @@ public class NewGameView extends Frame implements ActionListener {
 
         panelName.setOpaque(false);
         panelCity.setOpaque(false);
+        level.setOpaque(false);
         allPanel.setOpaque(false);
 
         allPanel.add(Box.createVerticalStrut(500));
         allPanel.add(panelName);
         allPanel.add(panelCity);
+        allPanel.add(level);
         allPanel.add(newGame);
 
         this.add(Box.createVerticalStrut(150));
@@ -67,7 +79,12 @@ public class NewGameView extends Frame implements ActionListener {
         JPanel newPanel = new JPanel();
         newPanel.setLayout(new FlowLayout());
         ButtonGroup cityGroup = new ButtonGroup();
-        JLabel cityLabel = new JLabel("Choose your city:");
+        JLabel cityLabel;
+        if(names[0].equals("Cairo"))
+            cityLabel = new JLabel("Choose your city:");
+        else
+            cityLabel = new JLabel("Select your level");
+
         cityLabel.setFont(BOLD_LABEL);
         cityLabel.setForeground(Color.white);
         newPanel.add(cityLabel);
@@ -104,13 +121,20 @@ public class NewGameView extends Frame implements ActionListener {
         playerName = nameTextField.getText();
         if (e.getSource() instanceof JRadioButton) {
             selectedRadio = (JRadioButton) e.getSource();
-            cityName = selectedRadio.getText();
+            String selected = selectedRadio.getText();
+            if(levels.contains(selected))
+            {
+                selectedLevel = selected.toLowerCase();
+            }
+            else{
+                cityName = selected;
+            }
         } else if (e.getActionCommand().equals("Play")) {
             if (selectedRadio == null) {
                 JOptionPane.showMessageDialog(null, "Please Choose a City");
             } else if (validText(playerName)) {
                 try {
-                    listener.onPlayClicked();
+                    listener.onPlayClicked(selectedLevel);
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 }

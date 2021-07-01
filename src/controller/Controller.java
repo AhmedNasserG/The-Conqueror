@@ -216,11 +216,11 @@ public class Controller
     }
 
     @Override
-    public void onPlayClicked() throws IOException {
+    public void onPlayClicked(String selectedLevel) throws IOException {
         new SplashScreen("temp_res/imgs/backgrounds/sparta.jpg");
         String playerName = view.getNewGameView().getPlayerName();
         String cityName = view.getNewGameView().getCityName();
-        game = new Game(playerName, cityName, "easy");
+        game = new Game(playerName, cityName,selectedLevel);
         playMusic("res/sounds/background-selectcity.wav");
         //Cheating Haha
         if (playerName.equals("salah3beed") && cityName.equals("Cairo")) {
