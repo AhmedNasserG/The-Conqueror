@@ -206,7 +206,6 @@ public class Controller
     @Override
     public void onNewGameClicked() throws IOException {
         view.getStartMenuView().dispose();
-        new SplashScreen("temp_res/imgs/backgrounds/sparta.jpg");
         view.setNewGameView(new NewGameView());
         view.getNewGameView().setListener(this);
     }
@@ -218,6 +217,7 @@ public class Controller
 
     @Override
     public void onPlayClicked() throws IOException {
+        new SplashScreen("temp_res/imgs/backgrounds/sparta.jpg");
         String playerName = view.getNewGameView().getPlayerName();
         String cityName = view.getNewGameView().getCityName();
         game = new Game(playerName, cityName, "easy");

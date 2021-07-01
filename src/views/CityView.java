@@ -63,6 +63,7 @@ public class CityView extends Frame {
         initiateArmyButton.setContentAreaFilled(false);
         initiateArmyButton.setFont(BOLD_LABEL);
         initiateArmyButton.setOpaque(false);
+        initiateArmyButton.setForeground(Color.white);
 
         centerPanel.add(initiateArmyButton,BorderLayout.EAST);
         centerPanel.setOpaque(false);
@@ -169,7 +170,7 @@ public class CityView extends Frame {
 
     public void setBackground(){
 
-        String backgroundPath = "res/backgrounds" + cityToView.getName().toLowerCase()+".jpg";
+        String backgroundPath = "res/backgrounds/" + cityToView.getName().toLowerCase()+".jpg";
         this.setBackground(backgroundPath);
 
     }
