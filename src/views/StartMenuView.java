@@ -23,7 +23,7 @@ public class StartMenuView extends Frame implements ActionListener {
         this.setVisible(true);
         this.setLayout(new FlowLayout());
         this.setBackground("temp_res/imgs/backgrounds/start_menu.jpg");
-        String[] buttonNames = new String[]{"New Game", "Leadboard", "About", "Help", "Exit"};
+        String[] buttonNames = new String[]{"New Game", "Leaderboard", "About", "Help", "Exit"};
         JPanel menuPanel = menuPanel(buttonNames);
         menuPanel.setOpaque(false);
 
