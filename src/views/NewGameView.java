@@ -16,14 +16,14 @@ public class NewGameView extends Frame implements ActionListener {
     private String cityName;
     private NewGameListener listener;
     private JRadioButton selectedRadio;
-    private final Font BOLD_LABEL = new Font(Font.MONOSPACED, Font.BOLD, 30);
+    private final Font BOLD_LABEL = new Font(Font.MONOSPACED, Font.BOLD, 25);
 
 
     public NewGameView() {
         super("New Game");
         this.setVisible(true);
-        this.setLayout(new BorderLayout());
-        this.setBackground("temp_res/imgs/backgrounds/start_menu.jpg");
+        this.setLayout(new BoxLayout(this.getContentPane(),BoxLayout.Y_AXIS));
+        this.setBackground("res/backgrounds/start_menu.jpg");
 
         JPanel allPanel = new JPanel();
         allPanel.setLayout(new FlowLayout());
