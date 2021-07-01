@@ -7,6 +7,7 @@ class newButton extends JButton {
 
     private Color hoverBackgroundColor = new Color(0,0,0,30);
     private Color pressedBackgroundColor = new Color(0,100,0,190);
+    private Color backgroundColor = new Color(0,0,0,0);
 
     public newButton() {
         this(null);
@@ -24,7 +25,7 @@ class newButton extends JButton {
         } else if (getModel().isRollover()) {
             g.setColor(hoverBackgroundColor);
         } else {
-            g.setColor(new Color(0,0,0,0));
+            g.setColor(backgroundColor);
         }
         g.fillRect(0, 0, getWidth(), getHeight());
         super.paintComponent(g);
@@ -48,5 +49,9 @@ class newButton extends JButton {
 
     public void setPressedBackgroundColor(Color pressedBackgroundColor) {
         this.pressedBackgroundColor = pressedBackgroundColor;
+    }
+
+    public void setBackgroundColor(Color backgroundColor) {
+        this.backgroundColor = backgroundColor;
     }
 }

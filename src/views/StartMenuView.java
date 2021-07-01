@@ -16,6 +16,7 @@ public class StartMenuView extends Frame implements ActionListener {
 
     private NewGameView newGameView;
     private StartMenuListener listener;
+    private final Font BOLD_LABEL = new Font(Font.MONOSPACED, Font.BOLD, 30);
 
     public StartMenuView(){
         super("The Conqueror");
@@ -46,14 +47,17 @@ public class StartMenuView extends Frame implements ActionListener {
     }
 
     public JButton createButton(String name) {
-        JButton newButton = new JButton(name);
-        newButton.setPreferredSize(new Dimension(150,30));
-        newButton.setMinimumSize(new Dimension(150,30));
-        newButton.setMaximumSize(new Dimension(150,30));
-        newButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        newButton.addActionListener(this);
-        newButton.setActionCommand(name);
-        return newButton;
+        newButton button = new newButton(name);
+        button.setPreferredSize(new Dimension(300,50));
+        button.setMinimumSize(new Dimension(300,50));
+        button.setMaximumSize(new Dimension(300,50));
+        button.setAlignmentX(Component.CENTER_ALIGNMENT);
+        button.setFont(BOLD_LABEL);
+        button.setBackgroundColor(new Color(255,255,255,100));
+        button.setPressedBackgroundColor(new Color(255,255,255,160));
+        button.addActionListener(this);
+        button.setActionCommand(name);
+        return button;
     }
 
     public static void main(String[] args) {
