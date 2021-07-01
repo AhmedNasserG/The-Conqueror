@@ -12,7 +12,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Card extends JButton {
+public class Card extends newButton {
     private JLayeredPane layeredPane;
     private JLabel img;
     private JLabel topLabel;
