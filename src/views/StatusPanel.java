@@ -13,9 +13,10 @@ public class StatusPanel extends JPanel {
     private JLabel turnCountLabel;
     private JLabel goldCountLabel;
     private JLabel foodCountLabel;
-    private JButton endTurnButton;
+    private newButton endTurnButton;
     private ActionListener listener;
     private Color TRANSPARENT_WHITE = new Color(255,255,255,150);
+    private final Font BOLD_LABEL = new Font(Font.MONOSPACED, Font.BOLD, 22);
 
     public StatusPanel() {
         FlowLayout layout = new FlowLayout(FlowLayout.LEADING);
@@ -27,13 +28,24 @@ public class StatusPanel extends JPanel {
         turnCountLabel = new JLabel();
         goldCountLabel = new JLabel();
         foodCountLabel = new JLabel();
-        endTurnButton = new JButton("End Turn");
+        endTurnButton = new newButton("End Turn");
 
         ImageIcon goldIcon = new ImageIcon("res/img/coin.png");
         ImageIcon foodIcon = new ImageIcon("res/img/food.png");
 
         goldCountLabel.setIcon(new ImageIcon(goldIcon.getImage().getScaledInstance(60, 60, Image.SCALE_DEFAULT)));
         foodCountLabel.setIcon(new ImageIcon(foodIcon.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
+
+        playerNameLabel.setFont(BOLD_LABEL);
+        turnCountLabel.setFont(BOLD_LABEL);
+        goldCountLabel.setFont(BOLD_LABEL);
+        foodCountLabel.setFont(BOLD_LABEL);
+        endTurnButton.setFont(BOLD_LABEL);
+        playerNameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        turnCountLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        goldCountLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        foodCountLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        endTurnButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         add(playerNameLabel);
         add(turnCountLabel);
@@ -52,6 +64,7 @@ public class StatusPanel extends JPanel {
 
         this.add(modeLabel);
         modeLabel.setBorder(BorderFactory.createEmptyBorder(0, 700, 0, 0));
+        this.setAlignmentX(Component.CENTER_ALIGNMENT);
 
     }
 
@@ -66,7 +79,7 @@ public class StatusPanel extends JPanel {
         }
     }
 
-    public JButton getEndTurnButton() {
+    public newButton getEndTurnButton() {
         return endTurnButton;
     }
 

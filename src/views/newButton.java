@@ -3,7 +3,7 @@ package views;
 import javax.swing.*;
 import java.awt.*;
 
-class newButton extends JButton {
+public class newButton extends JButton {
 
     private Color hoverBackgroundColor = new Color(0,0,0,30);
     private Color pressedBackgroundColor = new Color(0,100,0,190);

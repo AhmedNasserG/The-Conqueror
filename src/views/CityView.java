@@ -42,7 +42,6 @@ public class CityView extends Frame {
         worldMapButton.setContentAreaFilled(false);
         worldMapButton.setBorder(BorderFactory.createEmptyBorder());
 
-        //cityGrid.setBackground(Color.lightGray);
 
         JPanel centerPanel = new JPanel(new BorderLayout());
 
@@ -113,7 +112,7 @@ public class CityView extends Frame {
 
         JLabel label = new JLabel("Choose a Building to be built in your city if you want ", SwingConstants.CENTER);
         label.setAlignmentX(Component.CENTER_ALIGNMENT);
-        label.setOpaque(true);
+        label.setOpaque(false);
 
         JPanel cardsPanel = new JPanel();
         cardsPanel.setLayout(new GridLayout(1, 0));
@@ -123,6 +122,8 @@ public class CityView extends Frame {
         addBuildingCardToBuildingPanel(cardsPanel, new ArcheryRange());
         addBuildingCardToBuildingPanel(cardsPanel, new Stable());
         addBuildingCardToBuildingPanel(cardsPanel, new Barracks());
+
+
 
         buildPanel.add(label);
         buildPanel.add(cardsPanel);
@@ -136,6 +137,7 @@ public class CityView extends Frame {
         Card card = new Card(building, cityToView.getName());
         card.setListener(listener);
         card.setActionCommand("BUILD_BUILDING");
+        card.setOpaque(false);
         cardsPanel.add(card);
 
     }
@@ -150,7 +152,9 @@ public class CityView extends Frame {
         worldMapButton.addActionListener(listener);
         initiateArmyButton.addActionListener(listener);
         updateCityGrid();
-        upperPanel.add(getToBuildPanel());
+        JPanel buildingsPanel = getToBuildPanel();
+        buildingsPanel.setOpaque(false);
+        upperPanel.add(buildingsPanel);
     }
 
     public void setControlledArmiesAtThisCity(ArrayList<Army> controlledArmiesAtThisCity) {
