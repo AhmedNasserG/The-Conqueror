@@ -49,7 +49,7 @@ public class WorldMapView extends Frame {
         for (City city : game.getAvailableCities()) {
             Card cityCard = new Card(city);
             cityCard.removeAll();
-            cityCard.setSize(500,800);
+            cityCard.setSize(300,400);
             ImageIcon icon = new ImageIcon("res/img/" + city.getName().toLowerCase() + "City.jpeg");
             icon = new ImageIcon(icon.getImage().getScaledInstance(cityCard.getWidth()+100, cityCard.getHeight()+100, Image.SCALE_DEFAULT));
             cityCard.setIcon(icon);
