@@ -22,26 +22,6 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.TreeMap;
 
-// TODO: remove all ActionListeners
-// TODO: fix battle view
-// TODO: fix scrolling
-
-//For the Bonus
-//TODO: sounds for{
-// Background music, victory or losing, recriut,end turn, build, upgrade, cool down, besiege, attacking, auto resolving either win or lose}
-// TODO: when the building is colling down the card should be unclickable and grey colored and writeen cooling down
-// TODO: voices for units in (arabic cairo, english sparta, greek rome)
-//TODO: cheating or easter eggs additions
-//TODO: help pop up
-//TODO: about pop up
-// TODO: change all the fonts to one unified good old font
-// TODO: backgrounds for all the views and all the cities (same style)
-//TODO: change the archer image
-// TODO: add cards above the radiobuttons in the start menu view
-// TODO: change the start about help exit buttons with other good iconed buttons
-// TODO: create a leaderboard in github for anyone finishes the game in under 25 turns (to make people download the game and play it)
-
-
 public class Controller
         implements ActionListener, NewGameListener, StartMenuListener, CityViewListener,
         WorldMapListener, BattleListener, UnitListener, CardListener, UnitPopUpListener {
@@ -319,11 +299,11 @@ public class Controller
     @Override
     public void onUpgradeClicked(BuildingPopUp buildingPopUp) {
         try {
-            playMusic("res/sfx/upgrade.wav");
             game.getPlayer().upgradeBuilding(buildingPopUp.getBuildingToShow());
             buildingPopUp.dispose();
             view.getCityView().updateCityGrid();
             statusPanel.updateStatusPanel();
+            playMusic("res/sfx/upgrade.wav");
         } catch (BuildingInCoolDownException e) {
             JOptionPane.showMessageDialog(null, "Sorry The Building is Cooling Down, Please wait to the next turn to upgrade.");
         } catch (MaxLevelException e) {
@@ -336,7 +316,6 @@ public class Controller
     @Override
     public void onRecruitClicked(BuildingPopUp buildingPopUp) {
         try {
-            playMusic("res/sfx/recruitUnit.wav");
             game.getPlayer().recruitUnit(((MilitaryBuilding) (buildingPopUp.getBuildingToShow())));
             buildingPopUp.dispose();
             statusPanel.updateStatusPanel();
@@ -352,6 +331,10 @@ public class Controller
     @Override
     public void buildBuilding(Building building, String whereToBuild) throws NotEnoughGoldException {
         try {
+
+            game.getPlayer().build(building.getBuildingName(), whereToBuild);
+            view.getCityView().updateCityGrid();
+            statusPanel.updateStatusPanel();
             if(building instanceof Barracks )
                 playMusic("res/sfx/recruitUnit.wav");
             else if(building instanceof Stable)
@@ -360,9 +343,6 @@ public class Controller
                 playMusic("res/sfx/archeryRange.wav");
             else if(building instanceof Barracks)
                 playMusic("res/sfx/barracks.wav");
-            game.getPlayer().build(building.getBuildingName(), whereToBuild);
-            view.getCityView().updateCityGrid();
-            statusPanel.updateStatusPanel();
         } catch (BuildingInCityAlreadyException e) {
             JOptionPane.showMessageDialog(null, "Sorry You Already Have " + building.getBuildingName() + " In Your City, Please Choose Another Building.");
         } catch (NotEnoughGoldException e) {

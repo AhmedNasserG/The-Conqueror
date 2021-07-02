@@ -75,12 +75,13 @@ public class StartMenuView extends Frame implements ActionListener {
                 }
                 break;
             }
-            case "Leadboard":{
+            case "Leaderboard":{
                 try {
                     listener.onLeadboardClicked();
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 }
+                break;
             }
             case "About": {
                 new HelpView();

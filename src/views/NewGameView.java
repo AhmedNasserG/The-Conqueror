@@ -21,6 +21,7 @@ public class NewGameView extends Frame implements ActionListener {
     private String selectedLevel = "easy";
     private ArrayList<String> levels;
     private final Font BOLD_LABEL = new Font(Font.MONOSPACED, Font.BOLD, 25);
+    private Color TRANSPARENT_WHITE = new Color(0,0,0,40);
 
 
     public NewGameView() {
@@ -68,6 +69,7 @@ public class NewGameView extends Frame implements ActionListener {
         allPanel.add(panelCity);
         allPanel.add(level);
         allPanel.add(newGame);
+
 
         this.add(Box.createVerticalStrut(150));
         this.add(allPanel);

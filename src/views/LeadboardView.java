@@ -17,11 +17,11 @@ public class LeadboardView extends Frame implements ActionListener {
         setLayout(null);
         JTable LeadboardTable = new JTable(toTableModel(data));
 
-        JButton closeButton = new JButton("Close");
+        JButton closeButton = new newButton("Close");
         closeButton.addActionListener(this);
 
         LeadboardTable.setBounds(10,10,getWidth()- 10, getHeight() - 150);
-        closeButton.setBounds(10,getHeight() - 150, getWidth()- 10, getHeight() - 100);
+        closeButton.setBounds(getWidth()/2,getHeight() - 140, 180, 70);
 
         add(LeadboardTable);
         add(closeButton);

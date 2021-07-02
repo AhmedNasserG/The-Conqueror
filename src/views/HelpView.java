@@ -14,7 +14,7 @@ import java.util.TreeMap;
 
 public class HelpView extends Frame implements ActionListener {
     private final Font BOLD_LABEL = new Font(Font.MONOSPACED, Font.BOLD, 30);
-    private Color TRANSPARENT_WHITE = new Color(0,0,0,70);
+    private Color TRANSPARENT_WHITE = new Color(0,0,0,160);
 
     public HelpView() {
         setLayout(new FlowLayout());
@@ -69,24 +69,8 @@ public class HelpView extends Frame implements ActionListener {
         textArea.setForeground(Color.white);
         textArea.setOpaque(false);
         textArea.repaint();
-        JScrollPane textPane = new JScrollPane(textArea) {
-            @Override
-            protected void paintComponent(Graphics g) {
-                try {
-                    Composite composite = ((Graphics2D)g).getComposite();
-
-                    ((Graphics2D)g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
-                    g.setColor(getBackground());
-                    g.fillRect(0, 0, getWidth(), getHeight());
-
-                    ((Graphics2D)g).setComposite(composite);
-                    paintChildren(g);
-                }
-                catch(IndexOutOfBoundsException e) {
-                    super.paintComponent(g);
-                }
-            }
-        };
+        textArea.setEditable(false);
+        JScrollPane textPane = new JScrollPane(textArea);
 
         textPane.getViewport().setOpaque(false);
         textPane.setOpaque(false);

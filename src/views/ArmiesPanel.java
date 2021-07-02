@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 
 public class ArmiesPanel extends JPanel {
-    private Color TRANSPARENT_WHITE = new Color(0,0,0,70);
+    private Color TRANSPARENT_WHITE = new Color(160, 160, 152, 255);
     public ArmiesPanel(ArrayList<Army> defendingArmies,ArrayList<Army> controlledArmies, CardListener listener) {
         super();
         this.setLayout(new BorderLayout());
@@ -42,7 +42,6 @@ public class ArmiesPanel extends JPanel {
         JScrollPane defendingArmyPane = new JScrollPane(defendingArmyPanel);
         this.add(defendingArmyPane,BorderLayout.WEST);
         JScrollPane controlledArmiesPane = new JScrollPane(controlledArmiesPanel);
-        controlledArmiesPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
         this.add(controlledArmiesPane,BorderLayout.CENTER);
         this.setOpaque(false);
         this.setBackground(TRANSPARENT_WHITE);

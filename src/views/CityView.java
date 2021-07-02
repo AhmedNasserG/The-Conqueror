@@ -24,7 +24,7 @@ public class CityView extends Frame {
     private JButton initiateArmyButton;
     private ArmiesPanel armiesPanel;
     private JPanel upperPanel;
-    private Color TRANSPARENT_WHITE = new Color(0,0,0,70);
+    private Color TRANSPARENT_WHITE = new Color(0,0,0,20);
     private final Font BOLD_LABEL = new Font(Font.MONOSPACED, Font.BOLD, 22);
 
     public CityView(City cityToView) {
@@ -128,6 +128,7 @@ public class CityView extends Frame {
         buildPanel.add(cardsPanel);
         buildPanel.setPreferredSize(new Dimension(140*5,180));
         buildPanel.setOpaque(false);
+
         return buildPanel;
     }
 

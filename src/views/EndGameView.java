@@ -1,8 +1,11 @@
 package views;
 
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
 public class EndGameView extends Frame {
     private ActionListener listener;
@@ -22,10 +25,12 @@ public class EndGameView extends Frame {
         if (gameWon) {
             gameVerdictText.setText("VICTORY!!!");
             setBackground("res/backgrounds/win.jpg");
+            playMusic("res/sounds/win.wav");
         }
         else {
             gameVerdictText.setText("DEFEAT");
             setBackground("res/backgrounds/lose.gif");
+            playMusic("res/sounds/defeat.wav");
 
         }
         gameVerdictText.setFont(new Font(Font.MONOSPACED, Font.BOLD, 150));
@@ -57,5 +62,19 @@ public class EndGameView extends Frame {
         replayBtn.addActionListener(listener);
         exitBtn.addActionListener(listener);
 
+    }
+
+    private void playMusic(String path) {
+
+        try {
+            AudioInputStream audio = AudioSystem.getAudioInputStream(new File(path).getAbsoluteFile());
+            Clip clip = AudioSystem.getClip();
+            clip.open(audio);
+            clip.start();
+        } catch (UnsupportedAudioFileException | LineUnavailableException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
