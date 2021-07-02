@@ -103,7 +103,7 @@ public class Controller
                 if (!cityUnderSeigeForThreeTurns.equals("")) {
                     JOptionPane.showMessageDialog(null,
                             cityUnderSeigeForThreeTurns + " has been under Seige for 3 Turns, you have to attack to end the turn");
-                    playMusic("res/sfx/siege.wav");
+                    playMusic("res/sounds/siege.wav");
                     break;
                 }
                 game.endTurn();
@@ -303,7 +303,7 @@ public class Controller
             buildingPopUp.dispose();
             view.getCityView().updateCityGrid();
             statusPanel.updateStatusPanel();
-            playMusic("res/sfx/upgrade.wav");
+            playMusic("res/sounds/upgrade.wav");
         } catch (BuildingInCoolDownException e) {
             JOptionPane.showMessageDialog(null, "Sorry The Building is Cooling Down, Please wait to the next turn to upgrade.");
         } catch (MaxLevelException e) {
@@ -336,13 +336,13 @@ public class Controller
             view.getCityView().updateCityGrid();
             statusPanel.updateStatusPanel();
             if(building instanceof Barracks )
-                playMusic("res/sfx/recruitUnit.wav");
+                playMusic("res/sounds/recruitUnit.wav");
             else if(building instanceof Stable)
-                playMusic("res/sfx/stable.wav");
+                playMusic("res/sounds/stable.wav");
             else if(building instanceof ArcheryRange)
-                playMusic("res/sfx/archeryRange.wav");
+                playMusic("res/sounds/archeryRange.wav");
             else if(building instanceof Barracks)
-                playMusic("res/sfx/barracks.wav");
+                playMusic("res/sounds/barracks.wav");
         } catch (BuildingInCityAlreadyException e) {
             JOptionPane.showMessageDialog(null, "Sorry You Already Have " + building.getBuildingName() + " In Your City, Please Choose Another Building.");
         } catch (NotEnoughGoldException e) {
