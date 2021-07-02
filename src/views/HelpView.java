@@ -66,13 +66,14 @@ public class HelpView extends Frame implements ActionListener {
                 "sufficient amount of food for all of his soldiers, they will gradually die each turn until he"
         );
         textArea.setFont(BOLD_LABEL);
-        textArea.setForeground(Color.white);
+        textArea.setForeground(Color.BLACK);
         textArea.setOpaque(false);
         textArea.repaint();
+        textArea.revalidate();
         textArea.setEditable(false);
         JScrollPane textPane = new JScrollPane(textArea);
 
-        textPane.getViewport().setOpaque(false);
+        textPane.getViewport().setBackground(new Color(161, 159, 159));
         textPane.setOpaque(false);
         textPane.repaint();
         JButton closeButton = new JButton("Close");
@@ -80,8 +81,9 @@ public class HelpView extends Frame implements ActionListener {
 
         closeButton.setSize(new Dimension(150,100));
 
+        allPanel.add(Box.createVerticalStrut(100));
         allPanel.add(textPane);
-        allPanel.add(Box.createVerticalStrut(20));
+        allPanel.add(Box.createVerticalStrut(50));
         allPanel.add(closeButton);
         allPanel.setBackground(TRANSPARENT_WHITE);
 

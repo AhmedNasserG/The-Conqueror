@@ -3,6 +3,7 @@ package views;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -18,15 +19,20 @@ public class LeadboardView extends Frame implements ActionListener {
         this.setBackground("res/backgrounds/start_menu.jpg");
         JTable LeadboardTable = new JTable(toTableModel(data));
 
-        JButton closeButton = new newButton("Close");
+        JButton closeButton = new newButton("Back");
+        closeButton.setActionCommand("Close");
         closeButton.addActionListener(this);
 
-        LeadboardTable.setBounds(10,10,getWidth()- 10, getHeight() - 150);
+        LeadboardTable.setBounds(40,10,getWidth()-200, getHeight() - 150);
+        LeadboardTable.setPreferredSize(new Dimension(500,500));
         LeadboardTable.setOpaque(false);
-        closeButton.setBounds(getWidth()/2,getHeight() - 140, 180, 70);
+        closeButton.setBounds(10,200, 180, 70);
 
         add(LeadboardTable);
+        add(Box.createVerticalStrut(20));
         add(closeButton);
+        this.revalidate();
+        this.repaint();
         setVisible(true);
     }
 
