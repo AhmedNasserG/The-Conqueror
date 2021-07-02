@@ -15,12 +15,14 @@ public class LeadboardView extends Frame implements ActionListener {
 
     public LeadboardView(TreeMap<Integer, String> data) {
         setLayout(null);
+        this.setBackground("res/backgrounds/start_menu.jpg");
         JTable LeadboardTable = new JTable(toTableModel(data));
 
         JButton closeButton = new newButton("Close");
         closeButton.addActionListener(this);
 
         LeadboardTable.setBounds(10,10,getWidth()- 10, getHeight() - 150);
+        LeadboardTable.setOpaque(false);
         closeButton.setBounds(getWidth()/2,getHeight() - 140, 180, 70);
 
         add(LeadboardTable);
