@@ -123,7 +123,7 @@ public class Controller
                 if (!cityUnderSeigeForThreeTurns.equals("")) {
                     JOptionPane.showMessageDialog(null,
                             cityUnderSeigeForThreeTurns + " has been under Seige for 3 Turns, you have to attack to end the turn");
-                    playMusic("res/sfx/siege.wav");
+                    playMusic("res/sounds/siege.wav");
                     break;
                 }
                 game.endTurn();
@@ -221,7 +221,7 @@ public class Controller
         new SplashScreen("temp_res/imgs/backgrounds/sparta.jpg");
         String playerName = view.getNewGameView().getPlayerName();
         String cityName = view.getNewGameView().getCityName();
-        game = new Game(playerName, cityName,selectedLevel);
+        game = new Game(playerName, cityName, selectedLevel);
         playMusicLoop("res/sounds/background-selectcity.wav");
         //Cheating Haha
         if (playerName.equals("salah3beed") && cityName.equals("Cairo")) {
@@ -319,8 +319,8 @@ public class Controller
     @Override
     public void onUpgradeClicked(BuildingPopUp buildingPopUp) {
         try {
-            playMusic("res/sfx/upgrade.wav");
             game.getPlayer().upgradeBuilding(buildingPopUp.getBuildingToShow());
+            playMusic("res/sounds/upgrade.wav");
             buildingPopUp.dispose();
             view.getCityView().updateCityGrid();
             statusPanel.updateStatusPanel();
@@ -336,8 +336,8 @@ public class Controller
     @Override
     public void onRecruitClicked(BuildingPopUp buildingPopUp) {
         try {
-            playMusic("res/sfx/recruitUnit.wav");
             game.getPlayer().recruitUnit(((MilitaryBuilding) (buildingPopUp.getBuildingToShow())));
+            playMusic("res/sounds/recruitUnit.wav");
             buildingPopUp.dispose();
             statusPanel.updateStatusPanel();
         } catch (BuildingInCoolDownException e) {
@@ -352,15 +352,14 @@ public class Controller
     @Override
     public void buildBuilding(Building building, String whereToBuild) throws NotEnoughGoldException {
         try {
-            if(building instanceof Barracks )
-                playMusic("res/sfx/recruitUnit.wav");
-            else if(building instanceof Stable)
-                playMusic("res/sfx/stable.wav");
-            else if(building instanceof ArcheryRange)
-                playMusic("res/sfx/archeryRange.wav");
-            else if(building instanceof Barracks)
-                playMusic("res/sfx/barracks.wav");
             game.getPlayer().build(building.getBuildingName(), whereToBuild);
+            if (building instanceof Stable) {
+                playMusic("res/sounds/stable.wav");
+            } else if (building instanceof ArcheryRange) {
+                playMusic("res/sounds/archeryRange.wav");
+            } else if (building instanceof Barracks) {
+                playMusic("res/sounds/barracks.wav");
+            }
             view.getCityView().updateCityGrid();
             statusPanel.updateStatusPanel();
         } catch (BuildingInCityAlreadyException e) {
@@ -724,6 +723,7 @@ public class Controller
             e.printStackTrace();
         }
     }
+
     private void playMusic(String path) {
 
         try {
@@ -738,18 +738,5 @@ public class Controller
         }
     }
 
-    private void playSound(String path) {
-
-        try {
-            AudioInputStream audio = AudioSystem.getAudioInputStream(new File(path).getAbsoluteFile());
-            Clip clip = AudioSystem.getClip();
-            clip.open(audio);
-            clip.start();
-        } catch (UnsupportedAudioFileException | LineUnavailableException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
 }

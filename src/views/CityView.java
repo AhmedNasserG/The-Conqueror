@@ -126,7 +126,7 @@ public class CityView extends Frame {
 
         buildPanel.add(label);
         buildPanel.add(cardsPanel);
-        buildPanel.setPreferredSize(new Dimension(140*5,180));
+        buildPanel.setPreferredSize(new Dimension(100*5,180));
         buildPanel.setOpaque(false);
         return buildPanel;
     }
