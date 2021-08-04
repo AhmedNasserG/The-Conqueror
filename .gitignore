@@ -2,6 +2,7 @@
 .idea
 .metadata
 bin
+out
 .classpath
 .project
 The-Conqueror.iml
